@@ -73,7 +73,6 @@ $result = $request->file->storeOnCloudinary('lambogini');
 $result = $request->file->storeOnCloudinaryAs('lambogini', 'prosper');
 
 
-
 $result->getPath(); // Get the url of the uploaded file; http
 $result->getSecurePath(); // Get the url of the uploaded file; https
 $result->getSize(); // Get the size of the uploaded file in bytes
@@ -233,40 +232,35 @@ A configuration-file named `cloudinary.php` with some sensible defaults will be 
 ```php
 <?php
 return [
-    'notification_url' => env('CLOUDINARY_NOTIFICATION_URL', ''),
+    /*
+    |--------------------------------------------------------------------------
+    | Cloudinary Configuration
+    |--------------------------------------------------------------------------
+    |
+    | An HTTP or HTTPS URL to notify your application (a webhook) when the process of uploads, deletes, and any API
+    | that accepts notification_url has completed.
+    |
+    |
+    */
+    'notification_url' => env('CLOUDINARY_NOTIFICATION_URL'),
 
-    'account_details' => [
+    /*
+    |--------------------------------------------------------------------------
+    | Cloudinary Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure your Cloudinary settings. Cloudinary is a cloud hosted
+    | media management service for all file uploads, storage, delivery and transformation needs.
+    |
+    |
+    */
+    'cloud_url' => env('CLOUDINARY_CLOUD_URL'),
 
-        'account' => [
-            /**
-             * Cloud Name From Cloudinary Dashboard
-             *
-             */
-            'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-
-            /**
-            * API Key From Cloudinary Dashboard
-            *
-            */
-            'api_key' => env('CLOUDINARY_API_KEY'),
-
-            /**
-             * API Secret From Cloudinary Dashboard
-             *
-             */
-            'api_secret' => env('CLOUDINARY_API_SECRET'),
-
-            /**
-            * Upload Preset From Cloudinary Dashboard
-            *
-            */
-            'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET')
-        ],
-
-        'url' => [
-            'secure' => true
-        ]
-    ]
+    /**
+    * Upload Preset From Cloudinary Dashboard
+    *
+    */
+    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET')
 ];
 ```
 
@@ -274,9 +268,7 @@ return [
 Open your .env file and add your Cloudinary cloud name, api key, api secret, and upload preset like so:
 
 ```php
-CLOUDINARY_CLOUD_NAME=xxxxxxxxxxxxx
-CLOUDINARY_API_KEY=xxxxxxxxxxxxx
-CLOUDINARY_API_SECRET=xxxxxxxxxxxxx
+CLOUDINARY_CLOUD_URL=xxxxxxxxxxxxx
 CLOUDINARY_UPLOAD_PRESET=xxxxxxxxxxxxx
 CLOUDINARY_NOTIFICATION_URL=
 ```
