@@ -53,8 +53,12 @@ $uploadedFileUrl = cloudinary()->uploadFile($request->file('file')->getRealPath(
 
 /**
  *  You can also skip the Cloudinary Facade or helper method and laravel-ize your uploads by simply calling the
- *  storeOnCloudinary() method on the file itself
+ *  laravel store() method and pass 'cloudinary' as the second option which indicates the disk name
+ *  or just use the storeOnCloudinary() method on the file itself
  */
+
+// Store the uploaded file in the "anaconda" directory on Cloudinary
+$result = $request->file('file')->store('anaconda', 'cloudinary');
 
 // Store the uploaded file on Cloudinary
 $result = $request->file('file')->storeOnCloudinary();
@@ -67,6 +71,8 @@ $result = $request->file->storeOnCloudinary('lambogini');
 
 // Store the uploaded file in the "lambogini" directory on Cloudinary with the filename "prosper"
 $result = $request->file->storeOnCloudinaryAs('lambogini', 'prosper');
+
+
 
 $result->getPath(); // Get the url of the uploaded file; http
 $result->getSecurePath(); // Get the url of the uploaded file; https
