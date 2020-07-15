@@ -25,11 +25,11 @@ use CloudinaryLabs\Exceptions\IsNullException;
 class CloudinaryEngine
 {
     /**
-    * The version of the SDK.
+    * The version of the Laravel Package.
     *
-    * @var string SDK_VERSION
+    * @var string PACKAGE_VERSION
     */
-    const SDK_VERSION = '1.0.0';
+    const PACKAGE_VERSION = '1.0.0';
 
     public const ASSET_ID = 'asset_id';
     public const PUBLIC_ID = 'public_id';
@@ -93,7 +93,7 @@ class CloudinaryEngine
     */
     public function setUserPlatform()
     {
-        BaseApiClient::$userPlatform = 'CloudinaryLaravel/' . self::SDK_VERSION;
+        BaseApiClient::$userPlatform = 'CloudinaryLaravel/' . self::PACKAGE_VERSION;
     }
 
     /**
