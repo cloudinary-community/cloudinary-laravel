@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Contracts\Foundation\Application;
-use Unicodeveloper\Cloudinary\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryEngine;
 
 if (!function_exists("cloudinary")) {
     /**

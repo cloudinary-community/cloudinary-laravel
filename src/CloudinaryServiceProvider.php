@@ -17,7 +17,7 @@ use CloudinaryLabs\Commands\UploadFileCommand;
 
 /**
  * Class CloudinaryServiceProvider
- * @package
+ * @package CloudinaryLabs
  */
 class CloudinaryServiceProvider extends ServiceProvider
 {

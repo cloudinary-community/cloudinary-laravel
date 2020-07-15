@@ -1,15 +1,15 @@
 <?php
 
-namespace Unicodeveloper\Cloudinary\Commands;
+namespace CloudinaryLabs\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Unicodeveloper\Cloudinary\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryEngine;
 
 /**
  * Class BackupFilesCommand
- * @package Unicodeveloper\Cloudinary\Commands
+ * @package CloudinaryLabs\Commands
  */
 class BackupFilesCommand extends Command
 {

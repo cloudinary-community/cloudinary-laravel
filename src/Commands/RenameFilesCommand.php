@@ -1,14 +1,14 @@
 <?php
 
-namespace Unicodeveloper\Cloudinary\Commands;
+namespace CloudinaryLabs\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
-use Unicodeveloper\Cloudinary\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryEngine;
 
 /**
  * Class RenameFilesCommand
- * @package Unicodeveloper\Cloudinary\Commands
+ * @package CloudinaryLabs\Commands
  */
 class RenameFilesCommand extends Command
 {

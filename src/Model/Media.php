@@ -1,14 +1,14 @@
 <?php
 
-namespace Unicodeveloper\Cloudinary\Model;
+namespace CloudinaryLabs\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Unicodeveloper\Cloudinary\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryEngine;
 
 /**
  * Class Media
- * @package Unicodeveloper\Cloudinary\Model
+ * @package CloudinaryLabs\Model
  */
 class Media extends Model
 {

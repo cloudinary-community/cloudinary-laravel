@@ -1,13 +1,13 @@
 <?php
 
-namespace Unicodeveloper\Cloudinary\Facades;
+namespace CloudinaryLabs\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Unicodeveloper\Cloudinary\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryEngine;
 
 /**
  * Class Cloudinary
- * @package Unicodeveloper\Cloudinary\Facades
+ * @package CloudinaryLabs\Facades
  */
 class Cloudinary extends Facade
 {

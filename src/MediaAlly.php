@@ -1,9 +1,9 @@
 <?php
 
-namespace Unicodeveloper\Cloudinary;
+namespace CloudinaryLabs;
 
 use Exception;
-use Unicodeveloper\Cloudinary\Model\Media;
+use CloudinaryLabs\Model\Media;
 
 
 /**

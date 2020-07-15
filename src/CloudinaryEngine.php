@@ -3,13 +3,11 @@
 /*
  * This file is part of the Laravel Cloudinary package.
  *
- * (c) Prosper Otemuyiwa <prosperotemuyiwa@gmail.com>
- *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Unicodeveloper\Cloudinary;
+namespace CloudinaryLabs;
 
 use Cloudinary\Api\ApiResponse;
 use Cloudinary\Api\Exception\ApiError;
@@ -17,11 +15,11 @@ use Cloudinary\Cloudinary;
 use Cloudinary\Tag\ImageTag;
 use Cloudinary\Tag\VideoTag;
 use GuzzleHttp\Promise\PromiseInterface;
-use Unicodeveloper\Cloudinary\Exceptions\IsNullException;
+use CloudinaryLabs\Exceptions\IsNullException;
 
 /**
  * Class CloudinaryEngine
- * @package Unicodeveloper\Cloudinary
+ * @package CloudinaryLabs
  */
 class CloudinaryEngine
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Unicodeveloper\Cloudinary;
+namespace CloudinaryLabs;
 
 use Cloudinary\Cloudinary;
 use League\Flysystem\Adapter\Polyfill\NotSupportingVisibilityTrait;
@@ -10,7 +10,7 @@ use League\Flysystem\Config;
 
 /**
  * Class CloudinaryAdapter
- * @package Unicodeveloper\Cloudinary
+ * @package CloudinaryLabs
  */
 class CloudinaryAdapter implements AdapterInterface
 {
