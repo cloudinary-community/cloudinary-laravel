@@ -9,8 +9,8 @@
             "homepage": "https://github.com/unicodeveloper"
         }
     ],
-    "homepage": "https://github.com/cloudinary-labs/laravel-cloudinary",
-    "keywords": ["Laravel", "laravel-cloudinary", "File Uploads", "Media Management", "Cloudinary", "File Transformations"],
+    "homepage": "https://github.com/cloudinary-labs/cloudinary-laravel",
+    "keywords": ["Laravel", "cloudinary-laravel", "File Uploads", "Media Management", "Cloudinary", "File Transformations"],
     "require": {
         "php": "^7.0",
         "illuminate/support": "~5|~6|~7",
