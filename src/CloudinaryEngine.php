@@ -25,7 +25,7 @@ use CloudinaryLabs\Exceptions\IsNullException;
 class CloudinaryEngine
 {
     /**
-    * The version of the Laravel Package.
+    * Laravel Package Version.
     *
     * @var string PACKAGE_VERSION
     */
