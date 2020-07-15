@@ -1,23 +1,23 @@
 <?php
 
-namespace Unicodeveloper\Cloudinary;
+namespace CloudinaryLabs;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem;
-use Unicodeveloper\Cloudinary\Commands\BackupFilesCommand;
-use Unicodeveloper\Cloudinary\Commands\DeleteFilesCommand;
-use Unicodeveloper\Cloudinary\Commands\FetchFilesCommand;
-use Unicodeveloper\Cloudinary\Commands\GenerateArchiveCommand;
-use Unicodeveloper\Cloudinary\Commands\RenameFilesCommand;
-use Unicodeveloper\Cloudinary\Commands\UploadFileCommand;
+use CloudinaryLabs\Commands\BackupFilesCommand;
+use CloudinaryLabs\Commands\DeleteFilesCommand;
+use CloudinaryLabs\Commands\FetchFilesCommand;
+use CloudinaryLabs\Commands\GenerateArchiveCommand;
+use CloudinaryLabs\Commands\RenameFilesCommand;
+use CloudinaryLabs\Commands\UploadFileCommand;
 
 
 /**
  * Class CloudinaryServiceProvider
- * @package Unicodeveloper\Cloudinary
+ * @package
  */
 class CloudinaryServiceProvider extends ServiceProvider
 {
