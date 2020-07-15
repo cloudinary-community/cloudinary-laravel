@@ -1,5 +1,5 @@
 <div align="center">
-    <h1> Laravel Cloudinary </h1>
+    <h1> Cloudinary Laravel SDK</h1>
 </div>
 
 <p align="center">

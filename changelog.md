@@ -1,8 +1,6 @@
 # Changelog
 
-All notable changes to `cloudinary-laravel` will be documented in this file.
+1.0.0 / 2020-07-15
+===================
 
-## Version 1.0
-
-### Added
-- Everything
+* The first public version of Cloudinary Laravel SDK

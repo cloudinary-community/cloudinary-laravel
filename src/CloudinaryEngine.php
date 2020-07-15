@@ -14,6 +14,7 @@ use Cloudinary\Api\Exception\ApiError;
 use Cloudinary\Cloudinary;
 use Cloudinary\Tag\ImageTag;
 use Cloudinary\Tag\VideoTag;
+use Cloudinary\Api\BaseApiClient;
 use GuzzleHttp\Promise\PromiseInterface;
 use CloudinaryLabs\Exceptions\IsNullException;
 
@@ -23,10 +24,13 @@ use CloudinaryLabs\Exceptions\IsNullException;
  */
 class CloudinaryEngine
 {
-
     /**
-     *
-     */
+    * The version of the SDK.
+    *
+    * @var string VERSION
+    */
+    const VERSION = '1.0.0';
+
     public const ASSET_ID = 'asset_id';
     public const PUBLIC_ID = 'public_id';
     public const VERSION = 'version';
@@ -68,6 +72,7 @@ class CloudinaryEngine
 
     public function __construct()
     {
+        $this->setUserPlatform();
         $this->setCloudinaryConfig();
         $this->bootCloudinary();
     }
@@ -80,6 +85,15 @@ class CloudinaryEngine
     {
         $config = config('cloudinary.cloud_url');
         $this->cloudinaryConfig = $config;
+    }
+
+    /**
+    * Set User Agent and Platform
+    *
+    */
+    public function setUserPlatform()
+    {
+        BaseApiClient::$userPlatform = 'CloudinaryLaravel/' . self::VERSION;
     }
 
     /**
