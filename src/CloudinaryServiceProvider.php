@@ -30,7 +30,6 @@ class CloudinaryServiceProvider extends ServiceProvider
     {
         $this->bootMacros();
         $this->bootResources();
-        $this->bootMigrations();
         $this->bootDirectives();
         $this->bootComponents();
         $this->bootCommands();
@@ -71,18 +70,6 @@ class CloudinaryServiceProvider extends ServiceProvider
     protected function bootResources()
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'cloudinary');
-    }
-
-    /**
-     * Boot the package migrations.
-     *
-     * @return void
-     */
-    protected function bootMigrations()
-    {
-        if ($this->app->runningInConsole()) {
-            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        }
     }
 
     /**
@@ -143,8 +130,16 @@ class CloudinaryServiceProvider extends ServiceProvider
 
             $this->publishes(
                 [
-                    $config => config_path('cloudinary.php')
-                ]
+                    $config => $this->app->configPath('cloudinary.php'),
+                ],
+                'laravel-cloudinary-config'
+            );
+
+            $this->publishes(
+                [
+                    __DIR__.'/../database/migrations' => $this->app->databasePath('migrations'),
+                ],
+                'laravel-cloudinary-migration'
             );
         }
     }
