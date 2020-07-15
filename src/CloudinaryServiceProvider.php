@@ -132,14 +132,14 @@ class CloudinaryServiceProvider extends ServiceProvider
                 [
                     $config => $this->app->configPath('cloudinary.php'),
                 ],
-                'laravel-cloudinary-config'
+                'cloudinary-laravel-config'
             );
 
             $this->publishes(
                 [
                     __DIR__.'/../database/migrations' => $this->app->databasePath('migrations'),
                 ],
-                'laravel-cloudinary-migration'
+                'cloudinary-laravel-migration'
             );
         }
     }

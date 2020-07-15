@@ -3,14 +3,14 @@
 </div>
 
 <p align="center">
-    <a href="https://packagist.org/packages/unicodeveloper/laravel-cloudinary">
-        <img src="https://img.shields.io/packagist/dt/unicodeveloper/laravel-cloudinary.svg?style=flat-square" alt="Total Downloads">
+    <a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel">
+        <img src="https://img.shields.io/packagist/dt/cloudinary-labs/cloudinary-laravel.svg?style=flat-square" alt="Total Downloads">
     </a>
-    <a href="https://packagist.org/packages/unicodeveloper/laravel-cloudinary">
-        <img src="https://poser.pugx.org/unicodeveloper/laravel-cloudinary/v/stable.svg" alt="Latest Stable Version">
+    <a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel">
+        <img src="https://poser.pugx.org/cloudinary-labs/cloudinary-laravel/v/stable.svg" alt="Latest Stable Version">
     </a>
-    <a href="https://packagist.org/packages/unicodeveloper/laravel-cloudinary">
-        <img src="https://poser.pugx.org/unicodeveloper/laravel-cloudinary/license.svg" alt="License">
+    <a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel">
+        <img src="https://poser.pugx.org/cloudinary-labs/cloudinary-laravel/license.svg" alt="License">
     </a>
 </p>
 
@@ -105,7 +105,7 @@ class Page extends Model
 Next, publish the package's migration file using this command:
 
 ```bash
-php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="laravel-cloudinary-migration"
+php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="cloudinary-laravel-migration"
 ```
 
 **Note:** Once this has been published, run `php artisan migrate` to create the required table in your DB.
@@ -216,13 +216,13 @@ php artisan cloudinary:upload
 To get the latest version of Laravel Cloudinary, simply require it:
 
 ```bash
-composer require cloudinary-labs/laravel-cloudinary
+composer require cloudinary-labs/cloudinary-laravel
 ```
 
 Or add the following line to the require block of your `composer.json` file.
 
 ```
-"cloudinary-labs/laravel-cloudinary": "1.0.0-beta"
+"cloudinary-labs/cloudinary-laravel": "1.0.0-beta"
 ```
 
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
@@ -238,7 +238,7 @@ Once Laravel Cloudinary is installed, you need to register the service provider.
 ]
 ```
 
-> Note: If you use **Laravel >= 5.5** you can skip this step (adding the code above to the providers key) and go to [**`configuration`**](https://github.com/cloudinary-labs/laravel-cloudinary#configuration)
+> Note: If you use **Laravel >= 5.5** you can skip this step (adding the code above to the providers key) and go to [**`configuration`**](https://github.com/cloudinary-labs/cloudinary-laravel#configuration)
 
 Also, register the Cloudinary Facade like so:
 
@@ -255,7 +255,7 @@ Also, register the Cloudinary Facade like so:
 You can publish the configuration file using this command:
 
 ```bash
-php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tags="laravel-cloudinary-config"
+php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tags="cloudinary-laravel-config"
 ```
 
 A configuration file named `cloudinary.php` with some sensible defaults will be placed in your `config` directory:
