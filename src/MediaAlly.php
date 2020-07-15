@@ -5,13 +5,11 @@ namespace CloudinaryLabs;
 use Exception;
 use CloudinaryLabs\Model\Media;
 
-
 /**
  * MediaAlly
  *
  * Provides functionality for attaching Cloudinary files to an eloquent model.
  * Whether the model should automatically reload its media relationship after modification.
- *
  *
  */
 trait MediaAlly

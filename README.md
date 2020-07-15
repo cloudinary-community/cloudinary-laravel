@@ -188,13 +188,13 @@ php artisan cloudinary:upload
 To get the latest version of Laravel Cloudinary, simply require it:
 
 ```bash
-composer require unicodeveloper/laravel-cloudinary
+composer require cloudinary-labs/laravel-cloudinary
 ```
 
 Or add the following line to the require block of your `composer.json` file.
 
 ```
-"unicodeveloper/laravel-cloudinary": "1.0.0-beta"
+"cloudinary-labs/laravel-cloudinary": "1.0.0-beta"
 ```
 
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
@@ -205,19 +205,19 @@ Once Laravel Cloudinary is installed, you need to register the service provider.
 ```php
 'providers' => [
     ...
-    Unicodeveloper\Cloudinary\CloudinaryServiceProvider::class,
+    CloudinaryLabs\CloudinaryServiceProvider::class,
     ...
 ]
 ```
 
-> Note: If you use **Laravel >= 5.5** you can skip this step (adding the code above to the providers key) and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-cloudinary#configuration)
+> Note: If you use **Laravel >= 5.5** you can skip this step (adding the code above to the providers key) and go to [**`configuration`**](https://github.com/cloudinary-labs/laravel-cloudinary#configuration)
 
 Also, register the Cloudinary Facade like so:
 
 ```php
 'aliases' => [
     ...
-    'Cloudinary' => Unicodeveloper\Cloudinary\Facades\Cloudinary::class,
+    'Cloudinary' => CloudinaryLabs\Facades\Cloudinary::class,
     ...
 ]
 ```
@@ -227,7 +227,7 @@ Also, register the Cloudinary Facade like so:
 You can publish the configuration file using this command:
 
 ```bash
-php artisan vendor:publish --provider="Unicodeveloper\Cloudinary\CloudinaryServiceProvider"
+php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryServiceProvider"
 ```
 
 A configuration-file named `cloudinary.php` with some sensible defaults will be placed in your `config` directory:
