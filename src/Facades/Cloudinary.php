@@ -1,13 +1,13 @@
 <?php
 
-namespace CloudinaryLabs\Facades;
+namespace CloudinaryLabs\CloudinaryLaravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use CloudinaryLabs\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 /**
  * Class Cloudinary
- * @package CloudinaryLabs\Facades
+ * @package CloudinaryLabs\CloudinaryLaravel\Facades
  */
 class Cloudinary extends Facade
 {

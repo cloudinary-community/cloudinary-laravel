@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Contracts\Foundation\Application;
-use CloudinaryLabs\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 if (!function_exists("cloudinary")) {
 

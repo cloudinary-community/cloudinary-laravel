@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CloudinaryLabs;
+namespace CloudinaryLabs\CloudinaryLaravel;
 
 use Cloudinary\Api\ApiResponse;
 use Cloudinary\Api\Exception\ApiError;
@@ -19,7 +19,7 @@ use CloudinaryLabs\Exceptions\IsNullException;
 
 /**
  * Class CloudinaryEngine
- * @package CloudinaryLabs
+ * @package CloudinaryLabs\CloudinaryLaravel
  */
 class CloudinaryEngine
 {

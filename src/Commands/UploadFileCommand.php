@@ -1,15 +1,15 @@
 <?php
 
-namespace CloudinaryLabs\Commands;
+namespace CloudinaryLabs\CloudinaryLaravel\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
-use CloudinaryLabs\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 
 /**
  * Class UploadFileCommand
- * @package CloudinaryLabs\Commands
+ * @package CloudinaryLabs\CloudinaryLaravel\Commands
  */
 class UploadFileCommand extends Command
 {

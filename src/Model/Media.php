@@ -1,14 +1,14 @@
 <?php
 
-namespace CloudinaryLabs\Model;
+namespace CloudinaryLabs\CloudinaryLaravel\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use CloudinaryLabs\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 /**
  * Class Media
- * @package CloudinaryLabs\Model
+ * @package CloudinaryLabs\CloudinaryLaravel\Model
  */
 class Media extends Model
 {

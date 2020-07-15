@@ -2,7 +2,7 @@
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via Pull Requests on [Github](https://github.com/unicodeveloper/laravel-cloudinary).
+We accept contributions via Pull Requests on [GitHub](https://github.com/cloudinary-labs/laravel-cloudinary).
 
 
 ## Pull Requests

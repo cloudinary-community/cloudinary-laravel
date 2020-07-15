@@ -1,9 +1,9 @@
 <?php
 
-namespace CloudinaryLabs;
+namespace CloudinaryLabs\CloudinaryLaravel;
 
 use Exception;
-use CloudinaryLabs\Model\Media;
+use CloudinaryLabs\CloudinaryLaravel\Model\Media;
 
 /**
  * MediaAlly

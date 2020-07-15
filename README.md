@@ -205,7 +205,7 @@ Once Laravel Cloudinary is installed, you need to register the service provider.
 ```php
 'providers' => [
     ...
-    CloudinaryLabs\CloudinaryServiceProvider::class,
+    CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
     ...
 ]
 ```
@@ -217,7 +217,7 @@ Also, register the Cloudinary Facade like so:
 ```php
 'aliases' => [
     ...
-    'Cloudinary' => CloudinaryLabs\Facades\Cloudinary::class,
+    'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
     ...
 ]
 ```
@@ -227,7 +227,7 @@ Also, register the Cloudinary Facade like so:
 You can publish the configuration file using this command:
 
 ```bash
-php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryServiceProvider"
+php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tags="laravel-cloudinary-config"
 ```
 
 A configuration-file named `cloudinary.php` with some sensible defaults will be placed in your `config` directory:

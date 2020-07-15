@@ -1,15 +1,15 @@
 <?php
 
-namespace CloudinaryLabs\Commands;
+namespace CloudinaryLabs\CloudinaryLaravel\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use CloudinaryLabs\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 /**
  * Class BackupFilesCommand
- * @package CloudinaryLabs\Commands
+ * @package CloudinaryLabs\CloudinaryLaravel\Commands
  */
 class BackupFilesCommand extends Command
 {

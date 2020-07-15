@@ -1,23 +1,23 @@
 <?php
 
-namespace CloudinaryLabs;
+namespace CloudinaryLabs\CloudinaryLaravel;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem;
-use CloudinaryLabs\Commands\BackupFilesCommand;
-use CloudinaryLabs\Commands\DeleteFilesCommand;
-use CloudinaryLabs\Commands\FetchFilesCommand;
-use CloudinaryLabs\Commands\GenerateArchiveCommand;
-use CloudinaryLabs\Commands\RenameFilesCommand;
-use CloudinaryLabs\Commands\UploadFileCommand;
+use CloudinaryLabs\CloudinaryLaravel\Commands\BackupFilesCommand;
+use CloudinaryLabs\CloudinaryLaravel\Commands\DeleteFilesCommand;
+use CloudinaryLabs\CloudinaryLaravel\Commands\FetchFilesCommand;
+use CloudinaryLabs\CloudinaryLaravel\Commands\GenerateArchiveCommand;
+use CloudinaryLabs\CloudinaryLaravel\Commands\RenameFilesCommand;
+use CloudinaryLabs\CloudinaryLaravel\Commands\UploadFileCommand;
 
 
 /**
  * Class CloudinaryServiceProvider
- * @package CloudinaryLabs
+ * @package CloudinaryLabs\CloudinaryLaravel
  */
 class CloudinaryServiceProvider extends ServiceProvider
 {

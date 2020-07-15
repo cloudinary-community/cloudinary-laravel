@@ -1,14 +1,14 @@
 <?php
 
-namespace CloudinaryLabs\Commands;
+namespace CloudinaryLabs\CloudinaryLaravel\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
-use CloudinaryLabs\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 /**
  * Class GenerateArchiveCommand
- * @package CloudinaryLabs\Commands
+ * @package CloudinaryLabs\CloudinaryLaravel\Commands
  */
 class GenerateArchiveCommand extends Command
 {
