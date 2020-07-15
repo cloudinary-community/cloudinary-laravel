@@ -84,6 +84,34 @@ $result->getTimeUploaded(); // Get the time the file was uploaded
 
 **Attach Files** to Laravel **Eloquent Models**:
 
+First, import the `CloudinaryLabs\CloudinaryLaravel\MediaAlly` trait into your Model like so:
+
+```php
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
+
+class Page extends Model
+{
+    use MediaAlly;
+
+    ...
+}
+```
+
+Next, publish the package's migration file using this command:
+
+```bash
+php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="laravel-cloudinary-migration"
+```
+
+**Note:** Once this has been published, run `php artisan migrate` to create the required table in your DB.
+
+You can now attach media assets to your model like so:
+
 ```php
 /**
  *  How to attach a file to a Model by model creation
@@ -230,7 +258,7 @@ You can publish the configuration file using this command:
 php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tags="laravel-cloudinary-config"
 ```
 
-A configuration-file named `cloudinary.php` with some sensible defaults will be placed in your `config` directory:
+A configuration file named `cloudinary.php` with some sensible defaults will be placed in your `config` directory:
 
 ```php
 <?php
