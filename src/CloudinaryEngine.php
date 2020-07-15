@@ -27,9 +27,9 @@ class CloudinaryEngine
     /**
     * The version of the SDK.
     *
-    * @var string VERSION
+    * @var string SDK_VERSION
     */
-    const VERSION = '1.0.0';
+    const SDK_VERSION = '1.0.0';
 
     public const ASSET_ID = 'asset_id';
     public const PUBLIC_ID = 'public_id';
@@ -93,7 +93,7 @@ class CloudinaryEngine
     */
     public function setUserPlatform()
     {
-        BaseApiClient::$userPlatform = 'CloudinaryLaravel/' . self::VERSION;
+        BaseApiClient::$userPlatform = 'CloudinaryLaravel/' . self::SDK_VERSION;
     }
 
     /**
