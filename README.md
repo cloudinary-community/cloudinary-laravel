@@ -255,7 +255,7 @@ Also, register the Cloudinary Facade like so:
 You can publish the configuration file using this command:
 
 ```bash
-php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tags="cloudinary-laravel-config"
+php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="cloudinary-laravel-config"
 ```
 
 A configuration file named `cloudinary.php` with some sensible defaults will be placed in your `config` directory:
