@@ -94,9 +94,9 @@ class CloudinaryServiceProvider extends ServiceProvider
      */
     protected function bootComponents()
     {
-        Blade::component('cloudinary::components.button', 'cld-upload-button');
-        Blade::component('cloudinary::components.image', 'cld-image');
-        Blade::component('cloudinary::components.video', 'cld-video');
+        Blade::component('cloudinary::components.button', 'cld_upload_button');
+        Blade::component('cloudinary::components.image', 'cld_image');
+        Blade::component('cloudinary::components.video', 'cld_video');
     }
 
     protected function bootCommands()
