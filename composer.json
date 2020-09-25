@@ -1,7 +1,6 @@
 {
     "name": "cloudinary-labs/cloudinary-laravel",
     "description": "A Laravel Cloudinary Package",
-    "version": "1.0.1",
     "license": "MIT",
     "authors": [
         {
