@@ -30,7 +30,7 @@
 // Upload an Image File to Cloudinary with One line of Code
 $uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
 
-// Upload an Video File to Cloudinary with One line of Code
+// Upload a Video File to Cloudinary with One line of Code
 $uploadedFileUrl = Cloudinary::uploadVideo($request->file('file')->getRealPath())->getSecurePath();
 
 // Upload any File to Cloudinary with One line of Code
@@ -45,7 +45,7 @@ $uploadedFileUrl = Cloudinary::uploadFile($request->file('file')->getRealPath())
 // Upload an Image File to Cloudinary with One line of Code
 $uploadedFileUrl = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
 
-// Upload an Video File to Cloudinary with One line of Code
+// Upload a Video File to Cloudinary with One line of Code
 $uploadedFileUrl = cloudinary()->uploadVideo($request->file('file')->getRealPath())->getSecurePath();
 
 // Upload any File to Cloudinary with One line of Code
@@ -108,7 +108,7 @@ Next, publish the package's migration file using this command:
 php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="cloudinary-laravel-migration"
 ```
 
-**Note:** Once this has been published, run `php artisan migrate` to create the required table in your DB.
+**Note:** Once this has been published, run `php artisan migrate` to create the required table in your Database.
 
 You can now attach media assets to your model like so:
 
@@ -120,7 +120,7 @@ $page = Page::create($this->request->input());
 $page->attachMedia($file);   // Example of $file is $request->file('file');
 
 /**
- *  How to attach a file to a Model by retreiving model records
+ *  How to attach a file to a Model by retrieving model records
  */
 $page = Page::find(2);
 $page->attachMedia($file);  // Example of $file is $request->file('file');
@@ -183,7 +183,7 @@ Other Blade components you can use are:
 
 ```bash
 /**
-*  Back up Files on Cloudinary
+*  Back-up Files on Cloudinary
 */
 php artisan cloudinary:backup
 
@@ -238,7 +238,7 @@ Once Laravel Cloudinary is installed, you need to register the service provider.
 ]
 ```
 
-> Note: If you use **Laravel >= 5.5** you can skip this step (adding the code above to the providers key) and go to [**`configuration`**](https://github.com/cloudinary-labs/cloudinary-laravel#configuration)
+> Note: If you use **Laravel >= 5.5** , you can skip this step (adding the code above to the providers key) and go to [**`configuration`**](https://github.com/cloudinary-labs/cloudinary-laravel#configuration)
 
 Also, register the Cloudinary Facade like so:
 
@@ -307,7 +307,7 @@ CLOUDINARY_NOTIFICATION_URL=
 
 ***Note:** You need to get these credentials from your [Cloudinary Dashboard](https://cloudinary.com/console)*
 
-*If you are using a hosting service like heroku,forge,digital ocean, etc, please ensure to add the above details to your configuration variables.*
+*If you are using a hosting service like heroku, forge, digital ocean, etc, please ensure to add the above details to your configuration variables.*
 
 ### Cloudinary JS
 
