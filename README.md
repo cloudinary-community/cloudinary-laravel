@@ -211,7 +211,7 @@ php artisan cloudinary:upload
 
 ## Installation
 
-[PHP](https://php.net) 7.0+, and [Composer](https://getcomposer.org) are required.
+[PHP](https://php.net) 7.2+, and [Composer](https://getcomposer.org) are required.
 
 To get the latest version of Laravel Cloudinary, simply require it:
 
@@ -222,7 +222,7 @@ composer require cloudinary-labs/cloudinary-laravel
 Or add the following line to the require block of your `composer.json` file.
 
 ```
-"cloudinary-labs/cloudinary-laravel": "1.0.0"
+"cloudinary-labs/cloudinary-laravel": "1.0.1"
 ```
 
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
