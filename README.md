@@ -42,14 +42,17 @@ $uploadedFileUrl = Cloudinary::uploadFile($request->file('file')->getRealPath())
  *  cloudinary() function
  */
 
-// Upload an Image File to Cloudinary with One line of Code
+// Upload an image file to cloudinary with one line of code
 $uploadedFileUrl = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
 
-// Upload a Video File to Cloudinary with One line of Code
+// Upload a video file to cloudinary with one line of code
 $uploadedFileUrl = cloudinary()->uploadVideo($request->file('file')->getRealPath())->getSecurePath();
 
-// Upload any File to Cloudinary with One line of Code
+// Upload any file  to cloudinary with one line of code
 $uploadedFileUrl = cloudinary()->uploadFile($request->file('file')->getRealPath())->getSecurePath();
+
+// Upload an existing remote file to Cloudinary with one line of code
+$uploadedFileUrl = cloudinary()->uploadFile($remoteFileUrl)->getSecurePath();
 
 /**
  *  You can also skip the Cloudinary Facade or helper method and laravel-ize your uploads by simply calling the
