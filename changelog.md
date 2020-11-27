@@ -13,4 +13,4 @@
 1.0.2 / 2020-11-27
 ==================
 
-  * Add Fix to support Laravel 5.8 and 6
+  * Add Fix to support Laravel 6
