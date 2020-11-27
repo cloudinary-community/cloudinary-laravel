@@ -94,9 +94,18 @@ class CloudinaryServiceProvider extends ServiceProvider
      */
     protected function bootComponents()
     {
-        Blade::component('cloudinary::components.button', 'cld-upload-button');
-        Blade::component('cloudinary::components.image', 'cld-image');
-        Blade::component('cloudinary::components.video', 'cld-video');
+        Blade::component('cloudinary::components.button', $this->getComponentName('cld-upload-button'));
+        Blade::component('cloudinary::components.image', $this->getComponentName('cld-image'));
+        Blade::component('cloudinary::components.video', $this->getComponentName('cld-video'));
+    }
+    
+    protected function getComponentName($componentName) 
+    {
+       if( (int)$this->app->version()[0] <= 6 ) {
+          $componentName = str_replace("-", "_", $componentName);
+       }
+        
+       return $componentName;
     }
 
     protected function bootCommands()
