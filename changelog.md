@@ -14,3 +14,8 @@
 ==================
 
   * Add Fix to support Laravel 6
+  
+ 1.0.3 / 2020-12-04
+======================
+
+  * Bump to support versions greater than PHP 7
