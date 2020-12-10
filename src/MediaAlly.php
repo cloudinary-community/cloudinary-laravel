@@ -77,15 +77,19 @@ trait MediaAlly
     }
 
     /**
-    * Delete all files associated with a particular Model record
+    * Delete all/one file(s) associated with a particular Model record
     */
-    public function detachMedia()
+    public function detachMedia(Media $media = null)
     {
 
        $items = $this->medially()->get();
 
         foreach($items as $item) {
             resolve(CloudinaryEngine::class)->destroy($item->getFileName());
+
+            if (!is_null($media) && $item->id == $media->id) {
+                return $item->delete();
+            }
         }
 
         return $this->medially()->delete();
