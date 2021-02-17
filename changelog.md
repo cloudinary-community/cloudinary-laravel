@@ -19,3 +19,9 @@
 ======================
 
   * Bump to support versions greater than PHP 7
+
+1.0.4 / 2021-02-17
+======================
+
+  * Upgrade cloudinary php library
+  * Fix Bug with HumanReadableSize Function - Cybersai
