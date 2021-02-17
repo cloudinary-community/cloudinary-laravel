@@ -232,7 +232,7 @@ composer require cloudinary-labs/cloudinary-laravel
 Or add the following line to the require block of your `composer.json` file.
 
 ```
-"cloudinary-labs/cloudinary-laravel": "1.0.1"
+"cloudinary-labs/cloudinary-laravel": "1.0.4"
 ```
 
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
