@@ -3,9 +3,11 @@
 namespace CloudinaryLabs\CloudinaryLaravel;
 
 use Cloudinary\Cloudinary;
+use Cloudinary\Api\Exception\NotFound;
 use League\Flysystem\Adapter\Polyfill\NotSupportingVisibilityTrait;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
+use Illuminate\Support\Str;
 
 
 /**
@@ -403,5 +405,25 @@ class CloudinaryAdapter implements AdapterInterface
     public function getTimestamp($path)
     {
         return $this->prepareTimestamp($this->getResource($path));
+    }
+
+    /**
+     * Get the url of a file
+     *
+     * @param string $path
+     *
+     * @return string|false
+     */
+    public function getUrl($path)
+    {
+        if ($path == '/') {
+            return $path;
+        }
+        try {
+            $resource = $this->getResource(Str::beforeLast($path, '.'));
+            return $resource['secure_url'] ?? '';
+        } catch (NotFound $e) {
+            return '';
+        }
     }
 }
