@@ -186,7 +186,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function deleteDir($dirname)
     {
-        $this->adminApi()->deleteResourcesByPrefix($dirname);
+        $this->adminApi()->deleteAssetsByPrefix($dirname);
 
         return true;
     }
@@ -253,7 +253,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function readStream($path)
     {
-        $resource = (array)$this->adminApi()->resource($path);
+        $resource = (array)$this->adminApi()->asset($path);
 
         $stream = fopen($resource['secure_url'], 'rb');
 
@@ -275,7 +275,7 @@ class CloudinaryAdapter implements AdapterInterface
         // get resources array
         $response = null;
         do {
-            $response = (array)$this->adminApi()->resources(
+            $response = (array)$this->adminApi()->assets(
                 [
                     'type' => 'upload',
                     'prefix' => $directory,
@@ -366,7 +366,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function getResource($path)
     {
-        return (array)$this->adminApi()->resource($path);
+        return (array)$this->adminApi()->asset($path);
     }
 
     /**
