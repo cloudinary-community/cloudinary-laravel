@@ -3,9 +3,11 @@
 namespace CloudinaryLabs\CloudinaryLaravel;
 
 use Cloudinary\Cloudinary;
+use Cloudinary\Api\Exception\NotFound;
 use League\Flysystem\Adapter\Polyfill\NotSupportingVisibilityTrait;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
+use Illuminate\Support\Str;
 
 
 /**
@@ -186,7 +188,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function deleteDir($dirname)
     {
-        $this->adminApi()->deleteResourcesByPrefix($dirname);
+        $this->adminApi()->deleteAssetsByPrefix($dirname);
 
         return true;
     }
@@ -253,7 +255,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function readStream($path)
     {
-        $resource = (array)$this->adminApi()->resource($path);
+        $resource = (array)$this->adminApi()->asset($path);
 
         $stream = fopen($resource['secure_url'], 'rb');
 
@@ -275,7 +277,7 @@ class CloudinaryAdapter implements AdapterInterface
         // get resources array
         $response = null;
         do {
-            $response = (array)$this->adminApi()->resources(
+            $response = (array)$this->adminApi()->assets(
                 [
                     'type' => 'upload',
                     'prefix' => $directory,
@@ -366,7 +368,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function getResource($path)
     {
-        return (array)$this->adminApi()->resource($path);
+        return (array)$this->adminApi()->asset($path);
     }
 
     /**
@@ -403,5 +405,25 @@ class CloudinaryAdapter implements AdapterInterface
     public function getTimestamp($path)
     {
         return $this->prepareTimestamp($this->getResource($path));
+    }
+
+    /**
+     * Get the url of a file
+     *
+     * @param string $path
+     *
+     * @return string|false
+     */
+    public function getUrl($path)
+    {
+        if ($path == '/') {
+            return $path;
+        }
+        try {
+            $resource = $this->getResource(Str::beforeLast($path, '.'));
+            return $resource['secure_url'] ?? '';
+        } catch (NotFound $e) {
+            return '';
+        }
     }
 }
