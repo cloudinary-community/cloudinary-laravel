@@ -240,7 +240,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function read($path)
     {
-        $resource = (array)$this->adminApi()->resource($path);
+        $resource = (array)$this->adminApi()->asset($path);
         $contents = file_get_contents($resource['secure_url']);
 
         return compact('contents', 'path');
