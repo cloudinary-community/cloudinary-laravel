@@ -29,7 +29,7 @@ class CloudinaryEngine
     *
     * @var string PACKAGE_VERSION
     */
-    const PACKAGE_VERSION = '1.0.4';
+    const PACKAGE_VERSION = '1.0.5';
 
     public const ASSET_ID = 'asset_id';
     public const PUBLIC_ID = 'public_id';
