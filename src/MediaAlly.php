@@ -27,13 +27,13 @@ trait MediaAlly
     /**
      * Attach Media Files to a Model
      */
-    public function attachMedia($file)
+    public function attachMedia($file, $options = [])
     {
         if(! file_exists($file)) {
             throw new Exception('Please pass in a file that exists');
         }
 
-        $response = resolve(CloudinaryEngine::class)->uploadFile($file->getRealPath());
+        $response = resolve(CloudinaryEngine::class)->uploadFile($file->getRealPath(), $options);
 
         $media = new Media();
         $media->file_name = $response->getFileName();
@@ -47,9 +47,9 @@ trait MediaAlly
     /**
      * Attach Rwmote Media Files to a Model
      */
-    public function attachRemoteMedia($remoteFile)
+    public function attachRemoteMedia($remoteFile, $options = [])
     {
-        $response = resolve(CloudinaryEngine::class)->uploadFile($remoteFile);
+        $response = resolve(CloudinaryEngine::class)->uploadFile($remoteFile, $options);
 
         $media = new Media();
         $media->file_name = $response->getFileName();
@@ -106,19 +106,19 @@ trait MediaAlly
     /**
     * Update the Media files relating to a particular Model record
     */
-    public function updateMedia($file)
+    public function updateMedia($file, $options = [])
     {
         $this->detachMedia();
-        $this->attachMedia($file);
+        $this->attachMedia($file, $options);
     }
 
     /**
     * Update the Media files relating to a particular Model record (Specificially existing remote files)
     */
-    public function updateRemoteMedia($file)
+    public function updateRemoteMedia($file, $options = [])
     {
         $this->detachMedia();
-        $this->attachRemoteMedia($file);
+        $this->attachRemoteMedia($file, $options);
     }
 
 }
