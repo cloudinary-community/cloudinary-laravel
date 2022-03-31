@@ -34,6 +34,18 @@ Contributions from the community via PRs are welcome and will be fully credited.
 *  Using the Cloudinary Facade
 */
 
+// access the admin api
+(https://cloudinary.com/documentation/admin_api)
+Cloudinary::admin();
+
+// access the search api
+(https://cloudinary.com/documentation/search_api)
+Cloudinary::search();
+
+// access the upload api
+(https://cloudinary.com/documentation/image_upload_api_reference)
+Cloudinary::uploadApi();
+
 // Upload an Image File to Cloudinary with One line of Code
 $uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
 
@@ -43,11 +55,27 @@ $uploadedFileUrl = Cloudinary::uploadVideo($request->file('file')->getRealPath()
 // Upload any File to Cloudinary with One line of Code
 $uploadedFileUrl = Cloudinary::uploadFile($request->file('file')->getRealPath())->getSecurePath();
 
+// get url from a file
+$url = Cloudinary::getUrl($publicId);
+
+
 /**
  *  This package also exposes a helper function you can use if you are not a fan of Facades
  *  Shorter, expressive, fluent using the
  *  cloudinary() function
  */
+
+// access the admin api
+(https://cloudinary.com/documentation/admin_api)
+cloudinary()->admin();
+
+// access the search api
+(https://cloudinary.com/documentation/search_api)
+cloudinary()->search();
+
+// access the upload api
+(https://cloudinary.com/documentation/image_upload_api_reference)
+cloudinary()->uploadApi();
 
 // Upload an image file to cloudinary with one line of code
 $uploadedFileUrl = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
@@ -60,6 +88,9 @@ $uploadedFileUrl = cloudinary()->uploadFile($request->file('file')->getRealPath(
 
 // Upload an existing remote file to Cloudinary with one line of code
 $uploadedFileUrl = cloudinary()->uploadFile($remoteFileUrl)->getSecurePath();
+
+// get url from a file
+$url = cloudinary()->getUrl($publicId);
 
 /**
  *  You can also skip the Cloudinary Facade or helper method and laravel-ize your uploads by simply calling the
