@@ -9,12 +9,12 @@
 
 namespace CloudinaryLabs\CloudinaryLaravel;
 
-use Cloudinary\Api\ApiResponse;
-use Cloudinary\Api\Exception\ApiError;
 use Cloudinary\Cloudinary;
 use Cloudinary\Tag\ImageTag;
 use Cloudinary\Tag\VideoTag;
+use Cloudinary\Api\ApiResponse;
 use Cloudinary\Api\BaseApiClient;
+use Cloudinary\Api\Exception\ApiError;
 use GuzzleHttp\Promise\PromiseInterface;
 use CloudinaryLabs\Exceptions\IsNullException;
 
@@ -25,10 +25,10 @@ use CloudinaryLabs\Exceptions\IsNullException;
 class CloudinaryEngine
 {
     /**
-    * Laravel Package Version.
-    *
-    * @var string PACKAGE_VERSION
-    */
+     * Laravel Package Version.
+     *
+     * @var string PACKAGE_VERSION
+     */
     const PACKAGE_VERSION = '1.0.5';
 
     public const ASSET_ID = 'asset_id';
@@ -88,9 +88,9 @@ class CloudinaryEngine
     }
 
     /**
-    * Set User Agent and Platform
-    *
-    */
+     * Set User Agent and Platform
+     *
+     */
     public function setUserPlatform()
     {
         BaseApiClient::$userPlatform = 'CloudinaryLaravel/' . self::PACKAGE_VERSION;
@@ -1014,5 +1014,33 @@ class CloudinaryEngine
     public function explicitAsync($publicId, $options = [])
     {
         return $this->uploadApi()->explicitAsync($publicId, $options);
+    }
+
+    /**
+     * Get Resource data
+     * @param string $path
+     * @return array
+     */
+    public function getResource($path)
+    {
+        try {
+            return $this->admin()->asset($path);
+        } catch (\Exception $e) {
+            return '';
+        }
+    }
+
+    /**
+     * Get the url of a file
+     *
+     * @param string $publicId
+     *
+     * @return string|false
+     */
+    public function getUrl($publicId)
+    {
+
+        $resource = $this->getResource($publicId);
+        return $resource['secure_url'] ?? '';
     }
 }
