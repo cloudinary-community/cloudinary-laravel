@@ -170,7 +170,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function delete($path)
     {
-        $result = $this->uploadApi()->destroy($path);
+        $result = (array) $this->uploadApi()->destroy($path);
 
         return is_array($result) ? $result['result'] == 'ok' : false;
     }
