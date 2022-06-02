@@ -32,7 +32,9 @@ Contributions from the community via PRs are welcome and will be fully credited.
 
 /**
 *  Using the Cloudinary Facade
+*  Import the Facade in your Class like so:
 */
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 // access the admin api
 (https://cloudinary.com/documentation/admin_api)
