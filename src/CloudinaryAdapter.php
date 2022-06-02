@@ -4,9 +4,14 @@ namespace CloudinaryLabs\CloudinaryLaravel;
 
 use Cloudinary\Cloudinary;
 use Cloudinary\Api\Exception\NotFound;
-use League\Flysystem\Adapter\Polyfill\NotSupportingVisibilityTrait;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\FilesystemAdapter;
+use League\Flysystem\UnableToCopyFile;
+use League\Flysystem\UnableToDeleteFile;
+use League\Flysystem\UnableToMoveFile;
+use League\Flysystem\UnableToReadFile;
+use League\Flysystem\UnableToRetrieveMetadata;
+use League\Flysystem\UnableToSetVisibility;
 use League\Flysystem\Config;
 use Illuminate\Support\Str;
 
@@ -62,9 +67,9 @@ class CloudinaryAdapter implements FilesystemAdapter
      */
     public function writeStream($path, $resource, Config $options)
     {
-        $publicId = $options->has('public_id') ? $options->get('public_id') : $path;
+        $publicId = $options->get('public_id', $path);
 
-        $resourceType = $options->has('resource_type') ? $options->get('resource_type') : 'auto';
+        $resourceType = $options->get('resource_type', 'auto');
 
         $fileExtension = pathinfo($publicId, PATHINFO_EXTENSION);
 
@@ -112,6 +117,19 @@ class CloudinaryAdapter implements FilesystemAdapter
     protected function uploadApi()
     {
         return $this->cloudinary->uploadApi();
+    }
+
+    /**
+     * Upload a file
+     *
+     * @param string $file
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function upload($file, $options = [])
+    {
+        $this->uploadApi()->upload($file, $options);
     }
 
     /**
@@ -192,16 +210,29 @@ class CloudinaryAdapter implements FilesystemAdapter
      *
      * @param string $path
      *
-     * @return array|bool|null
+     * @return bool
      */
-    public function has($path)
+    public function fileExists($path)
     {
         try {
             $this->adminApi()->asset($path);
         } catch (NotFound $e) {
             return false;
         }
+
         return true;
+    }
+
+    /**
+     * Check whether a directory exists.
+     *
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function directoryExists(string $path)
+    {
+        return $this->fileExists($path);
     }
 
     /**
@@ -233,6 +264,30 @@ class CloudinaryAdapter implements FilesystemAdapter
         $stream = fopen($resource['secure_url'], 'rb');
 
         return compact('stream', 'path');
+    }
+
+    /**
+    * Set visibility for the file
+    *
+    * @param string $path
+    * @param mixed $visibility
+    *
+    * @throws \League\Flysystem\UnableToSetVisibility
+    */
+    public function setVisibility($path, $visibility)
+    {
+        throw UnableToSetVisibility::atLocation($path, 'Cloudinary API does not support visibility.');
+    }
+
+    /**
+     * Check visibility of the file
+     *
+     * @param string $path
+     * @throws \League\Flysystem\UnableToSetVisibility
+     */
+    public function visibility(string $path)
+    {
+        throw UnableToSetVisibility::atLocation($path, 'Cloudinary API does not support visibility.');
     }
 
     /**
