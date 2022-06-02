@@ -6,6 +6,7 @@ use Cloudinary\Cloudinary;
 use Cloudinary\Api\Exception\NotFound;
 use League\Flysystem\Adapter\Polyfill\NotSupportingVisibilityTrait;
 use League\Flysystem\AdapterInterface;
+use League\Flysystem\FilesystemAdapter;
 use League\Flysystem\Config;
 use Illuminate\Support\Str;
 
@@ -13,9 +14,8 @@ use Illuminate\Support\Str;
  * Class CloudinaryAdapter
  * @package CloudinaryLabs\CloudinaryLaravel
  */
-class CloudinaryAdapter implements AdapterInterface
+class CloudinaryAdapter implements FilesystemAdapter
 {
-    use NotSupportingVisibilityTrait;
 
     /** Cloudinary\Cloudinary */
     protected $cloudinary;
@@ -29,21 +29,6 @@ class CloudinaryAdapter implements AdapterInterface
     public function __construct(string $config)
     {
         $this->cloudinary = new Cloudinary($config);
-    }
-
-    /**
-     * Update a file.
-     * Cloudinary has no specific update method. Overwrite instead.
-     *
-     * @param string $path
-     * @param string $contents
-     * @param Config $options Config object
-     *
-     * @return array|false false on failure file meta data on success
-     */
-    public function update($path, $contents, Config $options)
-    {
-        return $this->write($path, $contents, $options);
     }
 
     /**
@@ -96,22 +81,6 @@ class CloudinaryAdapter implements AdapterInterface
 
         return $result;
     }
-
-    /**
-     * Update a file using a stream.
-     * Cloudinary has no specific update method. Overwrite instead.
-     *
-     * @param string    $path
-     * @param resource  $resource
-     * @param Config    $options Config object
-     *
-     * @return array|false false on failure file meta data on success
-     */
-    public function updateStream($path, $resource, Config $options)
-    {
-        return $this->writeStream($path, $resource, $options);
-    }
-
 
     /**
      * Rename a file.
