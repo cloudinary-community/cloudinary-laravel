@@ -23,6 +23,9 @@
 ## Contributions
 Contributions from the community via PRs are welcome and will be fully credited. For details, see [contributions.md](contributing.md).
 
+## Importance
+For apps using **Laravel 9**, please use the **v2.0.0** of the package which is the latest.
+
 
 ## Usage
 
@@ -268,6 +271,14 @@ composer require cloudinary-labs/cloudinary-laravel
 
 Or add the following line to the require block of your `composer.json` file.
 
+### Apps Using Laravel 9
+
+```
+"cloudinary-labs/cloudinary-laravel": "2.0.0"
+```
+
+### Apps Using Laravel 8 and below
+
 ```
 "cloudinary-labs/cloudinary-laravel": "1.0.4"
 ```
@@ -296,6 +307,8 @@ Also, register the Cloudinary Facade like so:
     ...
 ]
 ```
+
+
 
 ## Configuration
 
