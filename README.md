@@ -23,8 +23,9 @@
 ## Contributions
 Contributions from the community via PRs are welcome and will be fully credited. For details, see [contributions.md](contributing.md).
 
-## Importance
-For apps using **Laravel 9**, please use the **v2.0.0** of the package which is the latest.
+## Very Important
+
+For apps using **Laravel 9**, please use the **v2.0.0** of the package which is the latest and the default. Otherwise, use the **v1.x.x**.
 
 
 ## Usage
@@ -126,10 +127,10 @@ $result->getHeight(); // Get the height of the uploaded file
 $result->getTimeUploaded(); // Get the time the file was uploaded
 
 /**
- * You can also retrieve a url if you have a public id
+ * You can also check if a file exists
  */
 
-$url = Storage::disk('cloudinary')->url($publicId);
+$url = Storage::disk('cloudinary')->fileExists($publicId);
 ```
 
 **Attach Files** to Laravel **Eloquent Models**:
@@ -308,6 +309,13 @@ Also, register the Cloudinary Facade like so:
 ]
 ```
 
+> Note: If you use **Laravel >= 9.0** , you can skip the step (adding the code above for registering the facade) and can just import it in whatever class you need it like so:
+
+```php
+  ...
+  use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+  ...
+```
 
 
 ## Configuration
