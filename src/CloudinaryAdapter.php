@@ -2,8 +2,11 @@
 
 namespace CloudinaryLabs\CloudinaryLaravel;
 
+use Exception;
 use Cloudinary\Cloudinary;
 use Cloudinary\Api\Exception\NotFound;
+use League\Flysystem\FileAttributes;
+use League\Flysystem\StorageAttributes;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\FilesystemAdapter;
 use League\Flysystem\UnableToCopyFile;
@@ -12,6 +15,7 @@ use League\Flysystem\UnableToMoveFile;
 use League\Flysystem\UnableToReadFile;
 use League\Flysystem\UnableToRetrieveMetadata;
 use League\Flysystem\UnableToSetVisibility;
+use League\Flysystem\UnableToCheckFileExistence;
 use League\Flysystem\Config;
 use Illuminate\Support\Str;
 
@@ -47,17 +51,17 @@ class CloudinaryAdapter implements FilesystemAdapter
      *
      * @return array|false false on failure file meta data on success
      */
-    public function write($path, $contents, Config $options)
+    public function write($path, $contents, Config $options): void
     {
         $tempFile = tmpfile();
 
         fwrite($tempFile, $contents);
 
-        return $this->writeStream($path, $tempFile, $options);
+        $this->writeStream($path, $tempFile, $options);
     }
 
     /**
-     * Write a new file using a stream.
+     * Write a new file using a stream
      *
      * @param string    $path
      * @param resource  $resource
@@ -65,7 +69,7 @@ class CloudinaryAdapter implements FilesystemAdapter
      *
      * @return array|false false on failure file meta data on success
      */
-    public function writeStream($path, $resource, Config $options)
+    public function writeStream($path, $resource, Config $options): void
     {
         $publicId = $options->get('public_id', $path);
 
@@ -82,10 +86,9 @@ class CloudinaryAdapter implements FilesystemAdapter
 
         $resourceMetadata = stream_get_meta_data($resource);
 
-        $result = resolve(CloudinaryEngine::class)->upload($resourceMetadata['uri'], $uploadOptions);
-
-        return $result;
+        resolve(CloudinaryEngine::class)->upload($resourceMetadata['uri'], $uploadOptions);
     }
+
 
     /**
      * Rename a file.
@@ -138,14 +141,12 @@ class CloudinaryAdapter implements FilesystemAdapter
      *
      * @param string $path
      * @param string $newpath
-     *
-     * @return bool
+     * @param Config $options
+     * @return void
      */
-    public function copy($path, $newpath)
+    public function copy($path, $newpath, Config $options): void
     {
-        $result = $this->uploadApi()->upload($path, ['public_id' => $newpath]);
-
-        return is_array($result) ? $result['public_id'] == $newpath : false;
+        $this->uploadApi()->upload($path, ['public_id' => $newpath]);
     }
 
     /**
@@ -155,11 +156,20 @@ class CloudinaryAdapter implements FilesystemAdapter
      *
      * @return bool
      */
-    public function delete($path)
+    public function delete($path): void
     {
-        $result = $this->uploadApi()->destroy($path);
+        try {
 
-        return is_array($result) ? $result['result'] == 'ok' : false;
+            $result      = $this->uploadApi()->destroy($path);
+            $finalResult = is_array($result) ? $result['result'] == 'ok' : false;
+
+            if ($finalResult != 'ok') {
+                throw new UnableToDeleteFile('file not found');
+            }
+
+        } catch (Throwable $exception) {
+            throw UnableToDeleteFile::atLocation($path, '', $exception);
+        }
     }
 
     /**
@@ -168,15 +178,12 @@ class CloudinaryAdapter implements FilesystemAdapter
      *
      * @param string $dirname
      *
-     * @return bool
+     * @return void
      *
-     * @throws ApiError
      */
-    public function deleteDir($dirname)
+    public function deleteDirectory($dirname): void
     {
         $this->adminApi()->deleteAssetsByPrefix($dirname);
-
-        return true;
     }
 
     /**
@@ -196,13 +203,10 @@ class CloudinaryAdapter implements FilesystemAdapter
      *
      * @return bool
      *
-     * @throws ApiError
      */
-    public function createDir($dirname, Config $options)
+    public function createDirectory($dirname, Config $options): void
     {
         $this->adminApi()->createFolder($dirname);
-
-        return true;
     }
 
     /**
@@ -212,7 +216,7 @@ class CloudinaryAdapter implements FilesystemAdapter
      *
      * @return bool
      */
-    public function fileExists($path)
+    public function fileExists(string $path): bool
     {
         try {
             $this->adminApi()->asset($path);
@@ -230,7 +234,7 @@ class CloudinaryAdapter implements FilesystemAdapter
      *
      * @return bool
      */
-    public function directoryExists(string $path)
+    public function directoryExists(string $path): bool
     {
         return $this->fileExists($path);
     }
@@ -242,12 +246,11 @@ class CloudinaryAdapter implements FilesystemAdapter
      *
      * @return array|false
      */
-    public function read($path)
+    public function read($path): string
     {
         $resource = (array)$this->adminApi()->asset($path);
-        $contents = file_get_contents($resource['secure_url']);
 
-        return compact('contents', 'path');
+        return file_get_contents($resource['secure_url']);
     }
 
     /**
@@ -261,9 +264,7 @@ class CloudinaryAdapter implements FilesystemAdapter
     {
         $resource = (array)$this->adminApi()->asset($path);
 
-        $stream = fopen($resource['secure_url'], 'rb');
-
-        return compact('stream', 'path');
+        return fopen($resource['secure_url'], 'rb');
     }
 
     /**
@@ -274,7 +275,7 @@ class CloudinaryAdapter implements FilesystemAdapter
     *
     * @throws \League\Flysystem\UnableToSetVisibility
     */
-    public function setVisibility($path, $visibility)
+    public function setVisibility($path, $visibility): void
     {
         throw UnableToSetVisibility::atLocation($path, 'Cloudinary API does not support visibility.');
     }
@@ -285,7 +286,7 @@ class CloudinaryAdapter implements FilesystemAdapter
      * @param string $path
      * @throws \League\Flysystem\UnableToSetVisibility
      */
-    public function visibility(string $path)
+    public function visibility(string $path): FileAttributes
     {
         throw UnableToSetVisibility::atLocation($path, 'Cloudinary API does not support visibility.');
     }
@@ -297,7 +298,7 @@ class CloudinaryAdapter implements FilesystemAdapter
      * @param bool $hasRecursive
      * @return array
      */
-    public function listContents($directory = '', $hasRecursive = false)
+    public function listContents($directory = '', $hasRecursive = false): iterable
     {
         $resources = [];
 
@@ -420,6 +421,63 @@ class CloudinaryAdapter implements FilesystemAdapter
     public function getMimetype($path)
     {
         return $this->prepareMimetype($this->getResource($path));
+    }
+
+    /**
+     * Get the mimetype of a file.
+     *
+     * @param string $path
+     *
+     * @return FileAttributes
+     */
+    public function mimeType(string $path): FileAttributes
+    {
+        $mimeType = $this->getMimetype($path);
+
+        return new FileAttributes($path, null, null, null, $mimeType['mimetype']);
+    }
+
+    /**
+     * Get the timestamp of a file.
+     *
+     * @param string $path
+     *
+     * @return FileAttributes
+     */
+    public function lastModified(string $path): FileAttributes
+    {
+        $timeStamp = $this->getTimestamp($path);
+
+        return new FileAttributes($path, null, null, $timeStamp['timestamp']);
+    }
+
+    /**
+     * Get the filesize of a file
+     *
+     * @param string $path
+     *
+     * @return FileAttributes
+     */
+    public function fileSize(string $path): FileAttributes
+    {
+        $fileSize = $this->getSize($path);
+
+        return new FileAttributes($path, $fileSize['size']);
+    }
+
+    /**
+     * Move a file to another location
+     *
+     * @param string $path
+     * @param string $destination
+     * @param Config $config
+     *
+     * @return void
+     */
+    public function move(string $source, string $destination, Config $config): void
+    {
+        $this->copy($source, $destination, $config);
+        $this->delete($source);
     }
 
     /**
