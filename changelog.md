@@ -35,3 +35,10 @@
   * Fix Flystem Adapter for Cloudinary Adapter
   * Add support for getting asset url using only public id
   * Replace deprecated method names with v2
+
+2.0.0 / 2022-06-02
+======================
+
+  * Rewrite Cloudinary Adapter to work with Flysystem v3
+  * Support for Laravel 9 without issues
+  * Remove deprecated methods
