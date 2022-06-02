@@ -41,7 +41,9 @@
 
 /**
 *  Using the Cloudinary Facade
+*  Import the Facade in your Class like so:
 */
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
