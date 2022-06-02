@@ -122,12 +122,6 @@ $result->getWidth(); // Get the width of the uploaded file
 $result->getHeight(); // Get the height of the uploaded file
 $result->getTimeUploaded(); // Get the time the file was uploaded
 
-/**
- * You can also retrieve a url if you have a public id
- */
-
-$url = Storage::disk('cloudinary')->url($publicId);
-```
 
 **Attach Files** to Laravel **Eloquent Models**:
 
