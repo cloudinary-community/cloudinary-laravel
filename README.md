@@ -18,17 +18,16 @@
 
 ## Contents
 
-* [Usage](#usage)
-    * [Upload, Retrieval, Transformation Method Calls](#upload-retrieval--transformation-media-method-calls)
-    * [Attach Files to Laravel Eloquent Models](#attach-files-to-laravel-eloquent-models)
-    * [Upload Files Via An Upload Widget](#upload-files-via-an-upload-widget)
-    * [Media Management Via The Command Line](#media-management-via-the-command-line)
-* [Installation](#installation)
-* [Configuration](#configuration)
-* [Disclaimer](#disclaimer)
-* [Contributions](#contributions)
-* [License](#license)
-
+- [Usage](#usage)
+  - [Upload, Retrieval, Transformation Method Calls](#upload-retrieval--transformation-media-method-calls)
+  - [Attach Files to Laravel Eloquent Models](#attach-files-to-laravel-eloquent-models)
+  - [Upload Files Via An Upload Widget](#upload-files-via-an-upload-widget)
+  - [Media Management Via The Command Line](#media-management-via-the-command-line)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Disclaimer](#disclaimer)
+- [Contributions](#contributions)
+- [License](#license)
 
 ## Usage
 
@@ -299,6 +298,7 @@ $page->attachMedia($file, $options);   // Example of $file is $request->file('fi
 ## **Upload Files Via An Upload Widget**:
 
 Use the `x-cld-upload-button` Blade upload button component that ships with this Package like so:
+
 ```
 <!DOCTYPE html>
 <html>
@@ -312,7 +312,7 @@ Use the `x-cld-upload-button` Blade upload button component that ships with this
         </x-cld-upload-button>
     </body>
 </html>
-````
+```
 
 Other Blade components you can use are:
 
@@ -371,7 +371,6 @@ php artisan cloudinary:rename
 php artisan cloudinary:upload
 ```
 
-
 ## Installation
 
 [PHP](https://php.net) 7.2+, and [Composer](https://getcomposer.org) are required.
@@ -397,7 +396,6 @@ Or add the following line to the require block of your `composer.json` file.
 ```
 
 You'll then need to run `composer install` or `composer update` to download it and have the autoloader updated.
-
 
 Once Laravel Cloudinary is installed, you need to register the service provider. Open up `config/app.php` and add the following to the `providers` key.
 
@@ -428,7 +426,6 @@ Also, register the Cloudinary Facade like so:
   use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
   ...
 ```
-
 
 ## Configuration
 
@@ -473,7 +470,7 @@ return [
     *
     */
     'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
-    
+
     /**
      * Route to get cloud_image_url from Blade Upload Widget
      */
@@ -487,6 +484,7 @@ return [
 ```
 
 ### API Keys
+
 Open your `.env` file and add your API Environment variable, upload_preset (this is optional, until you need to use the widget) like so:
 
 ```php
@@ -495,9 +493,9 @@ CLOUDINARY_UPLOAD_PRESET=xxxxxxxxxxxxx
 CLOUDINARY_NOTIFICATION_URL=
 ```
 
-***Note:** You need to get these credentials from your [Cloudinary Dashboard](https://cloudinary.com/console). The CLOUDINARY_URL is the API Environment variable shown in your Cloudinary Dashboard. Use the Copy button there to get the full URL*
+**\*Note:** You need to get these credentials from your [Cloudinary Dashboard](https://cloudinary.com/console). The CLOUDINARY_URL is the API Environment variable shown in your Cloudinary Dashboard. Use the Copy button there to get the full URL\*
 
-*If you are using a hosting service like heroku, forge, digital ocean, etc, please ensure to add the above details to your configuration variables.*
+_If you are using a hosting service like heroku, forge, digital ocean, etc, please ensure to add the above details to your configuration variables._
 
 ### Cloudinary JS
 
@@ -505,20 +503,18 @@ Cloudinary relies on its own JavaScript library to initiate the Cloudinary Uploa
 
 ```html
 <head>
-    ...
-
-    @cloudinaryJS
+  ... @cloudinaryJS
 </head>
 ```
 
-***Note:** ONLY LOAD THIS IF YOU HAVE DECIDED TO USE THE UPLOAD WIDGET. IF YOU ARE USING THIS PACKAGE FOR A LARAVEL API BACKEND, YOU DON'T NEED TO DO THIS!*
-
+**\*Note:** ONLY LOAD THIS IF YOU HAVE DECIDED TO USE THE UPLOAD WIDGET. IF YOU ARE USING THIS PACKAGE FOR A LARAVEL API BACKEND, YOU DON'T NEED TO DO THIS!\*
 
 ## Disclaimer
 
 > _This software/code provided under Cloudinary Labs is an unsupported pre-production prototype undergoing further development and provided on an “AS IS” basis without warranty of any kind, express or implied, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. Furthermore, Cloudinary is not under any obligation to provide a commercial version of the software.</br> </br> Your use of the Software/code is at your sole risk and Cloudinary will not be liable for any direct, indirect, incidental, special, exemplary, consequential or similar damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of the Software, even if advised of the possibility of such damage.</br> </br> You should refrain from uploading any confidential or personally identifiable information to the Software. All rights to and in the Software are and will remain at all times, owned by, or licensed to Cloudinary._
 
 ## Contributions
+
 Contributions from the community via PRs are welcome and will be fully credited. For details, see [contributions.md](contributing.md).
 
 ## License
