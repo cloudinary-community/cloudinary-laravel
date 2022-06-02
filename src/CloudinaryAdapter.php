@@ -295,7 +295,7 @@ class CloudinaryAdapter implements FilesystemAdapter
      *
      * @param string $directory
      * @param bool $hasRecursive
-     * @return array
+     * @return iterable<\League\Flysystem\StorageAttributes>
      */
     public function listContents($directory = '', $hasRecursive = false): iterable
     {
@@ -317,9 +317,28 @@ class CloudinaryAdapter implements FilesystemAdapter
 
         // parse resourses
         foreach ($resources as $i => $resource) {
-            $resources[$i] = $this->prepareResourceMetadata($resource);
+            $resources[$i] = $this->prepareFileAttributes($this->prepareResourceMetadata($resource));
         }
         return $resources;
+    }
+
+    /**
+     * Transform array of resource metadata into a {@link \League\Flysystem\FileAttributes} instance.
+     *
+     * @param array $metadata
+     *
+     * @return \League\Flysystem\FileAttributes
+     */
+    protected function prepareFileAttributes(array $metadata): FileAttributes
+    {
+        return new FileAttributes(
+            $metadata['path'],
+            $metadata['size'],
+            null,
+            $metadata['timestamp'],
+            $metadata['mimetype'],
+            $metadata
+        );
     }
 
     /**
