@@ -20,6 +20,18 @@
 
 For apps using **Laravel 9**, please use the **v2.0.0** of the package which is the latest and the default. On version **8 and below**, use the **v1.x.x**.
 
+## Contents
+
+* [Usage](#usage)
+    * [Attach Files to Laravel Eloquent Models](#notification)
+    * [Upload Files Via An Upload Widget](#tabs)
+    * [Media Management Via The Command Line](#modal)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Disclaimer](#disclaimer)
+* [Contributions](#contributions)
+* [License](#license)
+
 
 ## Usage
 
@@ -126,7 +138,7 @@ $result->getTimeUploaded(); // Get the time the file was uploaded
 $url = Storage::disk('cloudinary')->fileExists($publicId);
 ```
 
-**Attach Files** to Laravel **Eloquent Models**:
+## **Attach Files** to Laravel **Eloquent Models**:
 
 First, import the `CloudinaryLabs\CloudinaryLaravel\MediaAlly` trait into your Model like so:
 
@@ -197,7 +209,7 @@ $page = Page::find(2);
 $page->detachMedia($file)  // Example of $file is $request->file('file');
 ```
 
-**Upload Files Via An Upload Widget**:
+## **Upload Files Via An Upload Widget**:
 
 Use the `x-cld-upload-button` Blade upload button component that ships with this Package like so:
 ```
@@ -223,7 +235,7 @@ Other Blade components you can use are:
 <x-cld-video public-id="awesome"></x-cld-video> // Blade Video Component for displaying videos
 ```
 
-**Media Management via The Command Line**:
+## **Media Management via The Command Line**:
 
 ```bash
 /**
