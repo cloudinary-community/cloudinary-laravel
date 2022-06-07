@@ -23,9 +23,9 @@ For apps using **Laravel 9**, please use the **v2.0.0** of the package which is 
 ## Contents
 
 * [Usage](#usage)
-    * [Attach Files to Laravel Eloquent Models](#notification)
-    * [Upload Files Via An Upload Widget](#tabs)
-    * [Media Management Via The Command Line](#modal)
+    * [Attach Files to Laravel Eloquent Models](#attach-files-to-laravel-eloquent-models)
+    * [Upload Files Via An Upload Widget](#upload-files-via-an-upload-widget)
+    * [Media Management Via The Command Line](#media-management-via-the-command-line)
 * [Installation](#installation)
 * [Configuration](#configuration)
 * [Disclaimer](#disclaimer)
