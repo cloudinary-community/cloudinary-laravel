@@ -36,7 +36,7 @@ For apps using **Laravel 9**, please use the **v2.0.0** of the package which is 
 
 ## Usage
 
-## **Upload, Retrieval, Transformation Method Calls**:
+## **Upload, Retrieval & Transformation Media (Image, Video, Media Files) Method Calls**:
 
 **Upload** a file (_Image_, _Video_ or any type of _File_) to **Cloudinary**, **retrieve** and **transform** via any of the following ways:
 
