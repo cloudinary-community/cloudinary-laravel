@@ -23,6 +23,7 @@ For apps using **Laravel 9**, please use the **v2.0.0** of the package which is 
 ## Contents
 
 * [Usage](#usage)
+    * [Upload, Retrieval, Transformation Method Calls](#upload-retrieval-transformation-method-calls)
     * [Attach Files to Laravel Eloquent Models](#attach-files-to-laravel-eloquent-models)
     * [Upload Files Via An Upload Widget](#upload-files-via-an-upload-widget)
     * [Media Management Via The Command Line](#media-management-via-the-command-line)
@@ -35,7 +36,9 @@ For apps using **Laravel 9**, please use the **v2.0.0** of the package which is 
 
 ## Usage
 
-**Upload** a file (_Image_, _Video_ or any type of _File_) to **Cloudinary**:
+## **Upload, Retrieval, Transformation Method Calls**:
+
+**Upload** a file (_Image_, _Video_ or any type of _File_) to **Cloudinary**, **retrieve** and **transform** via any of the following ways:
 
 ```php
 
