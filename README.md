@@ -503,8 +503,9 @@ Other Blade components you can use are:
  *  50 is for color similarity
  *  yellow is for color override
  */
-
 <x-cld-image public-id="casual_yellow_red_corners" trim="50_yellow"></x-cld-image>
+
+
 /**
  *  improve-mode
  *  Adjusts an image's colors, contrast and brightness to improve its appearance.
