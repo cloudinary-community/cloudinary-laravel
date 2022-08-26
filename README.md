@@ -318,8 +318,7 @@ Use the `x-cld-upload-button` Blade upload button component that ships with this
 
 Other Blade components you can use are:
 
-```php
-
+```markdown
 /**
  *
  *  TRANSFORMATION ACTIONS CATEGORIES:
@@ -509,9 +508,8 @@ Other Blade components you can use are:
 /**
  *  improve-mode
  *  Adjusts an image's colors, contrast and brightness to improve its appearance.
- *  Possible values:
- *    mode is 'indoor', 'outdoor'
- *    blend is withing the range of 0 to 100.
+ *  Possible values: mode is 'indoor', 'outdoor'
+ *  blend is withing the range of 0 to 100.
  *
  */
 <x-cld-image public-id="couple" improve-mode='indoor_99'></x-cld-image>
