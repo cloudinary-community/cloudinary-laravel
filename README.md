@@ -319,32 +319,260 @@ Use the `x-cld-upload-button` Blade upload button component that ships with this
 Other Blade components you can use are:
 
 ```php
+
+/**
+ *
+ *  TRANSFORMATION ACTIONS CATEGORIES:
+ *
+ *  1. RESIZE
+ * - Scale
+ * - Limit Fit
+ * - Fill
+ * - Fit
+ * - Crop
+ * - Thumbnail
+ * - Pad
+ * - Limit Fill
+ * - Limit Pad
+ * - Minimum Fit
+ * - Minimum Pad
+ *
+ *
+ *  2. ADJUST
+ * - Improve
+ * - Unsharp Mask
+ * - Saturation
+ * - Contrast
+ * - Brightness
+ * - Gamma
+ *
+ *
+ *  3. EFFECT
+ * - Colorize
+ * - Blur
+ * - Trim
+ * - Grayscale
+ * - Blackwhite
+ * - Sepia
+ * - Red Eye
+ * - Negate
+ * - Oil Paint
+ * - Vignette
+ * - Simulate Colorblind
+ * - Pixelate
+ * - Shadow
+ *
+ *
+ *  4. DELIVERY
+ * - Format
+ * - Quality
+ * - Color Space
+ * - DPR
+ *
+ *  5. LAYERS
+ * - Image Layer
+ * - Text Layer
+ *
+ *
+ */
 <x-cld-image public-id="prosper" width="300" height="300"></x-cld-image> // Blade Image Component for displaying images
 
 <x-cld-video public-id="awesome"></x-cld-video> // Blade Video Component for displaying videos
+
+/**
+ *  ARTISTIC Filters
+ *  Possible values: al_dente, athena, audrey, aurora, daguerre, eucalyptus, fes, frost, hairspray, hokusai, incognito, linen, peacock, primavera, quartz, red_rock, refresh, sizzle, sonnet, ukulele, zorro
+ *  Reference: https://cloudinary.com/documentation/transformation_reference#e_art
+ */
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' effect="art|sizzle"></x-cld-image>
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' effect="art|audrey"></x-cld-image>
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' effect="art|incognito"></x-cld-image>
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' art="incognito"></x-cld-image>
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' art="audrey"></x-cld-image>
+
+
+/**
+ *  Colorize
+ */
+<x-cld-image public-id="couple" colorize='rgb:0000_35'></x-cld-image>
+
+/**
+ *  Blur - Applies a blurring filter to an asset.
+ *  The strength ranges from 1 to 2000
+ */
+<x-cld-image public-id="couple" blur='599'></x-cld-image>
+
+/**
+ *  Grayscale
+ *  Converts an image to grayscale (multiple shades of gray).
+ */
+<x-cld-image public-id="couple" grayscale></x-cld-image>
+
+/**
+ *  sepia
+ *  Changes the color scheme of an image to sepia.
+ */
+<x-cld-image public-id="couple" sepia-50></x-cld-image>
+
+/**
+ *  redeye
+ *  Automatically removes red eyes in an image.
+ */
+<x-cld-image public-id="couple" redeye></x-cld-image>
+
+/**
+ *  negate
+ *  Creates a negative of an image.
+ */
+<x-cld-image public-id="couple" negate></x-cld-image>
+
+/**
+ *  oil-paint
+ *  Applies an oil painting effect.
+ */
+<x-cld-image public-id="couple" oil-paint></x-cld-image>
+<x-cld-image public-id="couple" oil-paint=78></x-cld-image>
+
+/**
+ *  vignette
+ *  Applies a vignette effect to an image.
+ *  The strength level of the vignette. Range: 0 to 100
+ */
+<x-cld-image public-id="couple" vignette></x-cld-image>
+<x-cld-image public-id="couple" vignette=78></x-cld-image>
+
+
+/**
+ *  simulate-colorblind
+ *  Simulates the way an image would appear to someone with the specified color blind condition.
+ *  The color blind condition to simulate.Possible values: deuteranopia, protanopia, tritanopia, tritanomaly, deuteranomaly, cone_monochromacy, rod_monochromacy
+ */
+<x-cld-image public-id="couple" simulate-colorblind></x-cld-image>
+<x-cld-image public-id="couple" simulate-colorblind=protanopia></x-cld-image>
+
+
+/**
+ *  pixelate
+ *  Applies a pixelation effect.
+ *  The width in pixels of each pixelation square. Range: 1 to 200. Default: Determined by an algorithm based on the image dimensions.
+ */
+<x-cld-image public-id="couple" pixelate></x-cld-image>
+<x-cld-image public-id="couple" pixelate=5></x-cld-image>
+
+/**
+ *  shadow
+ *  Adds a gray shadow to the bottom right of an image. You can change the color and location of the shadow using the color and x,y qualifiers.
+ *  The format of the shadow is color_offsetX_offsetY_strength
+ */
+<x-cld-image public-id="couple" shadow='rgb:999_-15_-15_50'></x-cld-image>
+
+/**
+ *  unsharp-mask
+ *  Applies an unsharp mask filter to the image.
+ *  The strength of the filter. (Range: 1 to 2000, Server default: 100)
+ */
+<x-cld-image public-id="couple" unsharp-mask=1799></x-cld-image>
+
+/**
+ *  saturation
+ *  Adjusts the color saturation.
+ *  The level of color saturation (Range: -100 to 100, Server default: 80).
+ */
+<x-cld-image public-id="couple" saturation=79></x-cld-image>
+
+/**
+ *  brightness
+ *  Adjusts the brightness.
+ *  The level of brightness (Range: -99 to 100).
+ */
+<x-cld-image public-id="couple" brightness=80></x-cld-image>
+
+/**
+ *  gamma
+ *  Adjusts the gamma level.
+ *  The level of gamma (Range: -50 to 150, Server default: 0).
+ */
+<x-cld-image public-id="couple" gamma=100></x-cld-image>
+
+/**
+ *  trim
+ *  Detects and removes image edges whose color is similar to the corner pixels.
+ *  The level of tolerance for color similarity. Range: 0 to 100
+ *  The color to trim as a named color or an RGB/A hex code.
+ *  e.g 50_yellow
+ *  50 is for color similarity
+ *  yellow is for color override
+ */
+
+<x-cld-image public-id="casual_yellow_red_corners" trim="50_yellow"></x-cld-image>
+/**
+ *  improve-mode
+ *  Adjusts an image's colors, contrast and brightness to improve its appearance.
+ *  Possible values:
+ *    mode is 'indoor', 'outdoor'
+ *    blend is withing the range of 0 to 100.
+ *
+ */
+<x-cld-image public-id="couple" improve-mode='indoor_99'></x-cld-image>
+
+
+/**
+ *  Blackwhite
+ *  Converts an image to black and white.
+ *  Threshold - The balance between black (100) and white (0).
+ */
+<x-cld-image public-id="couple" blackwhite></x-cld-image>
+<x-cld-image public-id="couple" blackwhite=47></x-cld-image>
+
+
+
+/**
+ *  CARTOON Filters
+ */
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' cartoonify></x-cld-image>
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' cartoonify="70:bw"></x-cld-image>
+
+/**
+ *  ROTATE
+ */
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' rotate=80></x-cld-image>
+
+/**
+ *  ROUNDED CORNERS
+ */
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' rounded-corners></x-cld-image>
+
+
+/**
+ *  Borders
+ */
+// Adds a solid border around an image or video.
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' rounded-corners border=4_solid_brown></x-cld-image>
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' rounded-corners border=4_solid_rgb:999></x-cld-image>
+
+/**
+ *  Background Color
+ */
+<x-cld-image public-id="eifrfdh65qvn8rbby3cs" crop='thumb' rotate=40 bg-color='red' rounded-corners border='4_solid_rgb:999'></x-cld-image>
+
+
+/**
+ *  Face detection-based image cropping
+ *  Crop "thumb" or "crop" and gravity must be used together
+ *  Faces will target all the faces
+ *  Face will target only one face
+ *  You can specify width and height or not
+ *  You can use compass to define a fixed location within an asset to focus on e.g north_west, east, south.
+ */
+ <x-cld-image public-id="couple" crop='thumb' width=150 gravity='faces'></x-cld-image>
+ <x-cld-image public-id="couple" crop='crop' gravity='faces'></x-cld-image>
+ <x-cld-image public-id="couple" crop='crop' gravity='face'></x-cld-image>
+
+<x-cld-image public-id="couple" crop='crop' width=200 height=200 gravity='compass:east'></x-cld-image>
+<x-cld-image public-id="couple" crop='crop' width=200 height=200 gravity='microwave'></x-cld-image>
 ```
 
-To get the upload image link from the widget in your controller, simply set a route and controller action in your `.env`. For example:
-
-```php
-CLOUDINARY_UPLOAD_ROUTE=api/cloudinary-js-upload
-CLOUDINARY_UPLOAD_ACTION=App\Http\Controllers\Api\CloudinaryController@upload
-```
-
-Make sure to specify the full path to the controller. You should be able to get the URL like so:
-
-```php
-...
-class CloudinaryController extends Controller
-{
-    public function upload(Request $request)
-    {
-        $url = $request->get('cloud_image_url');
-    }
-}
-```
-
-## **Media Management via The Command Line**:
+**Media Management via The Command Line**:
 
 ```bash
 /**
