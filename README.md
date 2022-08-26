@@ -199,7 +199,8 @@ $page->detachMedia($file)  // Example of $file is $request->file('file');
 **Upload Files Via An Upload Widget**:
 
 Use the `x-cld-upload-button` Blade upload button component that ships with this Package like so:
-```
+
+```html
 <!DOCTYPE html>
 <html>
     <head>
@@ -216,7 +217,8 @@ Use the `x-cld-upload-button` Blade upload button component that ships with this
 
 Other Blade components you can use are:
 
-```markdown
+```html
+
 /**
  *
  *  TRANSFORMATION ACTIONS CATEGORIES:
