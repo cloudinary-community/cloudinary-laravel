@@ -15,7 +15,28 @@
     use Cloudinary\Transformation\ImproveMode;
     use Illuminate\Support\Str;
 
+
     $retrieveFormattedImage = cloudinary()->getImageTag($publicId ?? '');
+
+    /**
+     * SET ALT if provided
+     */
+    if(isset($alt)) {
+        $retrieveFormattedImage = cloudinary()->getImageTag($publicId ?? '')
+            ->setAttributes([
+               'alt' => $alt ?? $publicId
+            ]);
+    }
+
+    /**
+     *  SET CLASS if provided
+     */
+    if(isset($class)) {
+        $retrieveFormattedImage = cloudinary()->getImageTag($publicId ?? '')
+            ->setAttributes([
+               'class' => $class
+            ]);
+    }
 
     /**
     *  If the attribute is "crop"
