@@ -81,15 +81,16 @@ trait MediaAlly
     */
     public function detachMedia(Media $media = null)
     {
+        if ($media) {
+            resolve(CloudinaryEngine::class)->destroy($media->getFileName());
 
+            return $media->delete();
+        }
+        
        $items = $this->medially()->get();
 
         foreach($items as $item) {
             resolve(CloudinaryEngine::class)->destroy($item->getFileName());
-
-            if (!is_null($media) && $item->id == $media->id) {
-                return $item->delete();
-            }
         }
 
         return $this->medially()->delete();
