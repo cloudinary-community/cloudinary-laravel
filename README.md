@@ -185,6 +185,12 @@ $page = Page::find(2);
 $page->attachMedia($file);  // Example of $file is $request->file('file');
 
 /**
+* How to attach a file that is already uploaded to cloudinary
+ */
+
+$page->attachCloudinaryMedia($publicId);
+
+/**
  *  How to retrieve files that were attached to a Model
  */
 $filesBelongingToSecondPage = Page::find(2)->fetchAllMedia();
