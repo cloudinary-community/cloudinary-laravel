@@ -25,3 +25,13 @@
 
   * Upgrade cloudinary php library
   * Fix Bug with HumanReadableSize Function - Cybersai
+
+1.0.5 / 2022-03-03
+======================
+
+  * Upgrade cloudinary php library
+  * Add support for Laravel 9
+  * Add more options to attach Media
+  * Fix Flystem Adapter for Cloudinary Adapter
+  * Add support for getting asset url using only public id
+  * Replace deprecated method names with v2

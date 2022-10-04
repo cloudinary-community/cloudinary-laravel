@@ -9,7 +9,6 @@ use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
 use Illuminate\Support\Str;
 
-
 /**
  * Class CloudinaryAdapter
  * @package CloudinaryLabs\CloudinaryLaravel
@@ -171,7 +170,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function delete($path)
     {
-        $result = $this->uploadApi()->destroy($path);
+        $result = (array) $this->uploadApi()->destroy($path);
 
         return is_array($result) ? $result['result'] == 'ok' : false;
     }
@@ -228,7 +227,12 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function has($path)
     {
-        return file_exists($path);
+        try {
+            $this->adminApi()->asset($path);
+        } catch (NotFound $e) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -266,8 +270,7 @@ class CloudinaryAdapter implements AdapterInterface
      * List contents of a directory.
      *
      * @param string $directory
-     * @param bool $hasR          ecursive
-     *
+     * @param bool $hasRecursive
      * @return array
      */
     public function listContents($directory = '', $hasRecursive = false)

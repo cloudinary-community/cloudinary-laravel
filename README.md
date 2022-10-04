@@ -16,23 +16,47 @@
 
 > A Laravel Package for uploading, optimizing, transforming and delivering media files with Cloudinary. Furthermore, it provides a fluent and expressive API to easily attach your media files to Eloquent models.
 
-## Disclaimer
+## Very Important
 
-> _This software/code provided under Cloudinary Labs is an unsupported pre-production prototype undergoing further development and provided on an “AS IS” basis without warranty of any kind, express or implied, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. Furthermore, Cloudinary is not under any obligation to provide a commercial version of the software.</br> </br> Your use of the Software/code is at your sole risk and Cloudinary will not be liable for any direct, indirect, incidental, special, exemplary, consequential or similar damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of the Software, even if advised of the possibility of such damage.</br> </br> You should refrain from uploading any confidential or personally identifiable information to the Software. All rights to and in the Software are and will remain at all times, owned by, or licensed to Cloudinary._
+For apps using **Laravel 9**, please use the **v2.0.0** of the package which is the latest and the default. On version **8 and below**, use the **v1.x.x**.
 
-## Contributions
-Contributions from the community via PRs are welcome and will be fully credited. For details, see [contributions.md](contributing.md).
+## Contents
+
+* [Usage](#usage)
+    * [Upload, Retrieval, Transformation Method Calls](#upload-retrieval-transformation-method-calls)
+    * [Attach Files to Laravel Eloquent Models](#attach-files-to-laravel-eloquent-models)
+    * [Upload Files Via An Upload Widget](#upload-files-via-an-upload-widget)
+    * [Media Management Via The Command Line](#media-management-via-the-command-line)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Disclaimer](#disclaimer)
+* [Contributions](#contributions)
+* [License](#license)
 
 
 ## Usage
 
-**Upload** a file (_Image_, _Video_ or any type of _File_) to **Cloudinary**:
+## **Upload, Retrieval & Transformation Media Method Calls**:
+
+**Upload** a file (_Image_, _Video_ or any type of _File_) to **Cloudinary**, **retrieve** and **transform** via any of the following ways:
 
 ```php
 
 /**
 *  Using the Cloudinary Facade
 */
+
+// access the admin api
+(https://cloudinary.com/documentation/admin_api)
+Cloudinary::admin();
+
+// access the search api
+(https://cloudinary.com/documentation/search_api)
+Cloudinary::search();
+
+// access the upload api
+(https://cloudinary.com/documentation/image_upload_api_reference)
+Cloudinary::uploadApi();
 
 // Upload an Image File to Cloudinary with One line of Code
 $uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
@@ -43,11 +67,27 @@ $uploadedFileUrl = Cloudinary::uploadVideo($request->file('file')->getRealPath()
 // Upload any File to Cloudinary with One line of Code
 $uploadedFileUrl = Cloudinary::uploadFile($request->file('file')->getRealPath())->getSecurePath();
 
+// get url from a file
+$url = Cloudinary::getUrl($publicId);
+
+
 /**
  *  This package also exposes a helper function you can use if you are not a fan of Facades
  *  Shorter, expressive, fluent using the
  *  cloudinary() function
  */
+
+// access the admin api
+(https://cloudinary.com/documentation/admin_api)
+cloudinary()->admin();
+
+// access the search api
+(https://cloudinary.com/documentation/search_api)
+cloudinary()->search();
+
+// access the upload api
+(https://cloudinary.com/documentation/image_upload_api_reference)
+cloudinary()->uploadApi();
 
 // Upload an image file to cloudinary with one line of code
 $uploadedFileUrl = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
@@ -60,6 +100,9 @@ $uploadedFileUrl = cloudinary()->uploadFile($request->file('file')->getRealPath(
 
 // Upload an existing remote file to Cloudinary with one line of code
 $uploadedFileUrl = cloudinary()->uploadFile($remoteFileUrl)->getSecurePath();
+
+// get url from a file
+$url = cloudinary()->getUrl($publicId);
 
 /**
  *  You can also skip the Cloudinary Facade or helper method and laravel-ize your uploads by simply calling the
@@ -92,13 +135,13 @@ $result->getHeight(); // Get the height of the uploaded file
 $result->getTimeUploaded(); // Get the time the file was uploaded
 
 /**
- * You can also retrieve a url if you have a public id
+ * You can also check if a file exists
  */
 
-$url = Storage::disk('cloudinary')->url($publicId);
+$url = Storage::disk('cloudinary')->fileExists($publicId);
 ```
 
-**Attach Files** to Laravel **Eloquent Models**:
+## **Attach Files** to Laravel **Eloquent Models**:
 
 First, import the `CloudinaryLabs\CloudinaryLaravel\MediaAlly` trait into your Model like so:
 
@@ -169,7 +212,7 @@ $page = Page::find(2);
 $page->detachMedia($file)  // Example of $file is $request->file('file');
 ```
 
-**Upload Files Via An Upload Widget**:
+## **Upload Files Via An Upload Widget**:
 
 Use the `x-cld-upload-button` Blade upload button component that ships with this Package like so:
 ```
@@ -195,7 +238,7 @@ Other Blade components you can use are:
 <x-cld-video public-id="awesome"></x-cld-video> // Blade Video Component for displaying videos
 ```
 
-**Media Management via The Command Line**:
+## **Media Management via The Command Line**:
 
 ```bash
 /**
@@ -237,6 +280,14 @@ composer require cloudinary-labs/cloudinary-laravel
 
 Or add the following line to the require block of your `composer.json` file.
 
+### Apps Using Laravel 9
+
+```
+"cloudinary-labs/cloudinary-laravel": "2.0.0"
+```
+
+### Apps Using Laravel 8 and below
+
 ```
 "cloudinary-labs/cloudinary-laravel": "1.0.4"
 ```
@@ -265,6 +316,15 @@ Also, register the Cloudinary Facade like so:
     ...
 ]
 ```
+
+> Note: If you use **Laravel >= 9.0** , you can skip the step (adding the code above for registering the facade) and can just import it in whatever class you need it like so:
+
+```php
+  ...
+  use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+  ...
+```
+
 
 ## Configuration
 
@@ -338,6 +398,14 @@ Cloudinary relies on its own JavaScript library to initiate the Cloudinary Uploa
 ```
 
 ***Note:** ONLY LOAD THIS IF YOU HAVE DECIDED TO USE THE UPLOAD WIDGET. IF YOU ARE USING THIS PACKAGE FOR A LARAVEL API BACKEND, YOU DON'T NEED TO DO THIS!*
+
+
+## Disclaimer
+
+> _This software/code provided under Cloudinary Labs is an unsupported pre-production prototype undergoing further development and provided on an “AS IS” basis without warranty of any kind, express or implied, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. Furthermore, Cloudinary is not under any obligation to provide a commercial version of the software.</br> </br> Your use of the Software/code is at your sole risk and Cloudinary will not be liable for any direct, indirect, incidental, special, exemplary, consequential or similar damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of the Software, even if advised of the possibility of such damage.</br> </br> You should refrain from uploading any confidential or personally identifiable information to the Software. All rights to and in the Software are and will remain at all times, owned by, or licensed to Cloudinary._
+
+## Contributions
+Contributions from the community via PRs are welcome and will be fully credited. For details, see [contributions.md](contributing.md).
 
 ## License
 
