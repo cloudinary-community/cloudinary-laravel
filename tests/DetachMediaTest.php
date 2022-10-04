@@ -1,31 +1,16 @@
 <?php
 
-use Orchestra\Testbench\TestCase;
+namespace CloudinaryLabs\CloudinaryLaravel\Tests;
+
 use Illuminate\Http\UploadedFile;
 use Illuminate\Database\Eloquent\Model;
 use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
-
 
 /**
  *
  */
 class DetachMediaTest extends TestCase
 {
-
-    protected function setUp(): void
-    {
-       parent::setUp();
-
-       $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
-
-       // and other test setup steps you need to perform
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return ['CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider'];
-    }
-
     public function test_can_detach_one_media_or_all()
     {
         $this->artisan('migrate')->run();
