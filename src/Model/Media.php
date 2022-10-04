@@ -12,8 +12,7 @@ use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
  */
 class Media extends Model
 {
-
-    protected $table = 'media';
+    protected $table = "media";
 
     /**
      * Create the polymorphic relation.
@@ -67,6 +66,17 @@ class Media extends Model
      */
     public function getReadableSize()
     {
-        return resolve(CloudinaryEngine::class)->getHumanReadableSize($this->size);
+        return resolve(CloudinaryEngine::class)->getHumanReadableSize(
+            $this->size
+        );
+    }
+
+    /**
+     * Get the Public ID of a Media File
+     * @return string
+     */
+    public function getPublicId()
+    {
+        return $this->public_id;
     }
 }
