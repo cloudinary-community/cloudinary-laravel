@@ -1,18 +1,18 @@
-<div align="center">
-    <h1> Cloudinary Laravel Package</h1>
-</div>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/62209650/196528621-b68e9e10-7e55-4c7d-9177-904cadbb4296.png" align="center" height=50>
+  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/62209650/196528761-a815025a-271a-4d8e-ac7e-cea833728bf9.png" align="center" height=50>
+  <img alt="Cloudinary" src="https://user-images.githubusercontent.com/62209650/196528761-a815025a-271a-4d8e-ac7e-cea833728bf9.png" align="center" height=50>
+</picture>
+&ensp;&ensp;
+<picture style="padding: 50px">
+  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/1045274/200928533-47539867-07ff-406e-aa8b-25c594652dc8.png" align="center" height=50>
+  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/1045274/200928533-47539867-07ff-406e-aa8b-25c594652dc8.png" align="center" height=50>
+  <img alt="Laravel" src="https://user-images.githubusercontent.com/1045274/200928533-47539867-07ff-406e-aa8b-25c594652dc8.png" align="center" height=50>
+</picture>
 
-<p align="center">
-    <a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel">
-        <img src="https://img.shields.io/packagist/dt/cloudinary-labs/cloudinary-laravel.svg?style=flat-square" alt="Total Downloads">
-    </a>
-    <a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel">
-        <img src="https://poser.pugx.org/cloudinary-labs/cloudinary-laravel/v/stable.svg" alt="Latest Stable Version">
-    </a>
-    <a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel">
-        <img src="https://poser.pugx.org/cloudinary-labs/cloudinary-laravel/license.svg" alt="License">
-    </a>
-</p>
+######
+
+<a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel"><img src="https://img.shields.io/packagist/dt/cloudinary-labs/cloudinary-laravel.svg?style=flat-square" alt="Total Downloads"></a> <a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel"><img src="https://poser.pugx.org/cloudinary-labs/cloudinary-laravel/v/stable.svg?style=flat-square" alt="Latest Stable Version"></a> <a href="https://github.com/cloudinary-devs/cloudinary-laravel/blob/main/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/cloudinary-devs/cloudinary-laravel?label=License&style=flat-square"></a>
 
 > A Laravel Package for uploading, optimizing, transforming and delivering media files with Cloudinary. Furthermore, it provides a fluent and expressive API to easily attach your media files to Eloquent models.
 
