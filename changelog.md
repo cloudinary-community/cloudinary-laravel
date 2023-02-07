@@ -42,3 +42,14 @@
   * Rewrite Cloudinary Adapter to work with Flysystem v3
   * Support for Laravel 9 without issues
   * Remove deprecated methods
+
+2.0.1 / 2022-06-03
+======================
+
+  * Fix listContents() and make it compatible with Flysystem v3. @brandon14
+
+
+2.0.2 / 2023-02-07
+======================
+
+  * Update Analytics
