@@ -16,10 +16,6 @@
 
 > A Laravel Package for uploading, optimizing, transforming and delivering media files with Cloudinary. Furthermore, it provides a fluent and expressive API to easily attach your media files to Eloquent models.
 
-## Very Important
-
-For apps using **Laravel 9**, please use the **v2.0.0** of the package which is the latest and the default. On version **8 and below**, use the **v1.x.x**.
-
 ## Contents
 
 * [Usage](#usage)
@@ -35,6 +31,8 @@ For apps using **Laravel 9**, please use the **v2.0.0** of the package which is 
 
 
 ## Usage
+
+> Laravel versions **8 and below** should use the **v1.x.x**.
 
 ## **Upload, Retrieval & Transformation Media Method Calls**:
 
