@@ -20,7 +20,7 @@
     ],
     "require": {
         "php": "^8.0.2",
-        "illuminate/support": "~6|~7|~8|^9.0",
+        "illuminate/support": "~6|~7|~8|^9.0|^10.0",
         "cloudinary/cloudinary_php": "^2.0",
         "ext-json": "*"
     },
