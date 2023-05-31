@@ -101,7 +101,8 @@ class CloudinaryServiceProvider extends ServiceProvider
     
     protected function getComponentName($componentName) 
     {
-       if( (int)$this->app->version()[0] <= 6 ) {
+       $version = explode(".", $this->app->version());
+       if( (int)$version[0] <= 6 ) {
           $componentName = str_replace("-", "_", $componentName);
        }
         
