@@ -14,77 +14,102 @@ use CloudinaryLabs\CloudinaryLaravel\Model\Media;
  */
 trait MediaAlly
 {
-
     /**
      * Relationship for all attached media.
      */
     public function medially()
     {
-        return $this->morphMany(Media::class, 'medially');
+        return $this->morphMany(Media::class, "medially");
     }
-
 
     /**
      * Attach Media Files to a Model
      */
     public function attachMedia($file, $options = [])
     {
-        if(! file_exists($file)) {
-            throw new Exception('Please pass in a file that exists');
+        if (!file_exists($file)) {
+            throw new Exception("Please pass in a file that exists");
         }
 
-        $response = resolve(CloudinaryEngine::class)->uploadFile($file->getRealPath(), $options);
+        $response = resolve(CloudinaryEngine::class)->uploadFile(
+            $file->getRealPath(),
+            $options
+        );
 
-        $media = new Media();
-        $media->file_name = $response->getFileName();
-        $media->file_url = $response->getSecurePath();
-        $media->size = $response->getSize();
-        $media->file_type = $response->getFileType();
-
-        $this->medially()->save($media);
+        $this->syncWith($response);
     }
 
     /**
-     * Attach Rwmote Media Files to a Model
+     * Attach Remote Media Files to a Model
      */
     public function attachRemoteMedia($remoteFile, $options = [])
     {
-        $response = resolve(CloudinaryEngine::class)->uploadFile($remoteFile, $options);
+        $response = resolve(CloudinaryEngine::class)->uploadFile(
+            $remoteFile,
+            $options
+        );
 
+        $this->syncWith($response);
+    }
+
+    /**
+     * Attach Media Files Already Existing on cloudinary to a Model
+     *
+     * @param string $publicId
+     * @param array $options
+     * @return void
+     */
+    public function attachCloudinaryMedia(string $publicId, array $options = [])
+    {
+        $engine = resolve(CloudinaryEngine::class);
+
+        $this->syncWith(
+            $engine->withResponse($engine->admin()->asset($publicId, $options))
+        );
+    }
+
+    /**
+     * Sync the model with a Cloudinary Response
+     *
+     * @param CloudinaryEngine $response
+     * @return void
+     */
+    public function syncWith(CloudinaryEngine $response)
+    {
         $media = new Media();
         $media->file_name = $response->getFileName();
         $media->file_url = $response->getSecurePath();
         $media->size = $response->getSize();
         $media->file_type = $response->getFileType();
+        $media->public_id = $response->getPublicId();
 
         $this->medially()->save($media);
     }
 
     /**
-    * Get all the Media files relating to a particular Model record
-    */
+     * Get all the Media files relating to a particular Model record
+     */
     public function fetchAllMedia()
     {
         return $this->medially()->get();
     }
 
     /**
-    * Get the first Media file relating to a particular Model record
-    */
+     * Get the first Media file relating to a particular Model record
+     */
     public function fetchFirstMedia()
     {
         return $this->medially()->first();
     }
 
     /**
-    * Delete all/one file(s) associated with a particular Model record
-    */
+     * Delete all/one file(s) associated with a particular Model record
+     */
     public function detachMedia(Media $media = null)
     {
+        $items = $this->medially()->get();
 
-       $items = $this->medially()->get();
-
-        foreach($items as $item) {
+        foreach ($items as $item) {
             resolve(CloudinaryEngine::class)->destroy($item->getFileName());
 
             if (!is_null($media) && $item->id == $media->id) {
@@ -96,16 +121,18 @@ trait MediaAlly
     }
 
     /**
-    * Get the last Media file relating to a particular Model record
-    */
+     * Get the last Media file relating to a particular Model record
+     */
     public function fetchLastMedia()
     {
-        return $this->medially()->get()->last();
+        return $this->medially()
+            ->get()
+            ->last();
     }
 
     /**
-    * Update the Media files relating to a particular Model record
-    */
+     * Update the Media files relating to a particular Model record
+     */
     public function updateMedia($file, $options = [])
     {
         $this->detachMedia();
@@ -113,12 +140,11 @@ trait MediaAlly
     }
 
     /**
-    * Update the Media files relating to a particular Model record (Specificially existing remote files)
-    */
+     * Update the Media files relating to a particular Model record (Specificially existing remote files)
+     */
     public function updateRemoteMedia($file, $options = [])
     {
         $this->detachMedia();
         $this->attachRemoteMedia($file, $options);
     }
-
 }
