@@ -379,7 +379,7 @@ CLOUDINARY_UPLOAD_PRESET=xxxxxxxxxxxxx
 CLOUDINARY_NOTIFICATION_URL=
 ```
 
-***Note:** You need to get these credentials from your [Cloudinary Dashboard](https://cloudinary.com/console)*
+***Note:** You need to get these credentials from your [Cloudinary Dashboard](https://cloudinary.com/console). The CLOUDINARY_URL is the API Environment variable shown in your Cloudinary Dashboard. Use the Copy button there to get the full URL*
 
 *If you are using a hosting service like heroku, forge, digital ocean, etc, please ensure to add the above details to your configuration variables.*
 
