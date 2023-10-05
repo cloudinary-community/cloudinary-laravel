@@ -4,6 +4,7 @@ namespace CloudinaryLabs\CloudinaryLaravel;
 
 use Exception;
 use CloudinaryLabs\CloudinaryLaravel\Model\Media;
+use Illuminate\Support\Collection;
 
 /**
  * MediaAlly
@@ -77,22 +78,26 @@ trait MediaAlly
     }
 
     /**
-    * Delete all/one file(s) associated with a particular Model record
-    */
-    public function detachMedia(Media $media = null)
+     * Delete all/one/multiple file(s) associated with a particular Model record
+     *
+     * @param Media|Collection|null $media
+     * @return void
+     */
+    public function detachMedia(Media|Collection $media = null)
     {
 
-       $items = $this->medially()->get();
+        if (is_null($media)) {
+            $items = $this->medially()->get();
+        } elseif ($media instanceof Media) {
+            $items = new Collection([$this->medially()->find($media->id)]);
+        } elseif ($media instanceof Collection) {
+            $items = $this->medially()->whereIn('id', $media->pluck('id'))->get();
+        }
 
         foreach($items as $item) {
             resolve(CloudinaryEngine::class)->destroy($item->getFileName());
-
-            if (!is_null($media) && $item->id == $media->id) {
-                return $item->delete();
-            }
+            $item->delete();
         }
-
-        return $this->medially()->delete();
     }
 
     /**
