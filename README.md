@@ -210,6 +210,90 @@ $page = Page::find(2);
 $page->detachMedia($file)  // Example of $file is $request->file('file');
 ```
 
+## **Add Transformation to Uploads Using AttachMedia Method**:
+
+```php
+
+/**
+*  How to resize an image to a specific width and height, and crop it using 'fill' mode
+*/
+
+$options = [
+    'transformation' => [
+        [
+            'width' => 200,    // Desired width
+            'height' => 200,   // Desired height
+            'crop' => 'fill',  // Crop mode (you can change this to 'fit' or other modes)
+        ],
+    ],
+]
+
+$page->attachMedia($file, $options);   // Example of $file is $request->file('file');
+
+/**
+*  How to crop an image to a specific width and height.
+*/
+
+$options = [
+    'transformation' => [
+        [
+            'width' => 200,    // Desired width
+            'height' => 200,   // Desired height
+            'crop' => 'crop',  // Crop mode
+        ],
+    ],
+]
+
+$page->attachMedia($file, $options);   // Example of $file is $request->file('file');
+
+/**
+*  How to rotate an image by a specific degree.
+*/
+
+$options = [
+    'transformation' => [
+        [
+            'angle' => 45,    // Rotation angle
+        ],
+    ],
+]
+
+$page->attachMedia($file, $options);   // Example of $file is $request->file('file');
+
+/**
+*  How to apply a filter to an image.
+*/
+
+$options = [
+    'transformation' => [
+        [
+            'effect' => 'grayscale',    // Filter effect
+        ],
+    ],
+]
+
+$page->attachMedia($file, $options);   // Example of $file is $request->file('file');
+
+/**
+*  How to overlay text on an image.
+*/
+
+$options = [
+    'transformation' => [
+        [
+            'overlay' => [
+                'font_family' => 'arial',
+                'font_size' => 24,
+                'text' => 'Hello World',
+            ],
+        ],
+    ],
+]
+
+$page->attachMedia($file, $options);   // Example of $file is $request->file('file');
+
+```
+
 ## **Upload Files Via An Upload Widget**:
 
 Use the `x-cld-upload-button` Blade upload button component that ships with this Package like so:
