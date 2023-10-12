@@ -38,5 +38,15 @@ return [
      * Upload Preset From Cloudinary Dashboard
      *
      */
-    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET')
+    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
+
+    /**
+     * Route to get cloud_image_url from Blade Upload Widget
+     */
+    'upload_route' => env('CLOUDINARY_UPLOAD_ROUTE'),
+
+    /**
+     * Controller to get cloud_image_url from Blade Upload Widget
+     */
+    'upload_action' => env('CLOUDINARY_UPLOAD_ACTION'),
 ];
