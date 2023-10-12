@@ -320,6 +320,26 @@ Other Blade components you can use are:
 <x-cld-video public-id="awesome"></x-cld-video> // Blade Video Component for displaying videos
 ```
 
+To get the upload image link from the widget in your controller, simply set a route and controller action in your `.env`. For example:
+
+```php
+CLOUDINARY_UPLOAD_ROUTE=api/cloudinary-js-upload
+CLOUDINARY_UPLOAD_ACTION=App\Http\Controllers\Api\CloudinaryController@upload
+```
+
+Make sure to specify the full path to the controller. You should be able to get the URL like so:
+
+```php
+...
+class CloudinaryController extends Controller
+{
+    public function upload(Request $request)
+    {
+        $url = $request->get('cloud_image_url');
+    }
+}
+```
+
 ## **Media Management via The Command Line**:
 
 ```bash
@@ -450,7 +470,17 @@ return [
     * Upload Preset From Cloudinary Dashboard
     *
     */
-    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET')
+    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
+    
+    /**
+     * Route to get cloud_image_url from Blade Upload Widget
+     */
+    'upload_route' => env('CLOUDINARY_UPLOAD_ROUTE'),
+
+    /**
+     * Controller action to get cloud_image_url from Blade Upload Widget
+     */
+    'upload_action' => env('CLOUDINARY_UPLOAD_ACTION'),
 ];
 ```
 
