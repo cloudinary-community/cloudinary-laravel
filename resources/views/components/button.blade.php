@@ -2,6 +2,7 @@
 
     var cloudName = @json(Str::after(config('cloudinary.cloud_url'),'@'));
     var uploadPreset = @json(config('cloudinary.upload_preset'));
+    var uploadRoute = @json(config('cloudinary.upload_route'));
 
     function openWidget() {
         window.cloudinary.openUploadWidget(
