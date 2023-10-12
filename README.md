@@ -291,12 +291,12 @@ $options = [
 ]
 
 $page->attachMedia($file, $options);   // Example of $file is $request->file('file');
-
+``
 ```
 
 ## **Upload Files Via An Upload Widget**:
 
-Use the `x-cld-upload-button` Blade upload button component that ships with this Package like so:
+Use the `x-cld_upload_button` Blade upload button component that ships with this Package like so:
 ```
 <!DOCTYPE html>
 <html>
@@ -305,9 +305,9 @@ Use the `x-cld-upload-button` Blade upload button component that ships with this
         @cloudinaryJS
     </head>
     <body>
-        <x-cld-upload-button>
+        <x-cld_upload_button>
             Upload Files
-        </x-cld-upload-button>
+        </x-cld_upload_button>
     </body>
 </html>
 ````
