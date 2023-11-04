@@ -44,6 +44,8 @@
 *  Using the Cloudinary Facade
 */
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 // access the admin api
 (https://cloudinary.com/documentation/admin_api)
 Cloudinary::admin();
