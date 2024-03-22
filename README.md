@@ -19,7 +19,7 @@
 ## Contents
 
 * [Usage](#usage)
-    * [Upload, Retrieval, Transformation Method Calls](#upload-retrieval-transformation-method-calls)
+    * [Upload, Retrieval, Transformation Method Calls](#upload-retrieval--transformation-media-method-calls)
     * [Attach Files to Laravel Eloquent Models](#attach-files-to-laravel-eloquent-models)
     * [Upload Files Via An Upload Widget](#upload-files-via-an-upload-widget)
     * [Media Management Via The Command Line](#media-management-via-the-command-line)
