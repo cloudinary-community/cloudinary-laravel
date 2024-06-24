@@ -4,6 +4,7 @@ namespace CloudinaryLabs\CloudinaryLaravel;
 
 use Exception;
 use CloudinaryLabs\CloudinaryLaravel\Model\Media;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
 /**
@@ -30,7 +31,7 @@ trait MediaAlly
      */
     public function attachMedia($file, $options = [])
     {
-        if(! file_exists($file)) {
+        if(!$file instanceof UploadedFile) {
             throw new Exception('Please pass in a file that exists');
         }
 
