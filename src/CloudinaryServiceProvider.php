@@ -4,6 +4,7 @@ namespace CloudinaryLabs\CloudinaryLaravel;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem;
@@ -35,6 +36,7 @@ class CloudinaryServiceProvider extends ServiceProvider
         $this->bootCommands();
         $this->bootPublishing();
         $this->bootCloudinaryDriver();
+        $this->bootRoutes();
     }
 
     /**
@@ -101,7 +103,8 @@ class CloudinaryServiceProvider extends ServiceProvider
     
     protected function getComponentName($componentName) 
     {
-       if( (int)$this->app->version()[0] <= 6 ) {
+       $version = explode(".", $this->app->version());
+       if( (int)$version[0] <= 6 ) {
           $componentName = str_replace("-", "_", $componentName);
        }
         
@@ -163,6 +166,18 @@ class CloudinaryServiceProvider extends ServiceProvider
                 return new Filesystem(new CloudinaryAdapter(config('cloudinary.cloud_url')));
             }
         );
+    }
+
+    /**
+     * Boot the package routes.
+     *
+     * @return void
+     */
+    protected function bootRoutes()
+    {
+        if (config('cloudinary.upload_route')) {
+            Route::post(config('cloudinary.upload_route'), config('cloudinary.upload_action'));
+        }
     }
 
     /**

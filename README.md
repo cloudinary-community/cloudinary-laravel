@@ -1,24 +1,20 @@
-<div align="center">
-    <h1> Cloudinary Laravel Package</h1>
-</div>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/62209650/196528621-b68e9e10-7e55-4c7d-9177-904cadbb4296.png" align="center" height=50>
+  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/62209650/196528761-a815025a-271a-4d8e-ac7e-cea833728bf9.png" align="center" height=50>
+  <img alt="Cloudinary" src="https://user-images.githubusercontent.com/62209650/196528761-a815025a-271a-4d8e-ac7e-cea833728bf9.png" align="center" height=50>
+</picture>
+&ensp;&ensp;
+<picture style="padding: 50px">
+  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/1045274/200928533-47539867-07ff-406e-aa8b-25c594652dc8.png" align="center" height=50>
+  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/1045274/200928533-47539867-07ff-406e-aa8b-25c594652dc8.png" align="center" height=50>
+  <img alt="Laravel" src="https://user-images.githubusercontent.com/1045274/200928533-47539867-07ff-406e-aa8b-25c594652dc8.png" align="center" height=50>
+</picture>
 
-<p align="center">
-    <a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel">
-        <img src="https://img.shields.io/packagist/dt/cloudinary-labs/cloudinary-laravel.svg?style=flat-square" alt="Total Downloads">
-    </a>
-    <a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel">
-        <img src="https://poser.pugx.org/cloudinary-labs/cloudinary-laravel/v/stable.svg" alt="Latest Stable Version">
-    </a>
-    <a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel">
-        <img src="https://poser.pugx.org/cloudinary-labs/cloudinary-laravel/license.svg" alt="License">
-    </a>
-</p>
+######
+
+<a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel"><img src="https://img.shields.io/packagist/dt/cloudinary-labs/cloudinary-laravel.svg?style=flat-square" alt="Total Downloads"></a> <a href="https://packagist.org/packages/cloudinary-labs/cloudinary-laravel"><img src="https://poser.pugx.org/cloudinary-labs/cloudinary-laravel/v/stable.svg?style=flat-square" alt="Latest Stable Version"></a> <a href="https://github.com/cloudinary-devs/cloudinary-laravel/blob/main/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/cloudinary-devs/cloudinary-laravel?label=License&style=flat-square"></a>
 
 > A Laravel Package for uploading, optimizing, transforming and delivering media files with Cloudinary. Furthermore, it provides a fluent and expressive API to easily attach your media files to Eloquent models.
-
-## Very Important
-
-For apps using **Laravel 9**, please use the **v2.0.0** of the package which is the latest and the default. On version **8 and below**, use the **v1.x.x**.
 
 ## Contents
 
@@ -36,6 +32,8 @@ For apps using **Laravel 9**, please use the **v2.0.0** of the package which is 
 
 ## Usage
 
+> Laravel versions **8 and below** should use the **v1.x.x**.
+
 ## **Upload, Retrieval & Transformation Media Method Calls**:
 
 **Upload** a file (_Image_, _Video_ or any type of _File_) to **Cloudinary**, **retrieve** and **transform** via any of the following ways:
@@ -45,6 +43,8 @@ For apps using **Laravel 9**, please use the **v2.0.0** of the package which is 
 /**
 *  Using the Cloudinary Facade
 */
+
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 // access the admin api
 (https://cloudinary.com/documentation/admin_api)
@@ -212,6 +212,90 @@ $page = Page::find(2);
 $page->detachMedia($file)  // Example of $file is $request->file('file');
 ```
 
+## **Add Transformation to Uploads Using AttachMedia Method**:
+
+```php
+
+/**
+*  How to resize an image to a specific width and height, and crop it using 'fill' mode
+*/
+
+$options = [
+    'transformation' => [
+        [
+            'width' => 200,    // Desired width
+            'height' => 200,   // Desired height
+            'crop' => 'fill',  // Crop mode (you can change this to 'fit' or other modes)
+        ],
+    ],
+]
+
+$page->attachMedia($file, $options);   // Example of $file is $request->file('file');
+
+/**
+*  How to crop an image to a specific width and height.
+*/
+
+$options = [
+    'transformation' => [
+        [
+            'width' => 200,    // Desired width
+            'height' => 200,   // Desired height
+            'crop' => 'crop',  // Crop mode
+        ],
+    ],
+]
+
+$page->attachMedia($file, $options);   // Example of $file is $request->file('file');
+
+/**
+*  How to rotate an image by a specific degree.
+*/
+
+$options = [
+    'transformation' => [
+        [
+            'angle' => 45,    // Rotation angle
+        ],
+    ],
+]
+
+$page->attachMedia($file, $options);   // Example of $file is $request->file('file');
+
+/**
+*  How to apply a filter to an image.
+*/
+
+$options = [
+    'transformation' => [
+        [
+            'effect' => 'grayscale',    // Filter effect
+        ],
+    ],
+]
+
+$page->attachMedia($file, $options);   // Example of $file is $request->file('file');
+
+/**
+*  How to overlay text on an image.
+*/
+
+$options = [
+    'transformation' => [
+        [
+            'overlay' => [
+                'font_family' => 'arial',
+                'font_size' => 24,
+                'text' => 'Hello World',
+            ],
+        ],
+    ],
+]
+
+$page->attachMedia($file, $options);   // Example of $file is $request->file('file');
+
+```
+
 ## **Upload Files Via An Upload Widget**:
 
 Use the `x-cld-upload-button` Blade upload button component that ships with this Package like so:
@@ -236,6 +320,26 @@ Other Blade components you can use are:
 <x-cld-image public-id="prosper" width="300" height="300"></x-cld-image> // Blade Image Component for displaying images
 
 <x-cld-video public-id="awesome"></x-cld-video> // Blade Video Component for displaying videos
+```
+
+To get the upload image link from the widget in your controller, simply set a route and controller action in your `.env`. For example:
+
+```php
+CLOUDINARY_UPLOAD_ROUTE=api/cloudinary-js-upload
+CLOUDINARY_UPLOAD_ACTION=App\Http\Controllers\Api\CloudinaryController@upload
+```
+
+Make sure to specify the full path to the controller. You should be able to get the URL like so:
+
+```php
+...
+class CloudinaryController extends Controller
+{
+    public function upload(Request $request)
+    {
+        $url = $request->get('cloud_image_url');
+    }
+}
 ```
 
 ## **Media Management via The Command Line**:
@@ -368,7 +472,17 @@ return [
     * Upload Preset From Cloudinary Dashboard
     *
     */
-    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET')
+    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
+    
+    /**
+     * Route to get cloud_image_url from Blade Upload Widget
+     */
+    'upload_route' => env('CLOUDINARY_UPLOAD_ROUTE'),
+
+    /**
+     * Controller action to get cloud_image_url from Blade Upload Widget
+     */
+    'upload_action' => env('CLOUDINARY_UPLOAD_ACTION'),
 ];
 ```
 
@@ -381,7 +495,7 @@ CLOUDINARY_UPLOAD_PRESET=xxxxxxxxxxxxx
 CLOUDINARY_NOTIFICATION_URL=
 ```
 
-***Note:** You need to get these credentials from your [Cloudinary Dashboard](https://cloudinary.com/console)*
+***Note:** You need to get these credentials from your [Cloudinary Dashboard](https://cloudinary.com/console). The CLOUDINARY_URL is the API Environment variable shown in your Cloudinary Dashboard. Use the Copy button there to get the full URL*
 
 *If you are using a hosting service like heroku, forge, digital ocean, etc, please ensure to add the above details to your configuration variables.*
 

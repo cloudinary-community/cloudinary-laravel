@@ -32,16 +32,25 @@ class DetachMediaTest extends TestCase
 
         $model = MyModel::create([]);
 
-        $model->attachMedia(UploadedFile::fake()->image('file.jpg'));
-        $model->attachMedia(UploadedFile::fake()->image('file.jpg'));
+        for ($i = 0; $i < 10; $i++) {
+            $model->attachMedia(UploadedFile::fake()->image('file.jpg'));
+        }
 
-        $this->assertCount(2, $model->fetchAllMedia());
+        $this->assertCount(10, $model->fetchAllMedia());
 
+        // Delete one
         $media1 = $model->fetchAllMedia()->first();
         $model->detachMedia($media1);
 
-        $this->assertCount(1, $model->fetchAllMedia());
+        $this->assertCount(9, $model->fetchAllMedia());
 
+        // Delete multiple
+        $multiple_media = $model->fetchAllMedia()->slice(0, 4);
+        $model->detachMedia($multiple_media);
+
+        $this->assertCount(5, $model->fetchAllMedia());
+
+        // Delete all
         $model->detachMedia();
         $this->assertCount(0, $model->fetchAllMedia());
     }
