@@ -1,15 +1,16 @@
 <?php
 
-use Orchestra\Testbench\TestCase;
+namespace Tests;
+
+use Orchestra\Testbench;
 use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
 use CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider;
 
-class CloudinaryAdapterTest extends TestCase
+abstract class TestCase extends Testbench\TestCase
 {
-
     protected function getEnvironmentSetup($app)
     {
-        $app->useEnvironmentPath(__DIR__.'/..');
+        $app->useEnvironmentPath(__DIR__ . '/..');
         $app->bootstrapWith([LoadEnvironmentVariables::class]);
         parent::getEnvironmentSetUp($app);
 
@@ -21,9 +22,8 @@ class CloudinaryAdapterTest extends TestCase
         return CloudinaryServiceProvider::class;
     }
 
-    public function test_can_get_url_given_public_id()
+    protected function defineDatabaseMigrations()
     {
-        //file already exists
-        $this->assertEquals(env('TEST_FILE_URL'), Storage::disk('cloudinary')->url(basename(env('TEST_FILE_URL'))));
+        $this->loadMigrationsFrom(__DIR__ . '/fixtures/migrations');
     }
 }

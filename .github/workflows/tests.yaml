@@ -29,7 +29,7 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        run: composer install
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Execute tests
-        run: vendor/bin/phpunit
+        run: vendor/bin/pest
