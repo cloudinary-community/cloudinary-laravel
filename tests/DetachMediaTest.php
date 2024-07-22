@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Orchestra\Testbench\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Database\Eloquent\Model;
@@ -14,11 +15,20 @@ class DetachMediaTest extends TestCase
 
     protected function setUp(): void
     {
-       parent::setUp();
+        parent::setUp();
 
-       $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
-       // and other test setup steps you need to perform
+        // and other test setup steps you need to perform
+    }
+
+    protected function getEnvironmentSetup($app)
+    {
+        $app->useEnvironmentPath(__DIR__.'/..');
+        $app->bootstrapWith([LoadEnvironmentVariables::class]);
+        parent::getEnvironmentSetUp($app);
+
+        $app['config']->set('cloudinary.cloud_url', env('CLOUDINARY_URL'));
     }
 
     protected function getPackageProviders($app)
