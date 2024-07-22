@@ -14,7 +14,8 @@ jobs:
       fail-fast: true
       matrix:
         php: [7.2, 8.3]
-  name: PHP ${{ matrix.php }}
+
+    name: PHP ${{ matrix.php }}
 
     steps:
       - name: Checkout code
