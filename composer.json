@@ -19,7 +19,7 @@
     "File Transformations"
   ],
   "scripts": {
-    "test": "phpunit"
+    "test": "pest"
   },
   "require": {
     "php": "^8.1",
@@ -28,10 +28,10 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.0|^9.5.10",
     "mockery/mockery": "^1.1",
     "orchestra/testbench": "~4|~5|~6",
-    "sempro/phpunit-pretty-print": "^1.0"
+    "sempro/phpunit-pretty-print": "^1.0",
+    "pestphp/pest": "^1.23"
   },
   "autoload": {
     "psr-4": {
@@ -43,7 +43,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "CloudinaryLabs\\CloudinaryLaravel\\Tests\\": "tests"
+      "Tests\\": "tests"
     }
   },
   "extra": {
@@ -54,6 +54,11 @@
       "aliases": {
         "Cloudinary": "CloudinaryLabs\\CloudinaryLaravel\\Facades\\Cloudinary"
       }
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
     }
   }
 }
