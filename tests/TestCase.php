@@ -14,7 +14,7 @@ abstract class TestCase extends Testbench\TestCase
         $app->bootstrapWith([LoadEnvironmentVariables::class]);
         parent::getEnvironmentSetUp($app);
 
-        $app['config']->set('cloudinary.cloud_url', env('CLOUDINARY_URL'));
+        $app['config']->set('cloudinary.cloud_url', env('CLOUDINARY_URL', 'cloudinary://foo:bar@baz'));
     }
 
     protected function getPackageProviders($app)
