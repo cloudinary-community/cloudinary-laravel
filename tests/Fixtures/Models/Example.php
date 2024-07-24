@@ -1,13 +1,11 @@
 <?php
 
-namespace Tests\Fixtures;
+namespace Tests\Fixtures\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
 
-class MyModel extends Model
+class Example extends Model
 {
-    protected $table = 'model';
-
     use MediaAlly;
 }
