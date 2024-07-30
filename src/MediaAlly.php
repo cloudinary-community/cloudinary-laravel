@@ -84,7 +84,7 @@ trait MediaAlly
      * @param Media|Collection|null $media
      * @return void
      */
-    public function detachMedia(Media|Collection $media = null)
+    public function detachMedia(mixed $media = null)
     {
 
         if (is_null($media)) {
