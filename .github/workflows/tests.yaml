@@ -30,6 +30,7 @@ jobs:
           coverage: none
 
       - name: Install dependencies
+        # TODO: remove --ignore-platform-reqs when we have stable v2 release
         run: composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
 
       - name: Execute tests
