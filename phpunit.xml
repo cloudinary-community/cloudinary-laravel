@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
-         backupGlobals="false"
-         backupStaticAttributes="false"
-         colors="true"
-         verbose="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         backupGlobals="false" 
+         backupStaticAttributes="false" 
+         colors="true" 
+         verbose="true" 
+         convertErrorsToExceptions="true" 
+         convertNoticesToExceptions="true" 
+         convertWarningsToExceptions="true" 
+         processIsolation="false" 
          stopOnFailure="false">
-    <testsuites>
-        <testsuite name="Package">
-            <directory suffix=".php">./tests/</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist>
-            <directory>src/</directory>
-        </whitelist>
-    </filter>
-    <php>
-        <server name="DB_CONNECTION" value="sqlite"/>
-        <server name="DB_DATABASE" value=":memory:"/>
-        <server name="APP_ENV" value="testing"/>
-    </php>
+  <coverage>
+    <include>
+      <directory>src/</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="Unit">
+        <directory>tests/Unit</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>
