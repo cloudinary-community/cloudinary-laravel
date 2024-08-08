@@ -104,7 +104,7 @@ class CloudinaryAdapter implements FilesystemAdapter
         $pathInfo    = pathinfo($path);
         $newPathInfo = pathinfo($newpath);
 
-        $remotePath = ($pathInfo['dirname'] != '.') ? pathInfo['dirname'] . '/' . $pathInfo['filename'] : $pathInfo['filename'];
+        $remotePath = ($pathInfo['dirname'] != '.') ? $pathInfo['dirname'] . '/' . $pathInfo['filename'] : $pathInfo['filename'];
 
         $remoteNewPath = ($pathInfo['dirname'] != '.') ? $newPathInfo['dirname'] . '/' . $newPathInfo['filename'] : $newPathInfo['filename'];
 
