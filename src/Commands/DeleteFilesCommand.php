@@ -29,9 +29,10 @@ class DeleteFilesCommand extends Command
     /**
      * Execute the console command.
      *
+     * @param CloudinaryEngine $engine
      * @return void
      */
-    public function handle(CloudinaryEngine $engine)
+    public function handle(CloudinaryEngine $engine): void
     {
         if (!config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
@@ -41,7 +42,7 @@ class DeleteFilesCommand extends Command
 
         $publicId = $this->argument('publicId');
 
-        $this->info("About to delete {$publicId} file on Cloudinary...");
+        $this->info("About to delete $publicId file on Cloudinary...");
 
         try {
             $engine->destroy($publicId);

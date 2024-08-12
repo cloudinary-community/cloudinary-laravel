@@ -2,8 +2,10 @@
 
 namespace CloudinaryLabs\CloudinaryLaravel;
 
+use Cloudinary\Api\Exception\ApiError;
 use Exception;
 use CloudinaryLabs\CloudinaryLaravel\Model\Media;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
@@ -20,7 +22,7 @@ trait MediaAlly
     /**
      * Relationship for all attached media.
      */
-    public function medially()
+    public function medially(): MorphMany
     {
         return $this->morphMany(Media::class, 'medially');
     }
@@ -28,8 +30,9 @@ trait MediaAlly
 
     /**
      * Attach Media Files to a Model
+     * @throws Exception
      */
-    public function attachMedia($file, $options = [])
+    public function attachMedia($file, $options = []): void
     {
         if(!$file instanceof UploadedFile) {
             throw new Exception('Please pass in a file that exists');
@@ -48,8 +51,9 @@ trait MediaAlly
 
     /**
      * Attach Rwmote Media Files to a Model
+     * @throws ApiError
      */
-    public function attachRemoteMedia($remoteFile, $options = [])
+    public function attachRemoteMedia($remoteFile, $options = []): void
     {
         $response = resolve(CloudinaryEngine::class)->uploadFile($remoteFile, $options);
 
@@ -65,7 +69,7 @@ trait MediaAlly
     /**
     * Get all the Media files relating to a particular Model record
     */
-    public function fetchAllMedia()
+    public function fetchAllMedia(): \Illuminate\Database\Eloquent\Collection
     {
         return $this->medially()->get();
     }
@@ -84,8 +88,9 @@ trait MediaAlly
      * @param Media|Collection|null $media
      * @return void
      */
-    public function detachMedia(Media|Collection $media = null)
+    public function detachMedia(Media|Collection $media = null): void
     {
+        $items = [];
 
         if (is_null($media)) {
             $items = $this->medially()->get();
@@ -110,18 +115,20 @@ trait MediaAlly
     }
 
     /**
-    * Update the Media files relating to a particular Model record
-    */
-    public function updateMedia($file, $options = [])
+     * Update the Media files relating to a particular Model record
+     * @throws Exception
+     */
+    public function updateMedia($file, $options = []): void
     {
         $this->detachMedia();
         $this->attachMedia($file, $options);
     }
 
     /**
-    * Update the Media files relating to a particular Model record (Specificially existing remote files)
-    */
-    public function updateRemoteMedia($file, $options = [])
+     * Update the Media files relating to a particular Model record (Specificially existing remote files)
+     * @throws ApiError
+     */
+    public function updateRemoteMedia($file, $options = []): void
     {
         $this->detachMedia();
         $this->attachRemoteMedia($file, $options);

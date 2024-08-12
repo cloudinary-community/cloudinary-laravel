@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateMediaTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('media', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -24,7 +24,7 @@ class CreateMediaTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('media');
     }

@@ -29,9 +29,10 @@ class RenameFilesCommand extends Command
     /**
      * Execute the console command.
      *
+     * @param CloudinaryEngine $engine
      * @return void
      */
-    public function handle(CloudinaryEngine $engine)
+    public function handle(CloudinaryEngine $engine): void
     {
         if (!config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
@@ -48,7 +49,7 @@ class RenameFilesCommand extends Command
             return;
         }
 
-        $this->info("About to rename {$fromPublicId} file to {$toPublicId} on Cloudinary...");
+        $this->info("About to rename $fromPublicId file to $toPublicId on Cloudinary...");
 
         try {
             $engine->rename($fromPublicId, $toPublicId);

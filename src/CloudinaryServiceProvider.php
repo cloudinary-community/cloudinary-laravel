@@ -15,7 +15,6 @@ use CloudinaryLabs\CloudinaryLaravel\Commands\FetchFilesCommand;
 use CloudinaryLabs\CloudinaryLaravel\Commands\GenerateArchiveCommand;
 use CloudinaryLabs\CloudinaryLaravel\Commands\RenameFilesCommand;
 use CloudinaryLabs\CloudinaryLaravel\Commands\UploadFileCommand;
-use Illuminate\Support\Str;
 
 
 /**
@@ -29,7 +28,7 @@ class CloudinaryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->bootMacros();
         $this->bootResources();
@@ -46,7 +45,7 @@ class CloudinaryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bootMacros()
+    protected function bootMacros(): void
     {
         UploadedFile::macro(
             'storeOnCloudinary',
@@ -71,7 +70,7 @@ class CloudinaryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bootResources()
+    protected function bootResources(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'cloudinary');
     }
@@ -81,7 +80,7 @@ class CloudinaryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bootDirectives()
+    protected function bootDirectives(): void
     {
         Blade::directive(
             'cloudinaryJS',
@@ -96,7 +95,7 @@ class CloudinaryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bootComponents()
+    protected function bootComponents(): void
     {
         Blade::component('cloudinary::components.button', $this->getComponentName('cld-upload-button'));
         Blade::component('cloudinary::components.image', $this->getComponentName('cld-image'));
@@ -113,7 +112,7 @@ class CloudinaryServiceProvider extends ServiceProvider
        return $componentName;
     }
 
-    protected function bootCommands()
+    protected function bootCommands(): void
     {
         /**
          * Register Laravel Cloudinary Artisan commands
@@ -137,7 +136,7 @@ class CloudinaryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bootPublishing()
+    protected function bootPublishing(): void
     {
         if ($this->app->runningInConsole()) {
             $config = dirname(__DIR__) . '/config/cloudinary.php';
@@ -158,7 +157,7 @@ class CloudinaryServiceProvider extends ServiceProvider
         }
     }
 
-    protected function bootCloudinaryDriver()
+    protected function bootCloudinaryDriver(): void
     {
         $this->app['config']['filesystems.disks.cloudinary'] = ['driver' => 'cloudinary'];
 
@@ -182,7 +181,7 @@ class CloudinaryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bootRoutes()
+    protected function bootRoutes(): void
     {
         if (config('cloudinary.upload_route')) {
             Route::post(config('cloudinary.upload_route'), config('cloudinary.upload_action'));
@@ -194,12 +193,12 @@ class CloudinaryServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         // Register the service the package provides.
         $this->app->singleton(
             CloudinaryEngine::class,
-            function ($app) {
+            function () {
                 return new CloudinaryEngine();
             }
         );

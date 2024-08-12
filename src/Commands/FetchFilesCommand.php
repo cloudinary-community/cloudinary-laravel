@@ -29,9 +29,10 @@ class FetchFilesCommand extends Command
     /**
      * Execute the console command.
      *
+     * @param CloudinaryEngine $engine
      * @return void
      */
-    public function handle(CloudinaryEngine $engine)
+    public function handle(CloudinaryEngine $engine): void
     {
         if (!config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
@@ -51,7 +52,7 @@ class FetchFilesCommand extends Command
 
         try {
             $url = $engine->getImage($publicId)->toUrl();
-            $this->info("File: {$url}");
+            $this->info("File: $url");
         } catch (Exception $exception) {
             $this->warn("Renaming of file on Cloudinary failed because: {$exception->getMessage()}.");
         }

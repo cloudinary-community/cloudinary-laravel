@@ -20,7 +20,7 @@ class Media extends Model
      *
      * @return MorphTo
      */
-    public function medially()
+    public function medially(): MorphTo
     {
         return $this->morphTo();
     }
@@ -29,7 +29,7 @@ class Media extends Model
      * Get the file url / path of a Media File
      * @return string
      */
-    public function getSecurePath()
+    public function getSecurePath(): string
     {
         return $this->file_url;
     }
@@ -38,7 +38,7 @@ class Media extends Model
      * Get the file name of a Media File
      * @return string
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->file_name;
     }
@@ -47,7 +47,7 @@ class Media extends Model
      * Get the mime type of a Media File
      * @return string
      */
-    public function getFileType()
+    public function getFileType(): string
     {
         return $this->file_type;
     }
@@ -56,7 +56,7 @@ class Media extends Model
      * Get the Size of a Media File
      * @return Integer
      */
-    public function getSize()
+    public function getSize(): int
     {
         return $this->size;
     }
@@ -65,7 +65,7 @@ class Media extends Model
      * Get the Readable Size of a Media File
      * @return string
      */
-    public function getReadableSize()
+    public function getReadableSize(): string
     {
         return resolve(CloudinaryEngine::class)->getHumanReadableSize($this->size);
     }
