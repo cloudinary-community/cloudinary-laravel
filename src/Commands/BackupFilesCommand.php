@@ -32,9 +32,10 @@ class BackupFilesCommand extends Command
     /**
      * Execute the console command.
      *
+     * @param CloudinaryEngine $engine
      * @return void
      */
-    public function handle(CloudinaryEngine $engine)
+    public function handle(CloudinaryEngine $engine): void
     {
         $files = $this->getFiles();
         $folder = null;
@@ -75,8 +76,8 @@ class BackupFilesCommand extends Command
         }
     }
 
-    public function getFiles($location = 'public')
+    public function getFiles($location = 'public'): array
     {
-        return File::allFiles(storage_path("app/{$location}"));
+        return File::allFiles(storage_path("app/".$location));
     }
 }

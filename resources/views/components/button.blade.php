@@ -39,7 +39,7 @@
     }
 </script>
 
-<button type="button" onclick="openWidget()">
+<button type="button" onclick="openWidget()" {{ $attributes }}>
   {{ $slot }}
 </button>
 

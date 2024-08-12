@@ -31,9 +31,10 @@ class GenerateArchiveCommand extends Command
     /**
      * Execute the console command.
      *
+     * @param CloudinaryEngine $engine
      * @return void
      */
-    public function handle(CloudinaryEngine $engine)
+    public function handle(CloudinaryEngine $engine): void
     {
         if (!config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
@@ -59,7 +60,7 @@ class GenerateArchiveCommand extends Command
                 ]
             )['secure_url'];
 
-            $this->info("Archive: {$response}");
+            $this->info("Archive: $response");
         } catch (Exception $exception) {
             $this->warn("Backup of files to Cloudinary failed because: {$exception->getMessage()}.");
         }

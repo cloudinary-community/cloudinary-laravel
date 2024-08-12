@@ -30,9 +30,10 @@ class UploadFileCommand extends Command
     /**
      * Execute the console command.
      *
+     * @param CloudinaryEngine $engine
      * @return void
      */
-    public function handle(CloudinaryEngine $engine)
+    public function handle(CloudinaryEngine $engine): void
     {
         if (!config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
