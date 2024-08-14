@@ -22,10 +22,18 @@ use Throwable;
  */
 class CloudinaryAdapter implements FilesystemAdapter
 {
-
-    /** Cloudinary\Cloudinary */
+    /**
+     * @var Cloudinary
+     */
     protected Cloudinary $cloudinary;
 
+    /**
+     * The media resource extensions supported by cloudinary.
+     */
+    public $mediaExtensions = [
+        'jpg', 'jpeg', 'png', 'gif', 'pdf', 'bmp', 'tiff', 'svg', 'ico', 'eps', 'psd', 'webp', 'jxr', 'wdp',
+        'mpeg', 'mp4', 'mkv', 'mov', 'flv', 'avi', '3gp', '3g2', 'wmv', 'webm', 'ogv', 'mxf',
+    ];
 
     /**
      * Constructor
@@ -70,28 +78,42 @@ class CloudinaryAdapter implements FilesystemAdapter
      */
     public function writeStream(string $path, $contents, Config $config): void
     {
-        $publicId = $config->get('public_id', $path);
+        $publicId = $this->preparePublicId($config->get('public_id', $path));
 
         $resourceType = $config->get('resource_type', 'auto');
 
-        $fileExtension = pathinfo($publicId, PATHINFO_EXTENSION);
-
-        $newPublicId = $fileExtension ? substr($publicId, 0, - (strlen($fileExtension) + 1)) : $publicId;
-
         $uploadOptions = [
-            'public_id'     => $newPublicId,
+            'public_id'     => $publicId,
             'resource_type' => $resourceType
         ];
 
         $resourceMetadata = stream_get_meta_data($contents);
 
-        resolve(CloudinaryEngine::class)->upload($resourceMetadata['uri'], $uploadOptions);
+        $this->upload($resourceMetadata['uri'], $uploadOptions);
     }
 
+    /**
+     * Prepare the given public ID for cloudinary.
+     */
+    public function preparePublicId($path): string
+    {
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+        return str($path)
+            ->when($this->isMedia($extension))
+            ->beforeLast('.'.$extension);
+    }
+
+    /**
+     * Determine if the given extension is a media extension.
+     */
+    public function isMedia($extension): bool
+    {
+        return in_array($extension, $this->mediaExtensions);
+    }
 
     /**
      * Rename a file.
-     * Paths without extensions.
      *
      * @param string $path
      * @param string $newpath
@@ -107,14 +129,16 @@ class CloudinaryAdapter implements FilesystemAdapter
 
         $remoteNewPath = ($pathInfo['dirname'] != '.') ? $newPathInfo['dirname'] . '/' . $newPathInfo['filename'] : $newPathInfo['filename'];
 
-        $result = $this->uploadApi()->rename($remotePath, $remoteNewPath);
+        $result = $this->uploadApi()->rename(
+            $this->preparePublicId($remotePath),
+            $this->preparePublicId($remoteNewPath)
+        );
 
         return $result['public_id'] == $newPathInfo['filename'];
     }
 
     /**
-     * Expose the Cloudinary v2 Upload Functionality
-     *
+     * Expose the Cloudinary v2 Upload Functionality.
      */
     protected function uploadApi(): UploadApi
     {
@@ -147,6 +171,9 @@ class CloudinaryAdapter implements FilesystemAdapter
      */
     public function copy(string $source, string $destination, Config $config): void
     {
+        $source = $this->preparePublicId($source);
+        $destination = $this->preparePublicId($destination);
+
         $this->uploadApi()->upload($source, ['public_id' => $destination]);
     }
 
@@ -160,8 +187,7 @@ class CloudinaryAdapter implements FilesystemAdapter
     public function delete(string $path): void
     {
         try {
-
-            $result      = $this->uploadApi()->destroy($path);
+            $result      = $this->uploadApi()->destroy($this->preparePublicId($path));
             $finalResult = is_array($result) && $result['result'] == 'ok';
 
             if ($finalResult != 'ok') {
@@ -221,7 +247,7 @@ class CloudinaryAdapter implements FilesystemAdapter
     public function fileExists(string $path): bool
     {
         try {
-            $this->adminApi()->asset($path);
+            $this->adminApi()->asset($this->preparePublicId($path));
         } catch (Exception) {
             return false;
         }
@@ -250,7 +276,7 @@ class CloudinaryAdapter implements FilesystemAdapter
      */
     public function read(string $path): string
     {
-        $resource = (array)$this->adminApi()->asset($path);
+        $resource = (array)$this->adminApi()->asset($this->preparePublicId($path));
 
         return file_get_contents($resource['secure_url']);
     }
@@ -264,7 +290,7 @@ class CloudinaryAdapter implements FilesystemAdapter
      */
     public function readStream(string $path): bool
     {
-        $resource = (array)$this->adminApi()->asset($path);
+        $resource = (array)$this->adminApi()->asset($this->preparePublicId($path));
 
         return fopen($resource['secure_url'], 'rb');
     }
@@ -417,7 +443,7 @@ class CloudinaryAdapter implements FilesystemAdapter
      */
     public function getResource(string $path): array
     {
-        return (array)$this->adminApi()->asset($path);
+        return (array)$this->adminApi()->asset($this->preparePublicId($path));
     }
 
     /**
