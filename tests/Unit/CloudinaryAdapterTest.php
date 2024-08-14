@@ -14,3 +14,16 @@ it('can get url given public id', function () {
     $result = Storage::disk('cloudinary')->url($file);
     expect($result)->toEqual($url);
 });
+
+it('removes extensions from media resources but not raw resources', function ($actual, $expected) {
+    $adapter = Storage::disk('cloudinary')->getAdapter();
+
+    expect($adapter->preparePublicId($actual))->toBe($expected);
+})->with([
+    ['file.jpg', 'file'],
+    ['file.png', 'file'],
+    ['file.gif', 'file'],
+    ['file.xlsx', 'file.xlsx'],
+    ['file.zip', 'file.zip'],
+    ['file.csv', 'file.csv'],
+]);
