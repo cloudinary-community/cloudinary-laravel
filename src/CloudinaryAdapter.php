@@ -32,7 +32,7 @@ class CloudinaryAdapter implements FilesystemAdapter
      */
     public $mediaExtensions = [
         'jpg', 'jpeg', 'png', 'gif', 'pdf', 'bmp', 'tiff', 'svg', 'ico', 'eps', 'psd', 'webp', 'jxr', 'wdp',
-        'mpeg', 'mp4', 'mkv', 'mov', 'flv', 'avi', '3gp', '3g2', 'wmv', 'webm', 'ogv', 'mxf',
+        'mpeg', 'mp4', 'mkv', 'mov', 'flv', 'avi', '3gp', '3g2', 'wmv', 'webm', 'ogv', 'mxf', 'avif',
     ];
 
     /**
