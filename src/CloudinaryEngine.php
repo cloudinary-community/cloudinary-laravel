@@ -242,9 +242,9 @@ class CloudinaryEngine
     }
 
     /**
-     * @return array
+     * @return array|ApiResponse
      */
-    public function getResponse(): array
+    public function getResponse(): array|ApiResponse
     {
         return $this->response;
     }
