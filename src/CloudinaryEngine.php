@@ -37,7 +37,7 @@ class CloudinaryEngine
      *
      * @var string PACKAGE_VERSION
      */
-    const PACKAGE_VERSION = '2.0.2';
+    const PACKAGE_VERSION = '2.2.2';
 
     public const ASSET_ID = 'asset_id';
     public const PUBLIC_ID = 'public_id';
@@ -105,8 +105,8 @@ class CloudinaryEngine
     }
 
     /**
-    * Set Analytics
-    */
+     * Set Analytics
+     */
     public function setAnalytics(): void
     {
         Analytics::sdkCode('W');
