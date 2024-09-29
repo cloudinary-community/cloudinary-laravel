@@ -1,61 +1,49 @@
 # Changelog
 
-1.0.0 / 2020-07-15
-===================
+# 2.0.3 / 2023-03-01
 
-* The first public version (1.0.0) of Cloudinary Laravel Package.
+- Bump to support Laravel 10
 
-1.0.1 / 2020-09-23
-==================
+# 2.0.2 / 2023-02-07
 
-  * Bump to support Laravel 8
-  
-1.0.2 / 2020-11-27
-==================
+- Update Analytics
 
-  * Add Fix to support Laravel 6
-  
- 1.0.3 / 2020-12-04
-======================
+# 2.0.1 / 2022-06-03
 
-  * Bump to support versions greater than PHP 7
+- Fix listContents() and make it compatible with Flysystem v3. @brandon14
 
-1.0.4 / 2021-02-17
-======================
+# 2.0.0 / 2022-06-02
 
-  * Upgrade cloudinary php library
-  * Fix Bug with HumanReadableSize Function - Cybersai
+- Rewrite Cloudinary Adapter to work with Flysystem v3
+- Support for Laravel 9 without issues
+- Remove deprecated methods
 
-1.0.5 / 2022-03-03
-======================
+# 1.0.5 / 2022-03-03
 
-  * Upgrade cloudinary php library
-  * Add support for Laravel 9
-  * Add more options to attach Media
-  * Fix Flystem Adapter for Cloudinary Adapter
-  * Add support for getting asset url using only public id
-  * Replace deprecated method names with v2
+- Upgrade cloudinary php library
+- Add support for Laravel 9
+- Add more options to attach Media
+- Fix Flystem Adapter for Cloudinary Adapter
+- Add support for getting asset url using only public id
+- Replace deprecated method names with v2
 
-2.0.0 / 2022-06-02
-======================
+# 1.0.4 / 2021-02-17
 
-  * Rewrite Cloudinary Adapter to work with Flysystem v3
-  * Support for Laravel 9 without issues
-  * Remove deprecated methods
+- Upgrade cloudinary php library
+- Fix Bug with HumanReadableSize Function - Cybersai
 
-2.0.1 / 2022-06-03
-======================
+# 1.0.3 / 2020-12-04
 
-  * Fix listContents() and make it compatible with Flysystem v3. @brandon14
+- Bump to support versions greater than PHP 7
 
+# 1.0.2 / 2020-11-27
 
-2.0.2 / 2023-02-07
-======================
+- Add Fix to support Laravel 6
 
-  * Update Analytics
+# 1.0.1 / 2020-09-23
 
+- Bump to support Laravel 8
 
-2.0.3 / 2023-03-01
-======================
+# 1.0.0 / 2020-07-15
 
-  * Bump to support Laravel 10
+- The first public version (1.0.0) of Cloudinary Laravel Package.
