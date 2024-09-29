@@ -1,5 +1,29 @@
 # Changelog
 
+# 2.2.2 / 2024-09-25
+
+- See what's new in [2.2.2](https://github.com/cloudinary-labs/cloudinary-laravel/releases/tag/2.2.2)
+
+# 2.2.1 / 2024-08-14
+
+- See what's new in [2.2.1](https://github.com/cloudinary-labs/cloudinary-laravel/releases/tag/2.2.1)
+
+# 2.2.0 / 2024-08-12
+
+- See what's new in [2.2.0](https://github.com/cloudinary-labs/cloudinary-laravel/releases/tag/2.2.0)
+
+# 1.0.7 / 2024-06-30
+
+- See what's new in [1.0.7](https://github.com/cloudinary-labs/cloudinary-laravel/releases/tag/1.0.7)
+
+# 1.0.6 / 2024-06-29
+
+- See what's new in [1.0.6](https://github.com/cloudinary-labs/cloudinary-laravel/releases/tag/1.0.6)
+
+# 2.1.0 / 2024-03-19
+
+- See what's new in [2.1.0](https://github.com/cloudinary-labs/cloudinary-laravel/releases/tag/2.1.0)
+
 # 2.0.3 / 2023-03-01
 
 - Bump to support Laravel 10
