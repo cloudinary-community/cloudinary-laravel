@@ -1,5 +1,8 @@
 # Changelog
 
+> [!IMPORTANT]
+> For more details about the changes in each version, please refer to the [releases](https://github.com/cloudinary-labs/cloudinary-laravel/releases) page.
+
 # 2.2.2 / 2024-09-25
 
 - See what's new in [2.2.2](https://github.com/cloudinary-labs/cloudinary-laravel/releases/tag/2.2.2)
