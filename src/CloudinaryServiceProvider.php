@@ -145,21 +145,16 @@ class CloudinaryServiceProvider extends ServiceProvider
 
     protected function bootCloudinaryDriver(): void
     {
-        $this->app['config']['filesystems.disks.cloudinary'] = ['driver' => 'cloudinary'];
+        Storage::extend('cloudinary', function ($app, $config) {
 
-        Storage::extend(
-            'cloudinary',
-            function ($app, $config) {
+            $cloudinaryAdapter = new CloudinaryAdapter(config('cloudinary.cloud_url'));
 
-                $cloudinaryAdapter = new CloudinaryAdapter(config('cloudinary.cloud_url'));
-
-                return new FilesystemAdapter(
-                    new Filesystem($cloudinaryAdapter, $config),
-                    $cloudinaryAdapter,
-                    $config
-                );
-            }
-        );
+            return new FilesystemAdapter(
+                new Filesystem($cloudinaryAdapter, $config),
+                $cloudinaryAdapter,
+                $config
+            );
+        });
     }
 
     /**

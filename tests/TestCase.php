@@ -16,6 +16,7 @@ abstract class TestCase extends Testbench\TestCase
 
         $app['config']->set('database.default', 'testing');
         $app['config']->set('cloudinary.cloud_url', env('CLOUDINARY_URL', 'cloudinary://foo:bar@baz'));
+        $app['config']->set('filesystems.disks.cloudinary', ['driver' => 'cloudinary']);
     }
 
     protected function getPackageProviders($app)
