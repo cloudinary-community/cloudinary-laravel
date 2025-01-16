@@ -5,7 +5,7 @@ use Mockery\MockInterface;
 use Tests\Fixtures\Models\Example;
 
 beforeEach(function () {
-    $this->mock('overload:' . Cloudinary\Api\Upload\UploadApi::class, function (MockInterface $mock) {
+    $this->mock('overload:'.Cloudinary\Api\Upload\UploadApi::class, function (MockInterface $mock) {
         $mock->shouldReceive('upload')->andReturn([
             'public_id' => 'file',
             'bytes' => '123',
@@ -23,7 +23,6 @@ it('can attach media to a model', function () {
     $example = Example::create([]);
 
     $example->attachMedia(UploadedFile::fake()->image('file.jpg'));
-
 
     expect($example->fetchAllMedia())->toHaveCount(1);
 });

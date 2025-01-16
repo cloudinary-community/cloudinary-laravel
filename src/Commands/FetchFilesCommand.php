@@ -2,13 +2,12 @@
 
 namespace CloudinaryLabs\CloudinaryLaravel\Commands;
 
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 use Exception;
 use Illuminate\Console\Command;
-use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 /**
  * Class FetchFilesCommand
- * @package CloudinaryLabs\CloudinaryLaravel\Commands
  */
 class FetchFilesCommand extends Command
 {
@@ -17,7 +16,7 @@ class FetchFilesCommand extends Command
      *
      * @var string
      */
-    protected $signature = "cloudinary:fetch {publicId}";
+    protected $signature = 'cloudinary:fetch {publicId}';
 
     /**
      * The console command description.
@@ -28,13 +27,10 @@ class FetchFilesCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @param CloudinaryEngine $engine
-     * @return void
      */
     public function handle(CloudinaryEngine $engine): void
     {
-        if (!config('cloudinary.cloud_url')) {
+        if (! config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;
@@ -42,13 +38,13 @@ class FetchFilesCommand extends Command
 
         $publicId = $this->argument('publicId');
 
-        if (!is_string($publicId)) {
-            $this->warn("Please ensure a valid public Id is passed as an argument.");
+        if (! is_string($publicId)) {
+            $this->warn('Please ensure a valid public Id is passed as an argument.');
 
             return;
         }
 
-        $this->info("Fetching file...");
+        $this->info('Fetching file...');
 
         try {
             $url = $engine->getImage($publicId)->toUrl();

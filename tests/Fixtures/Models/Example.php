@@ -2,8 +2,8 @@
 
 namespace Tests\Fixtures\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
+use Illuminate\Database\Eloquent\Model;
 
 class Example extends Model
 {

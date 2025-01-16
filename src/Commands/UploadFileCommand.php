@@ -2,14 +2,12 @@
 
 namespace CloudinaryLabs\CloudinaryLaravel\Commands;
 
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 use Exception;
 use Illuminate\Console\Command;
-use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
-
 
 /**
  * Class UploadFileCommand
- * @package CloudinaryLabs\CloudinaryLaravel\Commands
  */
 class UploadFileCommand extends Command
 {
@@ -18,7 +16,7 @@ class UploadFileCommand extends Command
      *
      * @var string
      */
-    protected $signature = "cloudinary:upload {remote-url}";
+    protected $signature = 'cloudinary:upload {remote-url}';
 
     /**
      * The console command description.
@@ -29,13 +27,10 @@ class UploadFileCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @param CloudinaryEngine $engine
-     * @return void
      */
     public function handle(CloudinaryEngine $engine): void
     {
-        if (!config('cloudinary.cloud_url')) {
+        if (! config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;
@@ -47,7 +42,7 @@ class UploadFileCommand extends Command
             return;
         }
 
-        if (!filter_var($this->argument('remote-url'), FILTER_VALIDATE_URL)) {
+        if (! filter_var($this->argument('remote-url'), FILTER_VALIDATE_URL)) {
             $this->warn('Please add a valid remote file url as an argument.');
 
             return;

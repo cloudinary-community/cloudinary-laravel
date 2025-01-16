@@ -2,15 +2,15 @@
 
 namespace Tests;
 
-use Orchestra\Testbench;
-use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
 use CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider;
+use Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables;
+use Orchestra\Testbench;
 
 abstract class TestCase extends Testbench\TestCase
 {
     protected function getEnvironmentSetup($app)
     {
-        $app->useEnvironmentPath(__DIR__ . '/..');
+        $app->useEnvironmentPath(__DIR__.'/..');
         $app->bootstrapWith([LoadEnvironmentVariables::class]);
         parent::getEnvironmentSetUp($app);
 
@@ -25,7 +25,7 @@ abstract class TestCase extends Testbench\TestCase
 
     protected function defineDatabaseMigrations()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->loadMigrationsFrom(__DIR__ . '/Fixtures/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/Fixtures/migrations');
     }
 }
