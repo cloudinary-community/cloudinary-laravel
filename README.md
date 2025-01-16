@@ -22,11 +22,9 @@
 
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Usage](#usage)
-  - [Upload, Retrieval & Transformation](#upload-retrieval--transformation)
-  - [Attach Files to Eloquent Models](#attach-files-to-eloquent-models)
-  - [Upload Widget](#upload-widget)
-  - [Media Management via CLI](#media-management-via-cli)
+- [Upload, Retrieval & Transformation](#upload-retrieval--transformation)
+- [Attach Files to Eloquent Models](#attach-files-to-eloquent-models)
+- [Media Management via CLI](#media-management-via-cli)
 - [Cloudinary URL Generation](#cloudinary-url-generation)
 - [Blade Components](#blade-components)
 - [Disclaimer](#disclaimer)
@@ -115,22 +113,6 @@ $page->updateMedia($newFile);
 
 // Detach media
 $page->detachMedia($file);
-```
-
-### Upload Widget
-
-Add the Cloudinary JS to your layout:
-
-```blade
-<head>
-  @cloudinaryJS
-</head>
-```
-
-Use the upload button component:
-
-```blade
-<x-cld-upload-button> Upload Files </x-cld-upload-button>
 ```
 
 ### Media Management via CLI
