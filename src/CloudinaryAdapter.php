@@ -121,7 +121,7 @@ class CloudinaryAdapter implements FilesystemAdapter
 
         return str($path)
             ->when($this->isMedia($extension))
-            ->beforeLast('.' . $extension)->toString();
+            ->beforeLast('.'.$extension)->toString();
     }
 
     /**
@@ -140,9 +140,9 @@ class CloudinaryAdapter implements FilesystemAdapter
         $pathInfo = pathinfo($path);
         $newPathInfo = pathinfo($newpath);
 
-        $remotePath = ($pathInfo['dirname'] != '.') ? $pathInfo['dirname'] . '/' . $pathInfo['filename'] : $pathInfo['filename'];
+        $remotePath = ($pathInfo['dirname'] != '.') ? $pathInfo['dirname'].'/'.$pathInfo['filename'] : $pathInfo['filename'];
 
-        $remoteNewPath = ($pathInfo['dirname'] != '.') ? $newPathInfo['dirname'] . '/' . $newPathInfo['filename'] : $newPathInfo['filename'];
+        $remoteNewPath = ($pathInfo['dirname'] != '.') ? $newPathInfo['dirname'].'/'.$newPathInfo['filename'] : $newPathInfo['filename'];
 
         $result = $this->uploadApi()->rename(
             $this->preparePublicId($remotePath),
