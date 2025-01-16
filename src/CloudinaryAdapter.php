@@ -6,41 +6,64 @@ use Cloudinary\Api\Admin\AdminApi;
 use Cloudinary\Api\Exception\ApiError;
 use Cloudinary\Api\Upload\UploadApi;
 use Cloudinary\Cloudinary;
+use Cloudinary\Configuration\Configuration;
+use Exception;
+use Illuminate\Support\Str;
+use League\Flysystem\Config;
 use League\Flysystem\FileAttributes;
 use League\Flysystem\FilesystemAdapter;
 use League\Flysystem\StorageAttributes;
 use League\Flysystem\UnableToDeleteFile;
 use League\Flysystem\UnableToSetVisibility;
-use League\Flysystem\Config;
-use Illuminate\Support\Str;
-use Exception;
 use Throwable;
 
 /**
  * Class CloudinaryAdapter
- * @package CloudinaryLabs\CloudinaryLaravel
  */
 class CloudinaryAdapter implements FilesystemAdapter
 {
-    /**
-     * @var Cloudinary
-     */
     protected Cloudinary $cloudinary;
 
     /**
      * The media resource extensions supported by cloudinary.
      */
     public $mediaExtensions = [
-        'jpg', 'jpeg', 'png', 'gif', 'pdf', 'bmp', 'tiff', 'svg', 'ico', 'eps', 'psd', 'webp', 'jxr', 'wdp',
-        'mpeg', 'mp4', 'mkv', 'mov', 'flv', 'avi', '3gp', '3g2', 'wmv', 'webm', 'ogv', 'mxf', 'avif',
+        'jpg',
+        'jpeg',
+        'png',
+        'gif',
+        'pdf',
+        'bmp',
+        'tiff',
+        'svg',
+        'ico',
+        'eps',
+        'psd',
+        'webp',
+        'jxr',
+        'wdp',
+        'mpeg',
+        'mp4',
+        'mkv',
+        'mov',
+        'flv',
+        'avi',
+        '3gp',
+        '3g2',
+        'wmv',
+        'webm',
+        'ogv',
+        'mxf',
+        'avif',
     ];
 
     /**
      * Constructor
      * Sets configuration for Cloudinary Api.
-     * @param string $config Cloudinary configuration
+     *
+     * @param  Configuration|string|array|null  $config  Cloudinary configuration
      */
-    public function __construct(string $config)
+    public function __construct($config = null)
     {
         $this->cloudinary = new Cloudinary($config);
     }
@@ -50,11 +73,9 @@ class CloudinaryAdapter implements FilesystemAdapter
      * Create temporary stream with content.
      * Pass to writeStream.
      *
-     * @param string $path
-     * @param string $contents
-     * @param Config $config Config object
-     *
+     * @param  Config  $config  Config object
      * @return void false on failure file meta data on success
+     *
      * @throws ApiError
      */
     public function write(string $path, string $contents, Config $config): void
@@ -69,11 +90,10 @@ class CloudinaryAdapter implements FilesystemAdapter
     /**
      * Write a new file using a stream
      *
-     * @param string $path
-     * @param resource $contents
-     * @param Config $config Config object
-     *
+     * @param  resource  $contents
+     * @param  Config  $config  Config object
      * @return void false on failure file meta data on success
+     *
      * @throws ApiError
      */
     public function writeStream(string $path, $contents, Config $config): void
@@ -83,8 +103,8 @@ class CloudinaryAdapter implements FilesystemAdapter
         $resourceType = $config->get('resource_type', 'auto');
 
         $uploadOptions = [
-            'public_id'     => $publicId,
-            'resource_type' => $resourceType
+            'public_id' => $publicId,
+            'resource_type' => $resourceType,
         ];
 
         $resourceMetadata = stream_get_meta_data($contents);
@@ -101,7 +121,7 @@ class CloudinaryAdapter implements FilesystemAdapter
 
         return str($path)
             ->when($this->isMedia($extension))
-            ->beforeLast('.'.$extension);
+            ->beforeLast('.' . $extension)->toString();
     }
 
     /**
@@ -114,15 +134,10 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Rename a file.
-     *
-     * @param string $path
-     * @param string $newpath
-     *
-     * @return bool
      */
     public function rename(string $path, string $newpath): bool
     {
-        $pathInfo    = pathinfo($path);
+        $pathInfo = pathinfo($path);
         $newPathInfo = pathinfo($newpath);
 
         $remotePath = ($pathInfo['dirname'] != '.') ? $pathInfo['dirname'] . '/' . $pathInfo['filename'] : $pathInfo['filename'];
@@ -148,10 +163,7 @@ class CloudinaryAdapter implements FilesystemAdapter
     /**
      * Upload a file
      *
-     * @param string $file
-     * @param array $options
      *
-     * @return void
      * @throws ApiError
      */
     protected function upload(string $file, array $options = []): void
@@ -163,10 +175,6 @@ class CloudinaryAdapter implements FilesystemAdapter
      * Copy a file.
      * Copy content from existing url.
      *
-     * @param string $source
-     * @param string $destination
-     * @param Config $config
-     * @return void
      * @throws ApiError
      */
     public function copy(string $source, string $destination, Config $config): void
@@ -179,15 +187,11 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Delete a file.
-     *
-     * @param string $path
-     *
-     * @return void
      */
     public function delete(string $path): void
     {
         try {
-            $result      = $this->uploadApi()->destroy($this->preparePublicId($path));
+            $result = $this->uploadApi()->destroy($this->preparePublicId($path));
             $finalResult = is_array($result) && $result['result'] == 'ok';
 
             if ($finalResult != 'ok') {
@@ -202,9 +206,7 @@ class CloudinaryAdapter implements FilesystemAdapter
      * Delete a directory.
      * Delete Files using directory as a prefix.
      *
-     * @param string $path
      *
-     * @return void
      *
      * @throws ApiError
      */
@@ -215,7 +217,6 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Expose the Cloudinary v2 Upload Functionality
-     *
      */
     protected function adminApi(): AdminApi
     {
@@ -225,10 +226,7 @@ class CloudinaryAdapter implements FilesystemAdapter
     /**
      * Create a directory.
      *
-     * @param string $path directory name
-     * @param Config $config
-     *
-     * @return void
+     * @param  string  $path  directory name
      *
      * @throws ApiError
      */
@@ -239,10 +237,6 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Check whether a file exists.
-     *
-     * @param string $path
-     *
-     * @return bool
      */
     public function fileExists(string $path): bool
     {
@@ -257,10 +251,6 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Check whether a directory exists.
-     *
-     * @param string $path
-     *
-     * @return bool
      */
     public function directoryExists(string $path): bool
     {
@@ -269,14 +259,10 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Read a file.
-     *
-     * @param string $path
-     *
-     * @return string
      */
     public function read(string $path): string
     {
-        $resource = (array)$this->adminApi()->asset($this->preparePublicId($path));
+        $resource = (array) $this->adminApi()->asset($this->preparePublicId($path));
 
         return file_get_contents($resource['secure_url']);
     }
@@ -284,13 +270,12 @@ class CloudinaryAdapter implements FilesystemAdapter
     /**
      * Read a file as a stream.
      *
-     * @param string $path
      *
-     * @return false
+     * @return resource
      */
-    public function readStream(string $path): bool
+    public function readStream(string $path)
     {
-        $resource = (array)$this->adminApi()->asset($this->preparePublicId($path));
+        $resource = (array) $this->adminApi()->asset($this->preparePublicId($path));
 
         return fopen($resource['secure_url'], 'rb');
     }
@@ -298,8 +283,7 @@ class CloudinaryAdapter implements FilesystemAdapter
     /**
      * Set visibility for the file
      *
-     * @param string $path
-     * @param mixed $visibility
+     * @param  mixed  $visibility
      *
      * @throws UnableToSetVisibility
      */
@@ -311,7 +295,6 @@ class CloudinaryAdapter implements FilesystemAdapter
     /**
      * Check visibility of the file
      *
-     * @param string $path
      * @throws UnableToSetVisibility
      */
     public function visibility(string $path): FileAttributes
@@ -322,8 +305,6 @@ class CloudinaryAdapter implements FilesystemAdapter
     /**
      * List contents of a directory.
      *
-     * @param string $path
-     * @param bool $deep
      * @return iterable<StorageAttributes>
      */
     public function listContents(string $path = '', bool $deep = false): iterable
@@ -333,7 +314,7 @@ class CloudinaryAdapter implements FilesystemAdapter
         // get resources array
         $response = null;
         do {
-            $response = (array)$this->adminApi()->assets(
+            $response = (array) $this->adminApi()->assets(
                 [
                     'type' => 'upload',
                     'prefix' => $path,
@@ -348,15 +329,12 @@ class CloudinaryAdapter implements FilesystemAdapter
         foreach ($resources as $i => $resource) {
             $resources[$i] = $this->prepareFileAttributes($this->prepareResourceMetadata($resource));
         }
+
         return $resources;
     }
 
     /**
      * Transform array of resource metadata into a {@link FileAttributes} instance.
-     *
-     * @param array $metadata
-     *
-     * @return FileAttributes
      */
     protected function prepareFileAttributes(array $metadata): FileAttributes
     {
@@ -372,64 +350,49 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Prepare apropriate metadata for resource metadata given from cloudinary.
-     * @param array $resource
-     * @return array
      */
     protected function prepareResourceMetadata(array $resource): array
     {
         $resource['type'] = 'file';
         $resource['path'] = $resource['public_id'];
-        $resource         = array_merge($resource, $this->prepareSize($resource));
-        $resource         = array_merge($resource, $this->prepareTimestamp($resource));
+        $resource = array_merge($resource, $this->prepareSize($resource));
+        $resource = array_merge($resource, $this->prepareTimestamp($resource));
 
         return array_merge($resource, $this->prepareMimetype($resource));
     }
 
     /**
      * prepare size response
-     *
-     * @param array $resource
-     *
-     * @return array
      */
     protected function prepareSize(array $resource): array
     {
         $size = $resource['bytes'];
+
         return compact('size');
     }
 
     /**
      * prepare timestamp response
-     *
-     * @param array $resource
-     *
-     * @return array
      */
     protected function prepareTimestamp(array $resource): array
     {
         $timestamp = strtotime($resource['created_at']);
+
         return compact('timestamp');
     }
 
     /**
      * prepare mimetype response
-     *
-     * @param array $resource
-     *
-     * @return array
      */
     protected function prepareMimetype(array $resource): array
     {
         $mimetype = $resource['resource_type'];
+
         return compact('mimetype');
     }
 
     /**
      * Get all the meta data of a file or directory.
-     *
-     * @param string $path
-     *
-     * @return array
      */
     public function getMetadata(string $path): array
     {
@@ -438,20 +401,14 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Get Resource data
-     * @param string $path
-     * @return array
      */
     public function getResource(string $path): array
     {
-        return (array)$this->adminApi()->asset($this->preparePublicId($path));
+        return (array) $this->adminApi()->asset($this->preparePublicId($path));
     }
 
     /**
      * Get all the meta data of a file or directory.
-     *
-     * @param string $path
-     *
-     * @return array
      */
     public function getSize(string $path): array
     {
@@ -460,10 +417,6 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Get the mimetype of a file.
-     *
-     * @param string $path
-     *
-     * @return array
      */
     public function getMimetype(string $path): array
     {
@@ -472,10 +425,6 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Get the mimetype of a file.
-     *
-     * @param string $path
-     *
-     * @return FileAttributes
      */
     public function mimeType(string $path): FileAttributes
     {
@@ -486,10 +435,6 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Get the timestamp of a file.
-     *
-     * @param string $path
-     *
-     * @return FileAttributes
      */
     public function lastModified(string $path): FileAttributes
     {
@@ -500,10 +445,6 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Get the filesize of a file
-     *
-     * @param string $path
-     *
-     * @return FileAttributes
      */
     public function fileSize(string $path): FileAttributes
     {
@@ -515,11 +456,7 @@ class CloudinaryAdapter implements FilesystemAdapter
     /**
      * Move a file to another location
      *
-     * @param string $source
-     * @param string $destination
-     * @param Config $config
      *
-     * @return void
      * @throws ApiError
      */
     public function move(string $source, string $destination, Config $config): void
@@ -530,10 +467,6 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Get the timestamp of a file.
-     *
-     * @param string $path
-     *
-     * @return array
      */
     public function getTimestamp(string $path): array
     {
@@ -542,18 +475,15 @@ class CloudinaryAdapter implements FilesystemAdapter
 
     /**
      * Get the url of a file
-     *
-     * @param string $path
-     *
-     * @return string|false
      */
-    public function getUrl(string $path): bool|string
+    public function getUrl(string $path): string
     {
         if ($path == '/') {
             return $path;
         }
         try {
             $resource = $this->getResource(Str::beforeLast($path, '.'));
+
             return $resource['secure_url'] ?? '';
         } catch (Exception) {
             return '';

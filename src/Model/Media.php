@@ -2,23 +2,19 @@
 
 namespace CloudinaryLabs\CloudinaryLaravel\Model;
 
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 /**
  * Class Media
- * @package CloudinaryLabs\CloudinaryLaravel\Model
  */
 class Media extends Model
 {
-
     protected $table = 'media';
 
     /**
      * Create the polymorphic relation.
-     *
-     * @return MorphTo
      */
     public function medially(): MorphTo
     {
@@ -27,7 +23,6 @@ class Media extends Model
 
     /**
      * Get the file url / path of a Media File
-     * @return string
      */
     public function getSecurePath(): string
     {
@@ -36,7 +31,6 @@ class Media extends Model
 
     /**
      * Get the file name of a Media File
-     * @return string
      */
     public function getFileName(): string
     {
@@ -45,7 +39,6 @@ class Media extends Model
 
     /**
      * Get the mime type of a Media File
-     * @return string
      */
     public function getFileType(): string
     {
@@ -54,7 +47,6 @@ class Media extends Model
 
     /**
      * Get the Size of a Media File
-     * @return Integer
      */
     public function getSize(): int
     {
@@ -63,7 +55,6 @@ class Media extends Model
 
     /**
      * Get the Readable Size of a Media File
-     * @return string
      */
     public function getReadableSize(): string
     {

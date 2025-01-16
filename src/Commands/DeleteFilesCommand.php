@@ -2,13 +2,12 @@
 
 namespace CloudinaryLabs\CloudinaryLaravel\Commands;
 
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 use Exception;
 use Illuminate\Console\Command;
-use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 /**
  * Class DeleteFilesCommand
- * @package CloudinaryLabs\CloudinaryLaravel\Commands
  */
 class DeleteFilesCommand extends Command
 {
@@ -17,7 +16,7 @@ class DeleteFilesCommand extends Command
      *
      * @var string
      */
-    protected $signature = "cloudinary:delete {publicId}";
+    protected $signature = 'cloudinary:delete {publicId}';
 
     /**
      * The console command description.
@@ -28,13 +27,10 @@ class DeleteFilesCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @param CloudinaryEngine $engine
-     * @return void
      */
     public function handle(CloudinaryEngine $engine): void
     {
-        if (!config('cloudinary.cloud_url')) {
+        if (! config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;

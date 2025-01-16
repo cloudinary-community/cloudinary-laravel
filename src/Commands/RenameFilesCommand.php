@@ -2,13 +2,12 @@
 
 namespace CloudinaryLabs\CloudinaryLaravel\Commands;
 
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 use Exception;
 use Illuminate\Console\Command;
-use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 /**
  * Class RenameFilesCommand
- * @package CloudinaryLabs\CloudinaryLaravel\Commands
  */
 class RenameFilesCommand extends Command
 {
@@ -17,7 +16,7 @@ class RenameFilesCommand extends Command
      *
      * @var string
      */
-    protected $signature = "cloudinary:rename {fromPublicId} {toPublicId}";
+    protected $signature = 'cloudinary:rename {fromPublicId} {toPublicId}';
 
     /**
      * The console command description.
@@ -28,13 +27,10 @@ class RenameFilesCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @param CloudinaryEngine $engine
-     * @return void
      */
     public function handle(CloudinaryEngine $engine): void
     {
-        if (!config('cloudinary.cloud_url')) {
+        if (! config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;
@@ -43,8 +39,8 @@ class RenameFilesCommand extends Command
         $fromPublicId = $this->argument('fromPublicId');
         $toPublicId = $this->argument('toPublicId');
 
-        if (!is_string($fromPublicId) || !is_string($toPublicId)) {
-            $this->warn("Please ensure a valid public Id is passed as an argument.");
+        if (! is_string($fromPublicId) || ! is_string($toPublicId)) {
+            $this->warn('Please ensure a valid public Id is passed as an argument.');
 
             return;
         }

@@ -2,14 +2,13 @@
 
 namespace CloudinaryLabs\CloudinaryLaravel\Commands;
 
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 /**
  * Class BackupFilesCommand
- * @package CloudinaryLabs\CloudinaryLaravel\Commands
  */
 class BackupFilesCommand extends Command
 {
@@ -31,16 +30,13 @@ class BackupFilesCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @param CloudinaryEngine $engine
-     * @return void
      */
     public function handle(CloudinaryEngine $engine): void
     {
         $files = $this->getFiles();
         $folder = null;
 
-        if (!$files) {
+        if (! $files) {
             $this->warn(
                 'There are no files in the storage/app/public directory. Use --location flag to specify the name of the directory (if there are files in there) within the storage/app directory.'
             );
@@ -48,7 +44,7 @@ class BackupFilesCommand extends Command
             return;
         }
 
-        if (!config('cloudinary.cloud_url')) {
+        if (! config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;
@@ -78,6 +74,6 @@ class BackupFilesCommand extends Command
 
     public function getFiles($location = 'public'): array
     {
-        return File::allFiles(storage_path("app/".$location));
+        return File::allFiles(storage_path('app/'.$location));
     }
 }

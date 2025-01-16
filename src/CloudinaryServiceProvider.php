@@ -2,31 +2,27 @@
 
 namespace CloudinaryLabs\CloudinaryLaravel;
 
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\ServiceProvider;
-use League\Flysystem\Filesystem;
-use Illuminate\Filesystem\FilesystemAdapter;
 use CloudinaryLabs\CloudinaryLaravel\Commands\BackupFilesCommand;
 use CloudinaryLabs\CloudinaryLaravel\Commands\DeleteFilesCommand;
 use CloudinaryLabs\CloudinaryLaravel\Commands\FetchFilesCommand;
 use CloudinaryLabs\CloudinaryLaravel\Commands\GenerateArchiveCommand;
 use CloudinaryLabs\CloudinaryLaravel\Commands\RenameFilesCommand;
 use CloudinaryLabs\CloudinaryLaravel\Commands\UploadFileCommand;
-
+use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\ServiceProvider;
+use League\Flysystem\Filesystem;
 
 /**
  * Class CloudinaryServiceProvider
- * @package CloudinaryLabs\CloudinaryLaravel
  */
 class CloudinaryServiceProvider extends ServiceProvider
 {
     /**
      * Perform post-registration booting of services.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -42,8 +38,6 @@ class CloudinaryServiceProvider extends ServiceProvider
 
     /**
      * Boot the package macros that extends Laravel Uploaded File API.
-     *
-     * @return void
      */
     protected function bootMacros(): void
     {
@@ -67,18 +61,14 @@ class CloudinaryServiceProvider extends ServiceProvider
 
     /**
      * Boot the package resources.
-     *
-     * @return void
      */
     protected function bootResources(): void
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'cloudinary');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'cloudinary');
     }
 
     /**
      * Boot the package directives.
-     *
-     * @return void
      */
     protected function bootDirectives(): void
     {
@@ -92,8 +82,6 @@ class CloudinaryServiceProvider extends ServiceProvider
 
     /**
      * Boot the package components.
-     *
-     * @return void
      */
     protected function bootComponents(): void
     {
@@ -101,15 +89,15 @@ class CloudinaryServiceProvider extends ServiceProvider
         Blade::component('cloudinary::components.image', $this->getComponentName('cld-image'));
         Blade::component('cloudinary::components.video', $this->getComponentName('cld-video'));
     }
-    
-    protected function getComponentName($componentName) 
-    {
-       $version = explode(".", $this->app->version());
-       if( (int)$version[0] <= 6 ) {
-          $componentName = str_replace("-", "_", $componentName);
-       }
 
-       return $componentName;
+    protected function getComponentName($componentName)
+    {
+        $version = explode('.', $this->app->version());
+        if ((int) $version[0] <= 6) {
+            $componentName = str_replace('-', '_', $componentName);
+        }
+
+        return $componentName;
     }
 
     protected function bootCommands(): void
@@ -125,7 +113,7 @@ class CloudinaryServiceProvider extends ServiceProvider
                     FetchFilesCommand::class,
                     RenameFilesCommand::class,
                     GenerateArchiveCommand::class,
-                    DeleteFilesCommand::class
+                    DeleteFilesCommand::class,
                 ]
             );
         }
@@ -133,13 +121,11 @@ class CloudinaryServiceProvider extends ServiceProvider
 
     /**
      * Boot the package's publishable resources.
-     *
-     * @return void
      */
     protected function bootPublishing(): void
     {
         if ($this->app->runningInConsole()) {
-            $config = dirname(__DIR__) . '/config/cloudinary.php';
+            $config = dirname(__DIR__).'/config/cloudinary.php';
 
             $this->publishes(
                 [
@@ -178,8 +164,6 @@ class CloudinaryServiceProvider extends ServiceProvider
 
     /**
      * Boot the package routes.
-     *
-     * @return void
      */
     protected function bootRoutes(): void
     {
@@ -190,8 +174,6 @@ class CloudinaryServiceProvider extends ServiceProvider
 
     /**
      * Register any package services.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -199,7 +181,7 @@ class CloudinaryServiceProvider extends ServiceProvider
         $this->app->singleton(
             CloudinaryEngine::class,
             function () {
-                return new CloudinaryEngine();
+                return new CloudinaryEngine;
             }
         );
     }

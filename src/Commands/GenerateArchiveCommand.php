@@ -2,13 +2,12 @@
 
 namespace CloudinaryLabs\CloudinaryLaravel\Commands;
 
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 use Exception;
 use Illuminate\Console\Command;
-use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 
 /**
  * Class GenerateArchiveCommand
- * @package CloudinaryLabs\CloudinaryLaravel\Commands
  */
 class GenerateArchiveCommand extends Command
 {
@@ -17,9 +16,9 @@ class GenerateArchiveCommand extends Command
      *
      * @var string
      */
-    protected $signature = "cloudinary:archive
+    protected $signature = 'cloudinary:archive
         {--tags=* : The tags of the assets you want included in the arhive}
-        {--public_ids=* : The public IDs of the assets you want included in the archive}";
+        {--public_ids=* : The public IDs of the assets you want included in the archive}';
 
     /**
      * The console command description.
@@ -30,19 +29,16 @@ class GenerateArchiveCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @param CloudinaryEngine $engine
-     * @return void
      */
     public function handle(CloudinaryEngine $engine): void
     {
-        if (!config('cloudinary.cloud_url')) {
+        if (! config('cloudinary.cloud_url')) {
             $this->warn('Please ensure your Cloudinary credentials are set before continuing.');
 
             return;
         }
 
-        if (!$this->option('tags') && !$this->option('public_ids')) {
+        if (! $this->option('tags') && ! $this->option('public_ids')) {
             $this->warn(
                 'Please ensure you pass in at least a tag with --tags, or at least a public_id  with --public_ids'
             );
@@ -56,7 +52,7 @@ class GenerateArchiveCommand extends Command
             $response = $engine->createArchive(
                 [
                     'tags' => $this->option('tags') ?? null,
-                    'public_ids' => $this->option('public_ids') ?? null
+                    'public_ids' => $this->option('public_ids') ?? null,
                 ]
             )['secure_url'];
 
