@@ -121,7 +121,7 @@ $page->detachMedia($file);
 
 Add the Cloudinary JS to your layout:
 
-```html
+```blade
 <head>
   @cloudinaryJS
 </head>
@@ -129,7 +129,7 @@ Add the Cloudinary JS to your layout:
 
 Use the upload button component:
 
-```html
+```blade
 <x-cld-upload-button> Upload Files </x-cld-upload-button>
 ```
 
@@ -163,7 +163,7 @@ This package provides several Blade components for easy integration of Cloudinar
 
 You can use the `<x-cld-upload-button />` Blade component that ships with this page like so:
 
-```html
+```blade
 <!DOCTYPE html>
 <html>
   <head>
@@ -179,13 +179,13 @@ You can use the `<x-cld-upload-button />` Blade component that ships with this p
 
 Basic usage:
 
-```html
+```blade
 <x-cld-image public-id="example" />
 ```
 
 With additional properties:
 
-```html
+```blade
 <x-cld-image public-id="example" width="300" height="300" />
 ```
 
@@ -231,13 +231,13 @@ With additional properties:
 
 Basic usage:
 
-```html
+```blade
 <x-cld-video public-id="example"></x-cld-video>
 ```
 
 With additional properties:
 
-```html
+```blade
 <x-cld-video public-id="example" width="300" height="300" />
 ```
 
