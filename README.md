@@ -157,46 +157,75 @@ $url = cloudinary()->getUrl($publicId);
 
 ## Blade Components
 
-This package provides several Blade components for easy integration of Cloudinary media in your Laravel views:
+This package provides several Blade components for easy integration of Cloudinary media in your Laravel views
+
+### Upload files via an Upload Widget
+
+You can use the `<x-cld-upload-button />` Blade component that ships with this page like so:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    ... @cloudinaryJS
+  </head>
+  <body>
+    <x-cld-upload-button>Upload Files</x-cld-upload-button>
+  </body>
+</html>
+```
 
 ### Image Component
 
 Basic usage:
 
 ```html
-<x-cld-image public-id="example" width="300" height="300"></x-cld-image>
+<x-cld-image public-id="example" />
 ```
 
-With transformations:
+With additional properties:
 
 ```html
-<x-cld-image public-id="example" width="300" height="300">
-  <x-cld-transformation
-    crop="fill"
-    gravity="auto"
-    radius="20"
-  ></x-cld-transformation>
-</x-cld-image>
+<x-cld-image public-id="example" width="300" height="300" />
 ```
 
-Responsive image:
+#### Properties available:
 
-```html
-<x-cld-image public-id="example" responsive>
-  <x-cld-transformation width="auto" crop="scale">
-    <x-cld-transformation
-      width="320"
-      crop="scale"
-      media="(max-width: 320px)"
-    ></x-cld-transformation>
-    <x-cld-transformation
-      width="480"
-      crop="scale"
-      media="(max-width: 480px)"
-    ></x-cld-transformation>
-  </x-cld-transformation>
-</x-cld-image>
-```
+| Property              | Required |
+| --------------------- | -------- |
+| `public-id`           | Yes      |
+| `width`               | No       |
+| `height`              | No       |
+| `alt`                 | No       |
+| `class`               | No       |
+| `crop`                | No       |
+| `gravity`             | No       |
+| `effect`              | No       |
+| `rotate`              | No       |
+| `colorize`            | No       |
+| `trim`                | No       |
+| `blur`                | No       |
+| `gray-scale`          | No       |
+| `black-white`         | No       |
+| `sepia`               | No       |
+| `redeye`              | No       |
+| `negate`              | No       |
+| `oil-paint`           | No       |
+| `vignette`            | No       |
+| `simulate-colorblind` | No       |
+| `pixelate`            | No       |
+| `unsharp-mask`        | No       |
+| `saturation`          | No       |
+| `contrast`            | No       |
+| `brightness`          | No       |
+| `gamma`               | No       |
+| `improve-mode`        | No       |
+| `shadow`              | No       |
+| `border`              | No       |
+| `round-corners`       | No       |
+| `bg-color`            | No       |
+| `art`                 | No       |
+| `cartoonify`          | No       |
 
 ### Video Component
 
@@ -206,61 +235,19 @@ Basic usage:
 <x-cld-video public-id="example"></x-cld-video>
 ```
 
-With transformations:
+With additional properties:
 
 ```html
-<x-cld-video public-id="example" controls>
-  <x-cld-transformation width="500" crop="fill"></x-cld-transformation>
-</x-cld-video>
+<x-cld-video public-id="example" width="300" height="300" />
 ```
 
-### Upload Button Component
+#### Properties available:
 
-Basic usage:
-
-```html
-<x-cld-upload-button>Upload Files</x-cld-upload-button>
-```
-
-With custom options:
-
-```html
-<x-cld-upload-button
-  :options="[
-        'multiple' => true,
-        'maxFiles' => 5,
-        'sources' => ['local', 'camera'],
-    ]"
->
-  Upload Multiple Files
-</x-cld-upload-button>
-```
-
-### Image Gallery Component
-
-```html
-<x-cld-image-gallery :images="$images" transformation="w_300,h_300,c_fill">
-  <x-slot name="placeholder">
-    <div class="spinner">Loading...</div>
-  </x-slot>
-</x-cld-image-gallery>
-```
-
-### Transformation Component
-
-This component can be used within other components to apply transformations:
-
-```html
-<x-cld-image public-id="example">
-  <x-cld-transformation
-    width="300"
-    height="300"
-    crop="fill"
-    gravity="auto"
-  ></x-cld-transformation>
-  <x-cld-transformation effect="sepia:50"></x-cld-transformation>
-</x-cld-image>
-```
+| Property    | Required |
+| ----------- | -------- |
+| `public-id` | Yes      |
+| `width`     | No       |
+| `height`    | No       |
 
 ## Disclaimer
 
