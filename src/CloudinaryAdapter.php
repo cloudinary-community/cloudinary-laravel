@@ -262,7 +262,13 @@ class CloudinaryAdapter implements FilesystemAdapter
      */
     public function read(string $path): string
     {
-        $resource = (array) $this->adminApi()->asset($this->preparePublicId($path));
+        try {
+            $resource = (array) $this->adminApi()->asset($this->preparePublicId($path));
+        } catch (Exception) {
+            $resource = (array) $this->adminApi()->asset(
+                $this->preparePublicId($path), ['resource_type' => 'video']
+            );
+        }
 
         return file_get_contents($resource['secure_url']);
     }
