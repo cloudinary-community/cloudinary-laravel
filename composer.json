@@ -4,9 +4,8 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Prosper Otemuyiwa",
-      "email": "prosperotemuyiwa@gmail.com",
-      "homepage": "https://github.com/unicodeveloper"
+      "name": "Josh Manders",
+      "homepage": "https://github.com/joshmanders"
     }
   ],
   "homepage": "https://github.com/cloudinary-labs/cloudinary-laravel",
@@ -39,7 +38,7 @@
       "CloudinaryLabs\\CloudinaryLaravel\\": "src/"
     },
     "files": [
-      "src/Support/helpers.php"
+      "src/helpers.php"
     ]
   },
   "autoload-dev": {
@@ -51,10 +50,7 @@
     "laravel": {
       "providers": [
         "CloudinaryLabs\\CloudinaryLaravel\\CloudinaryServiceProvider"
-      ],
-      "aliases": {
-        "Cloudinary": "CloudinaryLabs\\CloudinaryLaravel\\Facades\\Cloudinary"
-      }
+      ]
     }
   },
   "config": {
