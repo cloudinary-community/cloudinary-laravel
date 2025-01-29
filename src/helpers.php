@@ -1,11 +1,11 @@
 <?php
 
-use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
+use Cloudinary\Cloudinary;
 
 if (! function_exists('cloudinary')) {
 
-    function cloudinary(): CloudinaryEngine
+    function cloudinary(): Cloudinary
     {
-        return app(CloudinaryEngine::class);
+        return app(Cloudinary::class);
     }
 }

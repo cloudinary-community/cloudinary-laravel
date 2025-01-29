@@ -24,13 +24,14 @@
     "php": "^8.2",
     "ext-json": "*",
     "illuminate/support": "^11.0",
-    "cloudinary/cloudinary_php": "^2.0"
+    "cloudinary/cloudinary_php": "^3.0",
+    "league/flysystem": "^3.29"
   },
   "require-dev": {
-    "mockery/mockery": "^1.1",
-    "orchestra/testbench": "^9.0",
-    "pestphp/pest": "^2.35",
-    "sempro/phpunit-pretty-print": "^1.0",
+    "mockery/mockery": "^1.6",
+    "orchestra/testbench": "^9.9",
+    "pestphp/pest": "^2.36",
+    "sempro/phpunit-pretty-print": "^1.2",
     "laravel/pint": "^1.20"
   },
   "autoload": {

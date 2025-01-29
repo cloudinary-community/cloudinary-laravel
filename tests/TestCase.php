@@ -14,6 +14,15 @@ abstract class TestCase extends Testbench\TestCase
         $app->bootstrapWith([LoadEnvironmentVariables::class]);
 
         parent::getEnvironmentSetUp($app);
+
+        $app['config']->set('filesystems.disks.cloudinary', [
+            'driver' => 'cloudinary',
+            'key' => env('CLOUDINARY_KEY'),
+            'secret' => env('CLOUDINARY_SECRET'),
+            'cloud' => env('CLOUDINARY_CLOUD_NAME'),
+            'url' => env('CLOUDINARY_URL'),
+            'secure' => (bool) env('CLOUDINARY_SECURE', false),
+        ]);
     }
 
     protected function getPackageProviders($app): array
