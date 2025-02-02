@@ -15,31 +15,14 @@ use League\MimeTypeDetection\MimeTypeDetector;
 
 class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
 {
-    private Cloudinary $cloudinary;
-
     private PathPrefixer $prefixer;
 
     private MimeTypeDetector $mimeTypeDetector;
 
-    public function __construct(array $config, string $prefix = '', ?MimeTypeDetector $mimeTypeDetector = null)
+    public function __construct(private Cloudinary $cloudinary, string $prefix = '', ?MimeTypeDetector $mimeTypeDetector = null)
     {
         $this->prefixer = new PathPrefixer($prefix);
         $this->mimeTypeDetector = $mimeTypeDetector ?: new FinfoMimeTypeDetector;
-
-        if (isset($config['url'])) {
-            $this->cloudinary = new Cloudinary($config['url']);
-        } else {
-            $this->cloudinary = new Cloudinary([
-                'cloud' => [
-                    'cloud_name' => $config['cloud'],
-                    'api_key' => $config['key'],
-                    'api_secret' => $config['secret'],
-                ],
-                'url' => [
-                    'secure' => $config['secure'] ?? false,
-                ],
-            ]);
-        }
     }
 
     public function copy(string $source, string $destination, Config $config): void
@@ -79,46 +62,59 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
 
     public function fileExists(string $path): bool
     {
+        [$id, $type] = $this->prepareResource($path);
+
         try {
-            $this->cloudinary->adminApi()->asset($path);
+            $this->cloudinary->adminApi()->asset($id, ['resource_type' => $type]);
+
+            return true;
         } catch (\Throwable $e) {
             return false;
         }
-
-        return true;
     }
 
     public function fileSize(string $path): FileAttributes
     {
-        $resource = $this->cloudinary->adminApi()->asset($path);
+        [$id, $type] = $this->prepareResource($path);
+        $resource = $this->cloudinary->adminApi()->asset($id, ['resource_type' => $type]);
 
-        return new FileAttributes($path, $resource['bytes']);
+        return new FileAttributes($path, $resource->offsetGet('bytes'));
     }
 
     public function lastModified(string $path): FileAttributes
     {
-        $resource = $this->cloudinary->adminApi()->asset($path);
+        [$id, $type] = $this->prepareResource($path);
+        $resource = $this->cloudinary->adminApi()->asset($id, ['resource_type' => $type]);
 
-        return new FileAttributes($path, null, null, $resource['created_at']);
+        $dateTime = new \DateTime($resource->offsetGet('created_at'));
+
+        return new FileAttributes($path, null, null, $dateTime->getTimestamp());
     }
 
     public function listContents(string $path, bool $deep): array|\Traversable
     {
         $resources = [];
-
         $response = null;
 
         do {
-            $response = (array) $this->cloudinary->adminApi()->assets([
+            $response = $this->cloudinary->adminApi()->assets([
                 'type' => 'upload',
                 'prefix' => $path,
                 'max_results' => 500,
-                'next_cursor' => $response['next_cursor'] ?? null,
+                'next_cursor' => isset($response) ? $response->offsetGet('next_cursor') : null,
             ]);
-            $resources = array_merge($resources, $response['resources']);
-        } while (array_key_exists('next_cursor', $response));
+            $resources = array_merge($resources, $response->offsetGet('resources'));
+        } while ($response->offsetExists('next_cursor'));
 
-        return array_map(fn ($resource) => new FileAttributes($resource['public_id'], $resource['bytes'], null, $resource['created_at']), $resources);
+        return array_map(
+            fn ($resource) => new FileAttributes(
+                $resource['public_id'],
+                $resource['bytes'],
+                null,
+                (new \DateTime($resource['created_at']))->getTimestamp()
+            ),
+            $resources
+        );
     }
 
     public function mimeType(string $path): FileAttributes
@@ -141,19 +137,17 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
     public function read(string $path): string
     {
         [$id, $type] = $this->prepareResource($path);
-
         $resource = $this->cloudinary->adminApi()->asset($id, ['resource_type' => $type]);
 
-        return file_get_contents($resource['secure_url']);
+        return file_get_contents($resource->offsetGet('secure_url'));
     }
 
     public function readStream(string $path)
     {
         [$id, $type] = $this->prepareResource($path);
-
         $resource = $this->cloudinary->adminApi()->asset($id, ['resource_type' => $type]);
 
-        return fopen($resource['secure_url'], 'rb');
+        return fopen($resource->offsetGet('secure_url'), 'rb');
     }
 
     public function setVisibility(string $path, string $visibility): void
@@ -181,7 +175,7 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
         return hash($algo, file_get_contents($resource['secure_url']));
     }
 
-    private function prepareResource(string $path): array
+    public function prepareResource(string $path): array
     {
         $id = pathinfo($path, PATHINFO_FILENAME);
         $mimeType = $this->mimeTypeDetector->detectMimeTypeFromPath($path);

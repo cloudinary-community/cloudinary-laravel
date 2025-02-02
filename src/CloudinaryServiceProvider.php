@@ -12,7 +12,22 @@ class CloudinaryServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app['filesystem']->extend('cloudinary', function ($app, $config) {
-            $adapter = new CloudinaryStorageAdapter($config);
+            if (isset($config['url'])) {
+                $cloudinary = new Cloudinary($config['url']);
+            } else {
+                $cloudinary = new Cloudinary([
+                    'cloud' => [
+                        'cloud_name' => $config['cloud'],
+                        'api_key' => $config['key'],
+                        'api_secret' => $config['secret'],
+                    ],
+                    'url' => [
+                        'secure' => $config['secure'] ?? false,
+                    ],
+                ]);
+            }
+
+            $adapter = new CloudinaryStorageAdapter($cloudinary, $config['prefix'] ?? '');
 
             return new FilesystemAdapter(new Filesystem($adapter, $config), $adapter, $config);
         });

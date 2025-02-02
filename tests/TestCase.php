@@ -23,6 +23,8 @@ abstract class TestCase extends Testbench\TestCase
             'url' => env('CLOUDINARY_URL'),
             'secure' => (bool) env('CLOUDINARY_SECURE', false),
         ]);
+
+        $app['config']->set('filesystems.default', 'cloudinary');
     }
 
     protected function getPackageProviders($app): array
