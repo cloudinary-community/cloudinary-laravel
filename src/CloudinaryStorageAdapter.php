@@ -25,6 +25,13 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
         $this->mimeTypeDetector = $mimeTypeDetector ?: new FinfoMimeTypeDetector;
     }
 
+    public function getUrl(string $path): string
+    {
+        [$id] = $this->prepareResource($path);
+
+        return $this->cloudinary->adminApi()->asset($id)->offsetGet('secure_url');
+    }
+
     public function copy(string $source, string $destination, Config $config): void
     {
         [$source] = $this->prepareResource($source);
