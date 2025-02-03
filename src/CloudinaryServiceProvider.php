@@ -11,6 +11,12 @@ class CloudinaryServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Console\InstallCommand::class,
+            ]);
+        }
+
         $this->app['filesystem']->extend('cloudinary', function ($app, $config) {
             if (isset($config['url'])) {
                 $cloudinary = new Cloudinary($config['url']);
