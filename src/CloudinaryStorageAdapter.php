@@ -7,7 +7,6 @@ use League\Flysystem\ChecksumProvider;
 use League\Flysystem\Config;
 use League\Flysystem\FileAttributes;
 use League\Flysystem\FilesystemAdapter;
-use League\Flysystem\PathPrefixer;
 use League\Flysystem\UnableToDeleteFile;
 use League\Flysystem\UnableToSetVisibility;
 use League\MimeTypeDetection\FinfoMimeTypeDetector;
@@ -15,21 +14,18 @@ use League\MimeTypeDetection\MimeTypeDetector;
 
 class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
 {
-    private PathPrefixer $prefixer;
-
     private MimeTypeDetector $mimeTypeDetector;
 
-    public function __construct(private Cloudinary $cloudinary, string $prefix = '', ?MimeTypeDetector $mimeTypeDetector = null)
+    public function __construct(private Cloudinary $cloudinary, ?MimeTypeDetector $mimeTypeDetector = null)
     {
-        $this->prefixer = new PathPrefixer($prefix);
         $this->mimeTypeDetector = $mimeTypeDetector ?: new FinfoMimeTypeDetector;
     }
 
     public function getUrl(string $path): string
     {
-        [$id] = $this->prepareResource($path);
+        [$id, $type] = $this->prepareResource($path);
 
-        return $this->cloudinary->adminApi()->asset($id)->offsetGet('secure_url');
+        return $this->cloudinary->adminApi()->asset($id, ['resource_type' => $type])->offsetGet('secure_url');
     }
 
     public function copy(string $source, string $destination, Config $config): void
@@ -40,7 +36,10 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
         $this->cloudinary->uploadApi()->explicit($source, ['public_id' => $destination, 'type' => 'upload']);
     }
 
-    public function createDirectory(string $path, Config $config): void {}
+    public function createDirectory(string $path, Config $config): void
+    {
+        $this->cloudinary->adminApi()->createFolder($path);
+    }
 
     public function delete(string $path): void
     {
@@ -167,9 +166,19 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
         return new FileAttributes($path);
     }
 
-    public function write(string $path, string $contents, Config $config): void {}
+    public function write(string $path, string $contents, Config $config): void
+    {
+        [$id, $type] = $this->prepareResource($path);
 
-    public function writeStream(string $path, $contents, Config $config): void {}
+        $this->cloudinary->uploadApi()->upload($contents, ['public_id' => $id, 'resource_type' => $type]);
+    }
+
+    public function writeStream(string $path, $contents, Config $config): void
+    {
+        [$id, $type] = $this->prepareResource($path);
+
+        $this->cloudinary->uploadApi()->upload($contents, ['public_id' => $id, 'resource_type' => $type]);
+    }
 
     public function checksum(string $path, Config $config): string
     {
@@ -184,7 +193,8 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
 
     public function prepareResource(string $path): array
     {
-        $id = pathinfo($path, PATHINFO_FILENAME);
+        $info = pathinfo($path);
+        $id = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'];
         $mimeType = $this->mimeTypeDetector->detectMimeTypeFromPath($path);
 
         if (strpos($mimeType, 'image/') === 0) {
