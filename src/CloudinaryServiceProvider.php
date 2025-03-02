@@ -38,6 +38,8 @@ class CloudinaryServiceProvider extends ServiceProvider
             return new FilesystemAdapter(new Filesystem($adapter, $config), $adapter, $config);
         });
 
+        $this->loadViewsFrom(__DIR__.'/../views', 'cloudinary');
+
         $this->publishes([
             __DIR__.'/../config/cloudinary.php' => config_path('cloudinary.php'),
         ], 'cloudinary-config');
