@@ -37,12 +37,33 @@ class CloudinaryServiceProvider extends ServiceProvider
 
             return new FilesystemAdapter(new Filesystem($adapter, $config), $adapter, $config);
         });
+
+        $this->publishes([
+            __DIR__.'/../config/cloudinary.php' => config_path('cloudinary.php'),
+        ], 'cloudinary-config');
     }
 
     public function register(): void
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/cloudinary.php', 'cloudinary');
+
         $this->app->singleton(Cloudinary::class, function ($app) {
-            return new Cloudinary($app['config']->get('cloudinary'));
+            $config = $app['config']->get('filesystems.disks.cloudinary');
+
+            if (isset($config['url'])) {
+                return new Cloudinary($config['url']);
+            }
+
+            return new Cloudinary([
+                'cloud' => [
+                    'cloud_name' => $config['cloud'],
+                    'api_key' => $config['key'],
+                    'api_secret' => $config['secret'],
+                ],
+                'url' => [
+                    'secure' => $config['secure'] ?? false,
+                ],
+            ]);
         });
     }
 }
