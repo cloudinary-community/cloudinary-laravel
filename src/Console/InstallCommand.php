@@ -20,7 +20,7 @@ class InstallCommand extends Command
         match ($this->getDependencies()) {
             'react' => $this->call('cloudinary:react'),
             'vue' => $this->call('cloudinary:vue'),
-            'livewire' => $this->call('cloudinary:livewire'),
+            'svelte' => $this->call('cloudinary:svelte'),
             default => $this->info('No JavaScript framework detected.'),
         };
     }
@@ -42,8 +42,8 @@ class InstallCommand extends Command
             return 'vue';
         }
 
-        if (class_exists('Livewire\Livewire')) {
-            return 'livewire';
+        if (isset($dependencies['@vitejs/plugin-svelte'])) {
+            return 'svelte';
         }
 
         return null;
