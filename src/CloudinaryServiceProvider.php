@@ -14,9 +14,9 @@ class CloudinaryServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Console\InstallCommand::class,
-                Console\LivewireCommand::class,
                 Console\ReactCommand::class,
                 Console\VueCommand::class,
+                Console\SvelteCommand::class,
             ]);
         }
 
