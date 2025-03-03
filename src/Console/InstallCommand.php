@@ -42,7 +42,7 @@ class InstallCommand extends Command
             return 'vue';
         }
 
-        if (isset($dependencies['@vitejs/plugin-svelte'])) {
+        if (isset($dependencies['@sveltejs/vite-plugin-svelte'])) {
             return 'svelte';
         }
 
