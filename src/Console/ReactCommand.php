@@ -9,13 +9,13 @@ class ReactCommand extends Command
 {
     protected $signature = 'cloudinary:react';
 
-    protected $description = 'Install the React components';
+    protected $description = 'Install the React SDK';
 
     protected $hidden = true;
 
     public function handle()
     {
-        $this->info('Installing Cloudinary React components...');
+        $this->info('Installing Cloudinary React SDK...');
 
         $process = new Process(['npm', 'install', '@cloudinary/react', '@cloudinary/url-gen']);
 
@@ -24,7 +24,7 @@ class ReactCommand extends Command
         });
 
         $this->line(' ');
-        $this->info('Cloudinary React components installed successfully.');
+        $this->info('Cloudinary React SDK installed successfully.');
         $this->line('Read getting started: https://cloudinary.com/documentation/react_quick_start');
     }
 }

@@ -9,13 +9,13 @@ class VueCommand extends Command
 {
     protected $signature = 'cloudinary:vue';
 
-    protected $description = 'Install the Vue components';
+    protected $description = 'Install the Vue SDK';
 
     protected $hidden = true;
 
     public function handle()
     {
-        $this->info('Installing Cloudinary Vue components...');
+        $this->info('Installing Cloudinary Vue SDK...');
 
         $process = new Process(['npm', 'install', '@cloudinary/vue', '@cloudinary/url-gen']);
 
@@ -24,7 +24,7 @@ class VueCommand extends Command
         });
 
         $this->line(' ');
-        $this->info('Cloudinary Vue components installed successfully.');
+        $this->info('Cloudinary Vue SDK installed successfully.');
         $this->line('Read getting started: https://cloudinary.com/documentation/vue_quick_start');
     }
 }
