@@ -30,7 +30,7 @@
   "require-dev": {
     "mockery/mockery": "^1.1",
     "orchestra/testbench": "^8.0|^9.0|^10.0",
-    "pestphp/pest": "^2.35",
+    "pestphp/pest": "^2.35|^3.0",
     "sempro/phpunit-pretty-print": "^1.0",
     "laravel/pint": "^1.20"
   },
