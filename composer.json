@@ -23,17 +23,15 @@
   "require": {
     "php": "^8.2",
     "ext-json": "*",
-    "illuminate/support": "^11.0|^12.0",
-    "cloudinary/cloudinary_php": "^3.0",
-    "league/flysystem": "^3.29"
+    "illuminate/support": "^10.0|^11.0|^12.0",
+    "cloudinary/cloudinary_php": "^2.0"
   },
   "require-dev": {
-    "mockery/mockery": "^1.6",
-    "orchestra/testbench": "^9.9",
-    "pestphp/pest": "^2.36",
-    "sempro/phpunit-pretty-print": "^1.2",
-    "laravel/pint": "^1.20",
-    "phpspec/prophecy-phpunit": "^2.3"
+    "mockery/mockery": "^1.1",
+    "orchestra/testbench": "^8.0|^9.0|^10.0",
+    "pestphp/pest": "^2.35|^3.0",
+    "sempro/phpunit-pretty-print": "^1.0",
+    "laravel/pint": "^1.20"
   },
   "autoload": {
     "psr-4": {
