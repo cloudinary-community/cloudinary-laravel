@@ -81,7 +81,7 @@ This package provides a few Blade components for easy integration of Cloudinary 
 
 #### Upload Widget
 
-You can use the `<x-cloudinary::widget /> Blade component that ships with this like so:
+You can use the `<x-cloudinary::widget />` Blade component that ships with this like so:
 
 ```blade
 <!DOCTYPE html>
@@ -149,7 +149,7 @@ With additional properties:
 Basic usage:
 
 ```blade
-<x-cloudinary::video public-id="example"></x-cloudinary::video>
+<x-cloudinary::video public-id="example" />
 ```
 
 With additional properties:
