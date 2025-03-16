@@ -22,6 +22,7 @@
 
 - [Installation](#installation)
 - [Usage](#usage)
+  - [File Storage Driver](#file-storage-driver)
   - [Blade Components](#blade-components)
 - [Disclaimer](#disclaimer)
 - [Contributions](#contributions)
@@ -53,6 +54,26 @@ CLOUDINARY_NOTIFICATION_URL=
 > You can get your `CLOUDINARY_URL` from your [Cloudinary console](https://cloudinary.com/console). It typically looks like this: `cloudinary://API_KEY:API_SECRET@CLOUD_NAME`. Make sure to replace `API_KEY`, `API_SECRET`, and `CLOUD_NAME` with your actual Cloudinary credentials.
 
 ## Usage
+
+### File Storage Driver
+
+This SDK implements the [File Storage](https://laravel.com/docs/12.x/filesystem#main-content) Driver interface allowing you to use it as just another storage destination like s3, azure or local disk.
+
+Add a new `cloudinary` key to your `config/filesystems.php` disk key like so:
+
+```php
+  ...,
+  'cloudinary' => [
+      'driver' => 'cloudinary',
+      'key' => env('CLOUDINARY_KEY'),
+      'secret' => env('CLOUDINARY_SECRET'),
+      'cloud' => env('CLOUDINARY_CLOUD_NAME'),
+      'url' => env('CLOUDINARY_URL'),
+      'secure' => (bool) env('CLOUDINARY_SECURE', true),
+      'prefix' => env('CLOUDINARY_PREFIX'),
+  ],
+...,
+```
 
 ### Blade Components
 
