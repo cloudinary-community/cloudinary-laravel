@@ -21,7 +21,8 @@
 ## Table of Contents
 
 - [Installation](#installation)
-- [Configuration](#configuration)
+- [Usage](#usage)
+  - [Blade Components](#blade-components)
 - [Disclaimer](#disclaimer)
 - [Contributions](#contributions)
 - [License](#license)
@@ -34,12 +35,10 @@ Requires PHP 8.2+ and Laravel 11+.
 composer require cloudinary-labs/cloudinary-laravel
 ```
 
-## Configuration
-
-Publish the configuration file:
+After you have installed the SDK, you can invoke the install command to set everything up:
 
 ```bash
-php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="cloudinary-laravel-config"
+php artisan cloudinary:install
 ```
 
 Add your Cloudinary credentials to your `.env` file:
@@ -52,6 +51,99 @@ CLOUDINARY_NOTIFICATION_URL=
 
 > [!NOTE]  
 > You can get your `CLOUDINARY_URL` from your [Cloudinary console](https://cloudinary.com/console). It typically looks like this: `cloudinary://API_KEY:API_SECRET@CLOUD_NAME`. Make sure to replace `API_KEY`, `API_SECRET`, and `CLOUD_NAME` with your actual Cloudinary credentials.
+
+## Usage
+
+### Blade Components
+
+This package provides a few Blade components for easy integration of Cloudinary media in your Laravel views.
+
+#### Upload Widget
+
+You can use the `<x-cloudinary::widget /> Blade component that ships with this like so:
+
+```blade
+<!DOCTYPE html>
+<html>
+  <body>
+    <x-cloudinary::widget>Upload Files</x-cloudinary::widget>
+  </body>
+</html>
+```
+
+#### Image Component
+
+Basic usage:
+
+```blade
+<x-cloudinary::image public-id="example" />
+```
+
+With additional properties:
+
+```blade
+<x-cloudinary::image public-id="example" width="300" height="300" />
+```
+
+##### Properties available:
+
+| Property              | Required |
+| --------------------- | -------- |
+| `public-id`           | Yes      |
+| `width`               | No       |
+| `height`              | No       |
+| `alt`                 | No       |
+| `class`               | No       |
+| `crop`                | No       |
+| `gravity`             | No       |
+| `effect`              | No       |
+| `rotate`              | No       |
+| `colorize`            | No       |
+| `trim`                | No       |
+| `blur`                | No       |
+| `gray-scale`          | No       |
+| `black-white`         | No       |
+| `sepia`               | No       |
+| `redeye`              | No       |
+| `negate`              | No       |
+| `oil-paint`           | No       |
+| `vignette`            | No       |
+| `simulate-colorblind` | No       |
+| `pixelate`            | No       |
+| `unsharp-mask`        | No       |
+| `saturation`          | No       |
+| `contrast`            | No       |
+| `brightness`          | No       |
+| `gamma`               | No       |
+| `improve-mode`        | No       |
+| `shadow`              | No       |
+| `border`              | No       |
+| `round-corners`       | No       |
+| `bg-color`            | No       |
+| `art`                 | No       |
+| `cartoonify`          | No       |
+
+#### Video Component
+
+Basic usage:
+
+```blade
+<x-cloudinary::video public-id="example"></x-cloudinary::video>
+```
+
+With additional properties:
+
+```blade
+<x-cloudinary::video public-id="example" width="300" height="300" />
+```
+
+##### Properties available:
+
+| Property    | Required |
+| ----------- | -------- |
+| `public-id` | Yes      |
+| `width`     | No       |
+| `height`    | No       |
 
 ## Disclaimer
 
