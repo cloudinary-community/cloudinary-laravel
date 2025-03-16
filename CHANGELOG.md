@@ -3,9 +3,23 @@
 > [!IMPORTANT]
 > For more details about the changes in each version, please refer to the [releases](https://github.com/cloudinary-labs/cloudinary-laravel/releases) page.
 
-# 2.2.2 / 2024-09-25
+# 3.0.0 / 2024-03-16
 
-- See what's new in [2.2.2](https://github.com/cloudinary-labs/cloudinary-laravel/releases/tag/2.2.2)
+### Notable Changes
+
+With the v3 update, we've brought the Blade components to use the modern Blade system like `<x-cloudinary::image />`. We've also removed the limited upload, retrieval, transformation and `MediaAlly` system for just setting up and exposing the underlining Cloudinary PHP SDK directly with a helper in `cloudinary()`. We've also integrated directly into the File Storage disk system and auto detects and installs appropriate SDK's for when you're installing into an Inertia application.
+
+If you find any bugs or feature requests please open an issue!
+
+**Full Changelog**: https://github.com/cloudinary-community/cloudinary-laravel/compare/2.3.0...3.0.0
+
+# 2.3.0 / 2024-03-06
+
+- See what's new in [2.3.0](https://github.com/cloudinary-labs/cloudinary-laravel/releases/tag/2.3.0)
+
+# 2.2.3 / 2025-01-28
+
+- See what's new in [2.2.3](https://github.com/cloudinary-labs/cloudinary-laravel/releases/tag/2.2.3)
 
 # 2.2.1 / 2024-08-14
 
