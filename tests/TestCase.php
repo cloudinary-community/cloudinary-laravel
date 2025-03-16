@@ -12,21 +12,23 @@ abstract class TestCase extends Testbench\TestCase
     {
         $app->useEnvironmentPath(__DIR__.'/..');
         $app->bootstrapWith([LoadEnvironmentVariables::class]);
+
         parent::getEnvironmentSetUp($app);
 
-        $app['config']->set('database.default', 'testing');
-        $app['config']->set('cloudinary.cloud_url', env('CLOUDINARY_URL', 'cloudinary://foo:bar@baz'));
-        $app['config']->set('filesystems.disks.cloudinary', ['driver' => 'cloudinary']);
+        $app['config']->set('filesystems.disks.cloudinary', [
+            'driver' => 'cloudinary',
+            'key' => env('CLOUDINARY_KEY'),
+            'secret' => env('CLOUDINARY_SECRET'),
+            'cloud' => env('CLOUDINARY_CLOUD_NAME'),
+            'url' => env('CLOUDINARY_URL'),
+            'secure' => (bool) env('CLOUDINARY_SECURE', false),
+        ]);
+
+        $app['config']->set('filesystems.default', 'cloudinary');
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
-        return CloudinaryServiceProvider::class;
-    }
-
-    protected function defineDatabaseMigrations()
-    {
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadMigrationsFrom(__DIR__.'/Fixtures/migrations');
+        return [CloudinaryServiceProvider::class];
     }
 }

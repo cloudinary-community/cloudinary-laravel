@@ -21,30 +21,25 @@
 ## Table of Contents
 
 - [Installation](#installation)
-- [Configuration](#configuration)
-- [Upload, Retrieval & Transformation](#upload-retrieval--transformation)
-- [Attach Files to Eloquent Models](#attach-files-to-eloquent-models)
-- [Media Management via CLI](#media-management-via-cli)
-- [Cloudinary URL Generation](#cloudinary-url-generation)
-- [Blade Components](#blade-components)
+- [Usage](#usage)
+  - [File Storage Driver](#file-storage-driver)
+  - [Blade Components](#blade-components)
 - [Disclaimer](#disclaimer)
 - [Contributions](#contributions)
 - [License](#license)
 
 ## Installation
 
-Requires PHP 8.1+ and Laravel 10+.
+Requires PHP 8.2+ and Laravel 11+.
 
 ```bash
 composer require cloudinary-labs/cloudinary-laravel
 ```
 
-## Configuration
-
-Publish the configuration file:
+After you have installed the SDK, you can invoke the install command to set everything up:
 
 ```bash
-php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="cloudinary-laravel-config"
+php artisan cloudinary:install
 ```
 
 Add your Cloudinary credentials to your `.env` file:
@@ -60,118 +55,58 @@ CLOUDINARY_NOTIFICATION_URL=
 
 ## Usage
 
-### Upload, Retrieval & Transformation
+### File Storage Driver
+
+This SDK implements the [File Storage](https://laravel.com/docs/12.x/filesystem#main-content) Driver interface allowing you to use it as just another storage destination like s3, azure or local disk.
+
+Add a new `cloudinary` key to your `config/filesystems.php` disk key like so:
 
 ```php
-// Upload
-$uploadedFileUrl = cloudinary()->upload($request->file('file')->getRealPath())->getSecurePath();
-
-// Upload with transformation
-$uploadedFileUrl = cloudinary()->upload($request->file('file')->getRealPath(), [
-    'folder' => 'uploads',
-    'transformation' => [
-        'width' => 400,
-        'height' => 400,
-        'crop' => 'fill'
-    ]
-])->getSecurePath();
-
-// Get URL
-$url = cloudinary()->getUrl($publicId);
-
-// Check if file exists
-$exists = Storage::disk('cloudinary')->fileExists($publicId);
+  ...,
+  'cloudinary' => [
+      'driver' => 'cloudinary',
+      'key' => env('CLOUDINARY_KEY'),
+      'secret' => env('CLOUDINARY_SECRET'),
+      'cloud' => env('CLOUDINARY_CLOUD_NAME'),
+      'url' => env('CLOUDINARY_URL'),
+      'secure' => (bool) env('CLOUDINARY_SECURE', true),
+      'prefix' => env('CLOUDINARY_PREFIX'),
+  ],
+...,
 ```
 
-### Attach Files to Eloquent Models
+### Blade Components
 
-First, add the `MediaAlly` trait to your model:
+This package provides a few Blade components for easy integration of Cloudinary media in your Laravel views.
 
-```php
-use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
+#### Upload Widget
 
-class Page extends Model
-{
-    use MediaAlly;
-    // ...
-}
-```
-
-Then, you can use the following methods:
-
-```php
-// Attach media
-$page->attachMedia($request->file('file'));
-
-// Retrieve media
-$allMedia = $page->fetchAllMedia();
-$firstMedia = $page->fetchFirstMedia();
-$lastMedia = $page->fetchLastMedia();
-
-// Update media
-$page->updateMedia($newFile);
-
-// Detach media
-$page->detachMedia($file);
-```
-
-### Media Management via CLI
-
-```bash
-php artisan cloudinary:backup
-php artisan cloudinary:delete
-php artisan cloudinary:fetch
-php artisan cloudinary:rename
-php artisan cloudinary:upload
-```
-
-## Cloudinary URL Generation
-
-Use the `Cloudinary` facade or the `cloudinary()` helper function to generate URLs:
-
-```php
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
-
-$url = Cloudinary::getUrl($publicId);
-// or
-$url = cloudinary()->getUrl($publicId);
-```
-
-## Blade Components
-
-This package provides several Blade components for easy integration of Cloudinary media in your Laravel views
-
-### Upload files via an Upload Widget
-
-You can use the `<x-cld-upload-button />` Blade component that ships with this page like so:
+You can use the `<x-cloudinary::widget /> Blade component that ships with this like so:
 
 ```blade
 <!DOCTYPE html>
 <html>
-  <head>
-    ... @cloudinaryJS
-  </head>
   <body>
-    <x-cld-upload-button>Upload Files</x-cld-upload-button>
+    <x-cloudinary::widget>Upload Files</x-cloudinary::widget>
   </body>
 </html>
 ```
 
-### Image Component
+#### Image Component
 
 Basic usage:
 
 ```blade
-<x-cld-image public-id="example" />
+<x-cloudinary::image public-id="example" />
 ```
 
 With additional properties:
 
 ```blade
-<x-cld-image public-id="example" width="300" height="300" />
+<x-cloudinary::image public-id="example" width="300" height="300" />
 ```
 
-#### Properties available:
+##### Properties available:
 
 | Property              | Required |
 | --------------------- | -------- |
@@ -209,21 +144,21 @@ With additional properties:
 | `art`                 | No       |
 | `cartoonify`          | No       |
 
-### Video Component
+#### Video Component
 
 Basic usage:
 
 ```blade
-<x-cld-video public-id="example"></x-cld-video>
+<x-cloudinary::video public-id="example"></x-cloudinary::video>
 ```
 
 With additional properties:
 
 ```blade
-<x-cld-video public-id="example" width="300" height="300" />
+<x-cloudinary::video public-id="example" width="300" height="300" />
 ```
 
-#### Properties available:
+##### Properties available:
 
 | Property    | Required |
 | ----------- | -------- |
