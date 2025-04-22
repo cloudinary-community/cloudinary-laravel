@@ -194,7 +194,12 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
     public function prepareResource(string $path): array
     {
         $info = pathinfo($path);
-        $id = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'];
+        
+        // Ensure dirname uses forward slashes, regardless of OS
+        $dirname = str_replace('\\', '/', $info['dirname']);
+        // Always use forward slash for path construction
+        $id = $dirname.'/'.$info['filename'];
+        
         $mimeType = $this->mimeTypeDetector->detectMimeTypeFromPath($path);
 
         if (strpos($mimeType, 'image/') === 0) {
