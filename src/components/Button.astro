@@ -1,0 +1,30 @@
+---
+import { cn } from '../lib/util.js';
+
+interface Props {
+  class?: string;
+  href: string;
+}
+
+const { class: className = '', href }: Props = Astro.props;
+const buttonColor = '!text-white !bg-blue-500 hover:!bg-blue-600';
+
+const buttonProps = {
+  class: cn(
+    'inline-block rounded py-2.5 px-6 text-lg font-bold uppercase no-underline',
+    buttonColor,
+    className
+  )
+}
+---
+{href && (
+  <a href={href} {...buttonProps}>
+    <slot />
+  </a>
+)}
+
+{!href && (
+  <button {...buttonProps}>
+    <slot />
+  </button>
+)}
