@@ -1,0 +1,45 @@
+name: Sync Docs to Documentation Site
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "docs/**"
+
+jobs:
+  sync-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: master
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch docs-website branch
+        run: git fetch origin docs-website:docs-website
+
+      - name: Create temporary worktree
+        run: git worktree add ../docs-website docs-website
+
+      - name: Sync docs to docs-website
+        run: |
+          rm -rf ../docs-website/src/content/docs/*
+          cp -r docs/* ../docs-website/src/content/docs/
+
+      - name: Commit and push
+        run: |
+          cd ../docs-website
+          git add src/content/docs/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Sync docs from master branch"
+            git push origin docs-website
+          fi
