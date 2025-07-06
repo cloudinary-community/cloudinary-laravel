@@ -1,0 +1,53 @@
+---
+title: Installing Cloudinary Laravel
+description: Getting started with Cloudinary Laravel.
+ogImageTitle: Installation
+head:
+  - tag: title
+    content: Installation - Cloudinary Laravel
+---
+import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import CodeBlock from '@components/CodeBlock.astro';
+
+## Getting Started
+
+<Steps>
+<ol class="!mt-10">
+  <li>
+    ### Installation
+
+    Requires PHP 8.2+ and Laravel 11+.
+
+    <CodeBlock alwaysExpanded>
+    ```
+    composer require cloudinary-labs/cloudinary-laravel
+    ```
+    </CodeBlock>
+  </li>
+  <li>
+    ### Configuration
+
+    After you have installed the SDK, you can invoke the install command to set everything up:
+
+    <CodeBlock alwaysExpanded>
+    ```
+    php artisan cloudinary:install
+    ```
+    </CodeBlock>
+
+    Add your Cloudinary credentials to your .env file:
+
+    <CodeBlock alwaysExpanded>
+    ```
+    CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+    CLOUDINARY_UPLOAD_PRESET=your_upload_preset
+    CLOUDINARY_NOTIFICATION_URL=
+    ```
+    </CodeBlock>
+  </li>
+</ol>
+</Steps>
+
+:::tip
+Don't have a Cloudinary account? <a href="https://cloudinary.com/users/register_free?utm_campaign=devx_laravelcloudinary&utm_medium=referral&utm_source=laravelcloudinary">Sign up for free</a> on cloudinary.com!
+:::
