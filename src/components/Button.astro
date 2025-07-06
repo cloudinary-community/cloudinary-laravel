@@ -7,12 +7,11 @@ interface Props {
 }
 
 const { class: className = '', href }: Props = Astro.props;
-const buttonColor = '!text-white !bg-blue-500 hover:!bg-blue-600';
 
 const buttonProps = {
   class: cn(
     'inline-block rounded py-2.5 px-6 text-lg font-bold uppercase no-underline',
-    buttonColor,
+    'text-white bg-[var(--sl-color-accent)]',
     className
   )
 }

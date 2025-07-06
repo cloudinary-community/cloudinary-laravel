@@ -1,0 +1,97 @@
+---
+import { Icon } from 'astro-icon/components'
+
+import { cn } from '../lib/util';
+
+interface Props {
+  class?: string;
+  alwaysExpanded?: boolean;
+};
+
+const { class: className, alwaysExpanded = false }: Props = Astro.props;
+
+const codeBlockClassName = cn('code-block group relative [&_.code-block-code_pre]:rounded [&_.code-block-code_pre]:border-slate-200 dark:[&_.code-block-code_pre]:border-slate-600', className);
+---
+
+<div class={codeBlockClassName} data-codeblock-expanded={alwaysExpanded ? 'true' : 'false'}>
+  <div class={`code-block-code ${alwaysExpanded && 'after:!hidden'}`}>
+    <slot />
+  </div>
+  {!alwaysExpanded && (
+    <ul class="flex justify-center relative z-1 rounded p-0 m-0 !-mt-2">
+      <li class="flex items-center justify-center gap-1 p-4 m-0 group-data-[codeblock-expanded=true]:hidden">
+        <button class="flex gap-2 items-center bg-transparent text-blue-500 text-xs code-block-actions-expand cursor-pointer !mb-0">
+          <Icon name="mdi:expand-horizontal" />
+          Expand Snippet
+        </button>
+      </li>
+      <li class="flex items-center justify-center gap-1 p-4 m-0 group-data-[codeblock-expanded=false]:hidden">
+        <button class="flex gap-2 items-center bg-transparent text-blue-500 text-xs code-block-actions-collapse cursor-pointer !mb-0">
+          <Icon name="mdi:collapse-horizontal" />
+          Collapse Snippet
+        </button>
+      </li>
+    </ul>
+  )}
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.code-block-actions-expand, .code-block-actions-collapse') as NodeListOf<HTMLButtonElement>;
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const codeBlock = button.closest('.code-block') as HTMLDivElement;
+
+      if ( codeBlock?.dataset.codeblockExpanded === 'true' ) {
+        codeBlock?.setAttribute('data-codeblock-expanded', 'false');
+      } else if ( codeBlock?.dataset.codeblockExpanded === 'false' ) {
+        codeBlock?.setAttribute('data-codeblock-expanded', 'true');
+      }
+    });
+  });
+</script>
+
+<style>
+[data-codeblock-expanded="true"] {
+
+  .code-block-code {
+    max-height: none;
+
+    &:after {
+      display: none;
+    }
+  }
+
+}
+
+.code-block-code {
+
+  position: relative;
+  max-height: 12em;
+  overflow: hidden;
+
+  &:after {
+    display: block;
+    content: '';
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    height: 2em;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  }
+
+}
+
+
+@media (prefers-color-scheme: dark) {
+  .code-block-code:after {
+    /* Using main background color as basis from docs site */
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0), rgba(15, 23, 42, 1));
+  }
+}
+
+:root[data-theme="dark"] .code-block-code:after {
+  /* Using main background color as basis from docs site */
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0), rgba(15, 23, 42, 1));
+}
+</style>
