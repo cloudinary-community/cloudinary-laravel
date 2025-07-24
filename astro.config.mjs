@@ -32,39 +32,39 @@ export default defineConfig({
               label: "Examples",
               link: "examples",
             },
+          ],
+        },
+        {
+          label: "Blade Components",
+          items: [
             {
-              label: "Blade Components",
-              items: [
-                {
-                  label: "Image Component",
-                  link: "components/image",
-                },
-                {
-                  label: "Video Component",
-                  link: "components/video",
-                },
-                {
-                  label: "Upload Widget",
-                  link: "components/upload-widget",
-                },
-              ],
+              label: "Image Component",
+              link: "components/image",
             },
             {
-              label: "Guides",
-              items: [
-                {
-                  label: "Image Optimization",
-                  link: "guides/image-optimization",
-                },
-                {
-                  label: "Upload Images & Videos",
-                  link: "guides/uploading-images-and-videos",
-                },
-                {
-                  label: "Using with other Cloudinary SDKs",
-                  link: "guides/using-with-other-cloudinary-sdks",
-                },
-              ],
+              label: "Video Component",
+              link: "components/video",
+            },
+            {
+              label: "Upload Widget",
+              link: "components/upload-widget",
+            },
+          ],
+        },
+        {
+          label: "Guides",
+          items: [
+            {
+              label: "Image Optimization",
+              link: "guides/image-optimization",
+            },
+            {
+              label: "Upload Images & Videos",
+              link: "guides/uploading-images-and-videos",
+            },
+            {
+              label: "Using with other Cloudinary SDKs",
+              link: "guides/using-with-other-cloudinary-sdks",
             },
           ],
         },
