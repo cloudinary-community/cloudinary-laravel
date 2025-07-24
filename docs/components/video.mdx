@@ -1,0 +1,66 @@
+---
+title: Blade Components / Video
+description: Learn how to use the Video component in Cloudinary Laravel.
+ogImageTitle: Blade Components / Video
+head:
+  - tag: title
+    content: Blade Components / Video - Cloudinary Laravel
+---
+
+import Table from '@components/Table.astro';
+
+The Video component provides an easy way to deliver videos from Cloudinary using Blade syntax.
+
+Basic usage:
+
+```blade
+<x-cloudinary::video public-id="example" />
+```
+
+With additional properties:
+
+```blade
+<x-cloudinary::video public-id="example" width="300" height="300" />
+```
+
+## Properties Available
+<Table
+  columns={[
+    {
+      id: 'prop',
+      title: 'Property'
+    },
+    {
+      id: 'type',
+      title: 'Type'
+    },
+    {
+      id: 'required',
+      title: 'Required'
+    },
+    {
+      id: 'example',
+      title: 'Example'
+    }
+  ]}
+  data={[
+    {
+      prop: 'public-id',
+      type: 'string',
+      required: 'Yes',
+      example: () => (<code>sample</code>),
+    },
+    {
+      prop: 'width',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>300</code>),
+    },
+    {
+      prop: 'height',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>300</code>),
+    }
+  ]}
+/>

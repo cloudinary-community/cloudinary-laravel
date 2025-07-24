@@ -1,0 +1,30 @@
+---
+title: Basic Usage / Configuration
+description: Learn how to configure Cloudinary Laravel for your application.
+ogImageTitle: Configuration
+head:
+  - tag: title
+    content: File Storage Driver Basic Usage / Configuration - Cloudinary Laravel
+---
+import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import CodeBlock from '@components/CodeBlock.astro';
+
+This SDK implements the [File Storage](https://laravel.com/docs/12.x/filesystem#main-content) Driver interface allowing you to use it as just another storage destination like s3, azure or local disk.
+
+Add a new `cloudinary` key to your `config/filesystems.php` disk key like so:
+
+<CodeBlock alwaysExpanded>
+```php
+  ...,
+  'cloudinary' => [
+      'driver' => 'cloudinary',
+      'key' => env('CLOUDINARY_KEY'),
+      'secret' => env('CLOUDINARY_SECRET'),
+      'cloud' => env('CLOUDINARY_CLOUD_NAME'),
+      'url' => env('CLOUDINARY_URL'),
+      'secure' => (bool) env('CLOUDINARY_SECURE', true),
+      'prefix' => env('CLOUDINARY_PREFIX'),
+  ],
+...,
+```
+</CodeBlock>

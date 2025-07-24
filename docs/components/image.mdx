@@ -1,0 +1,247 @@
+---
+title: Blade Components / Image
+description: Learn how to use the Image component in Cloudinary Laravel.
+ogImageTitle: Blade Components / Image
+head:
+  - tag: title
+    content: Blade Components / Image - Cloudinary Laravel
+---
+import Table from '@components/Table.astro';
+
+The Image component provides an easy way to deliver images from Cloudinary using Blade syntax.
+
+With it comes access to more advanced features like dynamic cropping, background removal, overlays, and other Cloudinary transofrmations.
+
+Basic usage:
+
+```blade
+<x-cloudinary::image public-id="example" />
+```
+
+With additional properties:
+
+```blade
+<x-cloudinary::image public-id="example" width="300" height="300" />
+```
+
+## Properties Available
+<Table
+  columns={[
+    {
+      id: 'prop',
+      title: 'Property'
+    },
+    {
+      id: 'type',
+      title: 'Type'
+    },
+    {
+      id: 'required',
+      title: 'Required'
+    },
+    {
+      id: 'example',
+      title: 'Example'
+    }
+  ]}
+  data={[
+    {
+      prop: 'public-id',
+      type: 'string',
+      required: 'Yes',
+      example: () => (<code>sample</code>),
+    },
+    {
+      prop: 'width',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>300</code>),
+    },
+    {
+      prop: 'height',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>300</code>),
+    },
+    {
+      prop: 'alt',
+      type: 'string',
+      required: 'Yes',
+      example: () => (<code>Dog catching a frisbee</code>),
+    },
+    {
+      prop: 'class',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>rounded shadow-lg</code>),
+    },
+    {
+      prop: 'crop',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>fill</code>),
+    },
+    {
+      prop: 'gravity',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>auto</code>),
+    },
+    {
+      prop: 'effect',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>sepia</code>),
+    },
+    {
+      prop: 'rotate',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>90</code>),
+    },
+    {
+      prop: 'colorize',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>50,100,150</code>),
+    },
+    {
+      prop: 'trim',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>true</code>),
+    },
+    {
+      prop: 'blur',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>500</code>),
+    },
+    {
+      prop: 'gray-scale',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>true</code>),
+    },
+    {
+      prop: 'black-white',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>true</code>),
+    },
+    {
+      prop: 'sepia',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>true</code>),
+    },
+    {
+      prop: 'redeye',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>true</code>),
+    },
+    {
+      prop: 'negate',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>true</code>),
+    },
+    {
+      prop: 'oil-paint',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>30</code>),
+    },
+    {
+      prop: 'vignette',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>30</code>),
+    },
+    {
+      prop: 'simulate-colorblind',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>deuteranopia</code>),
+    },
+    {
+      prop: 'pixelate',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>5</code>),
+    },
+    {
+      prop: 'unsharp-mask',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>500</code>),
+    },
+    {
+      prop: 'saturation',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>50</code>),
+    },
+    {
+      prop: 'contrast',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>50</code>),
+    },
+    {
+      prop: 'brightness',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>50</code>),
+    },
+    {
+      prop: 'gamma',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>50</code>),
+    },
+    {
+      prop: 'improve-mode',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>indoor</code>),
+    },
+    {
+      prop: 'shadow',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>50,x5,y5</code>),
+    },
+    {
+      prop: 'border',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>5px_solid_black</code>),
+    },
+    {
+      prop: 'round-corners',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>max</code>),
+    },
+    {
+      prop: 'bg-color',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>lightblue</code>),
+    },
+    {
+      prop: 'art',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>al_dente</code>),
+    },
+    {
+      prop: 'cartoonify',
+      type: 'string',
+      required: 'No',
+      example: () => (<code>20:60</code>),
+    }
+  ]}
+/>
