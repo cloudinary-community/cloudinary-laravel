@@ -79,3 +79,7 @@ main {
     padding-top: 6rem;
   }
 }
+
+.code-block-code pre {
+  @apply !border-[var(--sl-color-gray-4)];
+}
