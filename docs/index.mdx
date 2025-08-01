@@ -1,0 +1,42 @@
+---
+title: Cloudinary Laravel
+description: Laravel SDK for Cloudinary.
+template: splash
+hero:
+  tagline: "Null"
+head:
+  - tag: title
+    content: Cloudinary Laravel - The Image & Video API for Laravel
+---
+
+import { CldImage } from "astro-cloudinary";
+
+import ImageGrid from "@components/ImageGrid.astro";
+import Button from "@components/Button.astro";
+
+<div class="not-content text-center max-w-xl mx-auto mt-14 mb-20 md:mt-36 md:mb-44">
+  <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold">Cloudinary Laravel</h1>
+<p class="text-xl mt-8">
+  High-performance image and video delivery and uploading at scale in Laravel
+  powered by Cloudinary.
+</p>
+
+  <p class="flex items-center justify-center gap-6 mt-8 px-2">
+    
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/62209650/196528621-b68e9e10-7e55-4c7d-9177-904cadbb4296.png" align="center" height="50" />
+      <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/62209650/196528761-a815025a-271a-4d8e-ac7e-cea833728bf9.png" align="center" height="50" />
+      <img alt="Cloudinary" src="https://user-images.githubusercontent.com/62209650/196528761-a815025a-271a-4d8e-ac7e-cea833728bf9.png" align="center" height="50" />
+    </picture>
+
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/1045274/200928533-47539867-07ff-406e-aa8b-25c594652dc8.png" align="center" height="50" />
+      <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/1045274/200928533-47539867-07ff-406e-aa8b-25c594652dc8.png" align="center" height="50" />
+      <img alt="Laravel" src="https://user-images.githubusercontent.com/1045274/200928533-47539867-07ff-406e-aa8b-25c594652dc8.png" align="center" height="50" />
+    </picture>
+
+  </p>
+  <p class="mt-10">
+    <Button href="/installation">Get Started</Button>
+  </p>
+</div>

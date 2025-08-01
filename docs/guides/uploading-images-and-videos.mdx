@@ -1,0 +1,31 @@
+---
+title: Guides / Upload Images & Videos
+description: Learn how to upload images & videos in Cloudinary Laravel.
+ogImageTitle: Guides / Upload Images & Videos
+head:
+  - tag: title
+    content: Guides / Upload Images & Videos - Cloudinary Laravel
+---
+
+Laravel Cloudinary provides a seamless way to integrate Cloudinary's powerful upload capabilities into your Laravel project. This guide will show you how to use the `<x-cloudinary::widget>` component to add upload functionality to your application.
+
+# `<x-cloudinary::widget>` Component
+
+The `<x-cloudinary::widget>` component is a wrapper around Cloudinary's Upload Widget, specifically optimized for Laravel projects. It allows you to easily add upload functionality with minimal configuration.
+
+## Basic Usage
+
+Here's a simple example of how to use the widget in your Blade templates:
+
+```blade
+<x-cloudinary::widget>Upload to Cloudinary</x-cloudinary::widget>
+```
+
+## Configuration Options
+Todo
+
+## Best Practices and Tips
+1. Always use upload presets to control what can be uploaded to your Cloudinary account.
+2. Implement signed uploads for enhanced security, especially in production environments.
+3. Customize the upload widget to match your application's design and user experience.
+4. Consider implementing upload restrictions (file types, sizes) using Cloudinarys upload presets.

@@ -1,0 +1,28 @@
+---
+title: Guides / Image Optimization
+description: Learn how to optimize images in Cloudinary Laravel.
+ogImageTitle: Guides / Image Optimization
+head:
+  - tag: title
+    content: Guides / Image Optimization - Cloudinary Laravel
+---
+
+Optimization plays a critical role in making your website load as fast as possible.
+
+With the [Image](/components/image) component, your images will be automatically optimized with automatic compression and by delivering the most efficient format based on your browser or device (WebP, AVIF, etc).
+
+:::tip
+You can further optimize delivery with responsive sizing by using the `sizes` prop.
+:::
+
+# Example
+
+```blade
+<x-cloudinary::image 
+  public-id="example" 
+  width="960" 
+  height="600" 
+  sizes="100vw" 
+  alt="My example"
+/>
+```
