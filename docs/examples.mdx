@@ -1,10 +1,1114 @@
 ---
-title: Examples
+title: Examples of using Cloudinary Laravel.
 description: Examples of using Cloudinary Laravel.
 ogImageTitle: Examples
 head:
   - tag: title
-    content: File Storage Driver Examples - Cloudinary Laravel
+    content: Examples - Cludinary Laravel
 ---
+import { CldImage } from "astro-cloudinary";
 
-Coming Soon!
+import CodeBlock from '@components/CodeBlock.astro';
+import HeaderImage from '@components/HeaderImage.astro';
+
+## Basic Transformations
+
+Cloudinary supports a wide variety of powerful transformations that allow you to
+not only deliver, but easily edit and build new images on the fly.
+
+### Background Removal
+
+<strong class="block mt-8 mb-2 text-lg font-medium">Remove Background</strong>
+
+`removeBackground`: Removes the background of the image using AI
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/animals/three-dogs"
+    width="960"
+    height="600"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/animals/three-dogs"
+    width="960"
+    height="600"
+    removeBackground
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  removeBackground
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+:::tip
+The Cloudinary AI Background Removal add-on is required to use this feature.
+:::
+
+<strong class="block mt-8 mb-2 text-lg font-medium">Color Background</strong>
+
+`background`: Specifies a color to use as a background.
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/animals/three-dogs"
+    width="960"
+    height="600"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/animals/three-dogs"
+    width="960"
+    height="600"
+    removeBackground
+    background="blueviolet"
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  removeBackground
+  background="blueviolet"
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+<strong class="block mt-8 mb-2 text-lg font-medium">Image Background</strong>
+
+`underlay`: Specifies a public ID to use as an underlaying image.
+
+:::tip
+The [Generative AI Background Replace](#generative-replace-background) feature can use AI to replace the background
+with an image based on a prompt, potentially resulting in better results!
+:::
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/animals/three-dogs"
+    width="960"
+    height="600"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/animals/three-dogs"
+    width="960"
+    height="600"
+    removeBackground
+    underlay="samples/landscapes/nature-mountains"
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  removeBackground
+  underlay="<Public ID>"
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+
+### Cropping & Resizing
+
+<strong class="block mt-8 mb-2 text-lg font-medium">Cropping</strong>
+
+`crop`: Specifies the mode to use when cropping an image based on the given dimensions.
+
+:::note
+By default, CldImage uses a gravity of auto, meaning the crop will automatically
+position the subject in the center of the resulting image.
+:::
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/woman-on-a-football-field"
+    width="1200"
+    height="1350"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/woman-on-a-football-field"
+    width="300"
+    height="300"
+    crop="fill"
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  crop="fill"
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+Cloudinary additionally supports dynamic crop modes like `thumb` that
+may provide a different result based on the given width and height. To
+help provide more options for controlling cropping images, you can specify
+and object or array of objects.
+
+For instance, to crop the original source image, which will then later
+resize it to the initial width and height, you can use:
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/woman-on-a-football-field"
+    width="1200"
+    height="1350"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/woman-on-a-football-field"
+    width="300"
+    height="300"
+    crop={{
+      width: 600,
+      height: 600,
+      type: 'thumb',
+      source: true
+    }}
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  crop={{
+    width: 600,
+    height: 600,
+    type: 'thumb',
+    source: true
+  }}
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+Which will provide a consistent crop for all rendered sizes.
+
+Learn more about [cropping](/cldimage/configuration#crop) and [responsive images](/guides/responsive-images).
+
+### Generative Fill
+
+`fillBackground`: Fills the background of an image using Generative AI
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="cld-sample-2"
+    width="900"
+    height="600"
+    crop="fill"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="cld-sample-2"
+    width="1400"
+    height="600"
+    crop="pad"
+    fillBackground
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  crop="pad"  // Returns the given size with padding
+  fillBackground
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+:::tip
+The generative fill transformation is currently in Beta. <a href="https://cloudinary.com/documentation/transformation_reference#b_gen_fill">Learn more</a>.
+:::
+
+### Generative Recolor
+
+`recolor`: Recolors an object in an image using Generative AI
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/balloons"
+    width="960"
+    height="600"
+    crop="fill"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/balloons"
+    width="960"
+    height="600"
+    crop="fill"
+    recolor={['balloon', 'red']}
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  crop="fill"
+  recolor={['<Object>', '<Color>']}
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+:::tip
+The generative recolor transformation is currently in Beta. <a href="https://cloudinary.com/documentation/transformation_reference#e_gen_replace">Learn more</a>.
+:::
+
+### Generative Remove
+
+`remove`: Removes an object in an image using Generative AI
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/landscapes/beach-boat"
+    width="960"
+    height="600"
+    crop="fill"
+    gravity="center"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/landscapes/beach-boat"
+    width="960"
+    height="600"
+    crop="fill"
+    gravity="center"
+    remove={{
+      prompt: 'boat',
+      removeShadow: true
+    }}
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  remove={{
+    prompt: '<Object>',
+    removeShadow: true
+  }}
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+:::tip
+The generative remove transformation is currently in Beta. <a href="https://cloudinary.com/documentation/transformation_reference#e_gen_replace">Learn more</a>.
+:::
+
+### Generative Replace
+
+`replace`: Replaces an object in an image using Generative AI
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/look-up"
+    width="960"
+    height="960"
+    crop="fill"
+    gravity="center"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/look-up"
+    width="960"
+    height="960"
+    crop="fill"
+    gravity="center"
+    replace={['person', 'cat']}
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  replace={['<Object>', '<Object>']}
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+:::tip
+The generative replace transformation is currently in Beta. <a href="https://cloudinary.com/documentation/transformation_reference#e_gen_replace">Learn more</a>.
+:::
+
+### Generative Replace Background
+
+`replaceBackground`: Replaces the background of an image with an AI-generated background.
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/balloons"
+    width="960"
+    height="600"
+    crop="fill"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/balloons"
+    width="960"
+    height="600"
+    crop="fill"
+    replaceBackground="space galaxy"
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  crop="fill"
+  replaceBackground="space galaxy"
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+:::tip
+The generative replace background transformation is currently in Beta. <a href="https://cloudinary.com/documentation/transformation_reference#e_gen_background_replace">Learn more</a>.
+:::
+
+## Filters & Effects
+
+Included in the Cloudinary transformations library are different filters and effects
+that allow you to recolor, improve, fix, and artistically transform your images. 
+
+### Blur
+
+`blur`: Applies a blurring filter to an asset.
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/food/spices"
+    width="960"
+    height="600"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/food/spices"
+    width="960"
+    height="600"
+    blur="1200"
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  blur="1200"
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+### Grayscale
+
+`grayscale`: Converts an image to grayscale (multiple shades of gray).
+
+<HeaderImage layout="grid">
+  <CldImage
+    width="960"
+    height="600"
+    src="samples/food/spices"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    width="960"
+    height="600"
+    src="samples/food/spices"
+    grayscale
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  grayscale
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+### Opacity
+
+`opacity`: Controls the opacity level of an image.
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/food/spices"
+    width="960"
+    height="600"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/food/spices"
+    width="960"
+    height="600"
+    opacity="50"
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  opacity="50"
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+### Pixelate
+
+`pixelate`: Applies a pixelation effect.
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/food/spices"
+    width="960"
+    height="600"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/food/spices"
+    width="960"
+    height="600"
+    pixelate
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  pixelate
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+### Tint
+
+`tint`: Blends an image with one or more tint colors.
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/food/spices"
+    width="960"
+    height="600"
+    alt=""
+    sizes="100vw"
+  />
+  <CldImage
+    src="samples/food/spices"
+    width="960"
+    height="600"
+    tint="equalize:80:blue:blueviolet"
+    alt=""
+    sizes="100vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  sizes="100vw"
+  tint="equalize:80:blue:blueviolet"
+  alt=""
+/>
+```
+</CodeBlock>
+
+### Chaining Multiple Effects
+
+`effects`: An array of objects the configure the effects to apply to an image.
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/food/spices"
+    width="960"
+    height="600"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/food/spices"
+    width="960"
+    height="600"
+    effects={[
+      {
+        background: 'green'
+      },
+      {
+        gradientFade: true
+      },
+      {
+        gradientFade: 'symetric,x_0.5'
+      }
+    ]}
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  effects={[
+    {
+      background: 'green'
+    },
+    {
+      gradientFade: true
+    },
+    {
+      gradientFade: 'symetric,x_0.5'
+    }
+  ]}
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+### More Filters & Effects
+
+Learn about what other filters and effects are supported on [CldImage Configuration](/cldimage/configuration#filters--effects).
+
+## Image Overlays
+
+Image overlays allow you to place one or multiple images on top of another image.
+
+### Overlay Image by Public ID
+
+`overlays`: Any array of overlay objects
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/people/kitchen-bar"
+    width="960"
+    height="600"
+    crop="fill"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/people/kitchen-bar"
+    width="960"
+    height="600"
+    crop="fill"
+    overlays={[{
+      publicId: "samples/food/fish-vegetables",
+      position: {
+        x: 50,
+        y: 50,
+        gravity: 'north_east',
+      },
+      effects: [{
+        crop: 'fill',
+        width: 350,
+        height: 350,
+        gravity: 'auto',
+        border: '5px_solid_yellow'
+      }]
+    }]}
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  overlays={[{
+    publicId: "samples/food/fish-vegetables",
+    position: {
+      x: 50,
+      y: 50,
+      gravity: 'north_east',
+    },
+    effects: [{
+      crop: 'fill',
+      width: 350,
+      height: 350,
+      gravity: 'auto',
+      border: '5px_solid_yellow'
+    }]
+  }]}
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+### Overlay Image with Blend Mode
+
+`appliedEffects`: When configured on an overlay object, allows you to set an effect
+that applies a blend mode, such as "multiply"
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/landscapes/nature-mountains"
+    width="960"
+    height="600"
+    crop="fill"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    width="960"
+    height="600"
+    crop="fill"
+    src="samples/landscapes/nature-mountains"
+    overlays={[{
+      publicId: "samples/animals/cat",
+      effects: [{
+        crop: 'fill',
+        gravity: 'auto',
+        width: '1.0',
+        height: '1.0',
+      }],
+      flags: ['relative'],
+      appliedEffects: [{ multiply: true }]
+    }]}
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  overlays={[{
+    publicId: "samples/animals/cat",
+    effects: [{
+      crop: 'fill',
+      gravity: 'auto',
+      width: '1.0',
+      height: '1.0',
+    }],
+    flags: ['relative'],
+    appliedEffects: [{ multiply: true }]
+  }]}
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+## Image Underlays
+
+Image underlays allow you to place one or multiple images behind a base image.
+
+### Replace Background with Image
+
+`underlay`: Public ID of image to use under base image
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="cld-sample-3"
+    width="960"
+    height="600"
+    crop="fill"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="cld-sample-3"
+    width="960"
+    height="600"
+    crop="fill"
+    underlay="samples/balloons"
+    removeBackground
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  underlay="<Public ID>"
+  removeBackground
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+### Replace Background with Multiple Images
+
+`underlays`: Array of underlay objects
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="cld-sample-3"
+    width="960"
+    height="600"
+    sizes="50vw"
+    alt=""
+  />
+  <CldImage
+    src="cld-sample-3"
+    width="960"
+    height="600"
+    underlays={[
+      {
+        publicId: 'cld-sample-2',
+        width: '0.5',
+        height: '1.0',
+        crop: 'fill',
+        position: {
+          gravity: 'north_west'
+        },
+        flags: ['relative']
+      },
+      {
+        publicId: 'samples/landscapes/beach-boat',
+        width: '0.5',
+        height: '1.0',
+        crop: 'fill',
+        position: {
+          gravity: 'south_east'
+        },
+        flags: ['relative']
+      },
+    ]}
+    removeBackground
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  underlays={[
+    {
+      publicId: '<Public ID>',
+      width: '0.5',
+      height: '1.0',
+      crop: 'fill',
+      position: {
+        gravity: 'north_west'
+      },
+      flags: ['relative']
+    },
+    {
+      publicId: '<Public ID>',
+      width: '0.5',
+      height: '1.0',
+      crop: 'fill',
+      position: {
+        gravity: 'south_east'
+      },
+      flags: ['relative']
+    },
+  ]}
+  removeBackground
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+
+## Text Overlays
+
+Text overlays allow you to place text on top of an image.
+
+### Adding Custom Text
+
+`overlays`: Uses overlay objects to add text on top of an image.
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="cld-sample-5"
+    width="960"
+    height="600"
+    crop="fill"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="cld-sample-5"
+    width="960"
+    height="600"
+    crop="fill"
+    overlays={[{
+      position: {
+        x: 60,
+        y: 60,
+        angle: -20,
+        gravity: 'south_east',
+      },
+      text: {
+        color: 'blueviolet',
+        fontFamily: 'Source Sans Pro',
+        fontSize: 160,
+        fontWeight: 'black',
+        textDecoration: 'underline',
+        letterSpacing: -15,
+        text: 'With Style'
+      }
+    }]}
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  overlays={[{
+    position: {
+      x: 140,
+      y: 140,
+      angle: -20,
+      gravity: 'south_east',
+    },
+    text: {
+      color: 'blueviolet',
+      fontFamily: 'Source Sans Pro',
+      fontSize: 280,
+      fontWeight: 'bold',
+      textDecoration: 'underline',
+      letterSpacing: 14,
+      text: 'Cool Beans'
+    }
+  }]}
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+### Adding Text with Effects
+
+`effects`: Applies effects to the overlaid text.
+
+<HeaderImage layout="grid">
+  <CldImage
+    src="samples/landscapes/nature-mountains"
+    width="960"
+    height="600"
+    crop="fill"
+    alt=""
+    sizes="50vw"
+  />
+  <CldImage
+    src="samples/landscapes/nature-mountains"
+    width="960"
+    height="600"
+    crop="fill"
+    overlays={[{
+      text: {
+        color: 'white',
+        fontFamily: 'Source Sans Pro',
+        fontSize: 400,
+        fontWeight: 'black',
+        text: 'Touching Grass'
+      },
+      effects: [
+        {
+          shear: '40:0',
+          opacity: 50
+        }
+      ]
+    }]}
+    alt=""
+    sizes="50vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Public ID>"
+  width="<Width>"
+  height="<Height>"
+  overlays={[{
+    text: {
+      color: 'white',
+      fontFamily: 'Source Sans Pro',
+      fontSize: 400,
+      fontWeight: 'black',
+      text: 'Touching Grass'
+    },
+    effects: [
+      {
+        shear: '40:0',
+        opacity: 50
+      }
+    ]
+  }]}
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+## Misc
+
+### Video Thumbnail
+
+`assetType`: Specifies the type of asset to be delivered.
+
+This is handy when wanting to create an image thumbnail from a video, where the asset type would be "video", yet delivering an image.
+
+<HeaderImage>
+  <CldImage
+    src="samples/sea-turtle"
+    assetType="video"
+    width="1920"
+    height="1080"
+    alt=""
+    sizes="100vw"
+  />
+</HeaderImage>
+
+<CodeBlock>
+```blade
+<x-cloudinary::image
+  src="<Your Video Public ID>"
+  assetType="video"
+  width="<Width>"
+  height="<Height>"
+  alt=""
+  sizes="100vw"
+/>
+```
+</CodeBlock>
+
+## More Examples
+
+Find more examples on [Social Card Templates](/templates/social-media-cards).
