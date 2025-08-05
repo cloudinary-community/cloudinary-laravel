@@ -1,0 +1,28 @@
+---
+import { cn } from '../lib/util';
+
+interface Props {
+  class?: string;
+  layout?: string;
+};
+
+const { layout, class: className }: Props = Astro.props;
+---
+<div class={cn(
+    'w-full bg-slate-100 border border-slate-200 dark:bg-black dark:border-[var(--sl-color-accent-low)] p-2 sm:py-8 rounded my-5',
+    layout === 'full' && 'sm:py-2',
+    className
+  )}>
+  <div
+    class={cn(`
+      flex justify-center max-w-[500px] mx-auto my-0
+      [&_img]:rounded-sm [&_img]:!m-0
+    `,
+      layout === 'grid' && 'grid max-w-full grid-cols-[1fr_1fr] gap-2',
+      layout === 'full' && 'block max-w-full max-x-none gap-2',
+    )}
+    data-layout={layout}
+  >
+    <slot />
+  </div>
+</div>

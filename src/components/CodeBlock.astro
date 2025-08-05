@@ -20,13 +20,13 @@ const codeBlockClassName = cn('code-block group relative [&_.code-block-code_pre
   {!alwaysExpanded && (
     <ul class="flex justify-center relative z-1 rounded p-0 m-0 !-mt-2">
       <li class="flex items-center justify-center gap-1 p-4 m-0 group-data-[codeblock-expanded=true]:hidden">
-        <button class="flex gap-2 items-center bg-transparent text-blue-500 text-xs code-block-actions-expand cursor-pointer !mb-0">
+        <button class="flex gap-2 items-center bg-transparent text-[var(--sl-color-accent)] text-xs code-block-actions-expand cursor-pointer !mb-0">
           <Icon name="mdi:expand-horizontal" />
           Expand Snippet
         </button>
       </li>
       <li class="flex items-center justify-center gap-1 p-4 m-0 group-data-[codeblock-expanded=false]:hidden">
-        <button class="flex gap-2 items-center bg-transparent text-blue-500 text-xs code-block-actions-collapse cursor-pointer !mb-0">
+        <button class="flex gap-2 items-center bg-transparent text-[var(--sl-color-accent)] text-xs code-block-actions-collapse cursor-pointer !mb-0">
           <Icon name="mdi:collapse-horizontal" />
           Collapse Snippet
         </button>
@@ -86,12 +86,12 @@ const codeBlockClassName = cn('code-block group relative [&_.code-block-code_pre
 @media (prefers-color-scheme: dark) {
   .code-block-code:after {
     /* Using main background color as basis from docs site */
-    background: linear-gradient(to bottom, rgba(15, 23, 42, 0), rgba(15, 23, 42, 1));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgb(0, 0, 0));
   }
 }
 
 :root[data-theme="dark"] .code-block-code:after {
   /* Using main background color as basis from docs site */
-  background: linear-gradient(to bottom, rgba(15, 23, 42, 0), rgba(15, 23, 42, 1));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgb(0, 0, 0));
 }
 </style>
