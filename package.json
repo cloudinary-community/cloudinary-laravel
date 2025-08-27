@@ -11,7 +11,6 @@
     "@astrojs/check": "^0.9.4",
     "@astrojs/starlight": "^0.35.2",
     "@astrojs/starlight-tailwind": "^4.0.1",
-    "@astrojs/tailwind": "^6.0.2",
     "@astrojs/vercel": "^8.2.6",
     "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/vite": "^4.1.12",
