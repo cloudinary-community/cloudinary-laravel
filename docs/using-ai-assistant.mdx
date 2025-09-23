@@ -1,0 +1,81 @@
+---
+title: "AI Assistant Integration"
+description: "Minimal demo of integrating an AI assistant in Cloudinary Laravel site"
+---
+
+# AI Assistant Integration Guide
+
+This guide shows a **minimal demo** of integrating a small AI assistant with your Cloudinary Laravel site.
+
+## Overview
+
+Adds a new documentation guide showing a minimal demo of integrating a small AI assistant
+(backend Laravel endpoint + simple frontend form) that can answer developer questions.
+
+### What I changed
+- `docs/guides/using-ai-assistant.mdx` — new file with step-by-step demo and sample code.
+
+### Notes
+- Demo uses `openai-php/client` and reads a short docs snippet for context.
+- This is a documentation/demo addition (no changes to core library).
+- No API keys are included.
+
+## Demo Steps
+
+1. **Install OpenAI PHP Client**
+```bash
+composer require openai-php/client
+
+## Create Laravel endpoint (routes/web.php):
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AIController;
+
+Route::post('/ai-assistant', [AIController::class, 'ask']);
+
+
+## Controller example (app/Http/Controllers/AIController.php):
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use OpenAI\Client;
+
+class AIController extends Controller
+{
+    public function ask(Request $request)
+    {
+        $client = new Client(env('OPENAI_API_KEY'));
+        $response = $client->chat()->create([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                ['role' => 'system', 'content' => 'You are a helpful assistant.'],
+                ['role' => 'user', 'content' => $request->input('question')],
+            ],
+        ]);
+
+        return response()->json($response->choices[0]->message->content);
+    }
+}
+
+
+## Frontend example (Blade view):
+
+<form id="ai-form">
+    <input type="text" name="question" placeholder="Ask a question">
+    <button type="submit">Ask AI</button>
+</form>
+
+<script>
+document.getElementById('ai-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const question = e.target.question.value;
+    const res = await fetch('/ai-assistant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+    alert(data);
+});
+</script>
