@@ -40,3 +40,144 @@ import Button from "@components/Button.astro";
     <Button href="/installation">Get Started</Button>
   </p>
 </div>
+
+<div class="not-content text-center max-w-4xl mx-auto my-14 md:my-36">
+  <h2 class="text-4xl font-bold">What's Inside?</h2>
+
+  <ul class="grid sm:grid-cols-2 gap-16 sm:gap-6 md:gap-8 lg:gap-16 p-0 mt-12 md:mt-20 list-none">
+    <li>
+      <CldImage
+        class="rounded-lg border border-zinc-200 mb-6"
+        width="800"
+        height="600"
+        src="samples/landscapes/nature-mountains"
+        crop={{
+          type: 'fill',
+          gravity: 'center',
+          source: true
+        }}
+        overlays={[
+          {
+            publicId: `${import.meta.env.PUBLIC_ASSETS_DIRECTORY}/pill-bad-red_ceyitm`,
+            width: 400,
+            position: {
+              gravity: 'south_east',
+              y: 180
+            }
+          },
+          {
+            position: {
+              gravity: 'south_west',
+              y: 214,
+              x: 1340
+            },
+            text: {
+              color: 'white',
+              fontFamily: 'Source Sans Pro',
+              fontSize: 74,
+              fontWeight: 'black',
+              text: '3.2 mb'
+            }
+          },
+          {
+            publicId: `${import.meta.env.PUBLIC_ASSETS_DIRECTORY}/pill-good-green_aaoi4h`,
+            width: 400,
+            position: {
+              gravity: 'south_east',
+              y: 50
+            }
+          },
+          {
+            position: {
+              gravity: 'south_west',
+              y: 82,
+              x: 1340
+            },
+            text: {
+              color: 'white',
+              fontFamily: 'Source Sans Pro',
+              fontSize: 74,
+              fontWeight: 'black',
+              text: '134 kb'
+            }
+          }
+        ]}
+        sizes="50w"
+        alt=""
+      />
+      <h3 class="text-2xl font-semibold mb-4">Optimization</h3>
+      <p>Automatically <a class="underline underline-offset-2" href="/guides/image-optimization">optimize images</a> and videos with responsive sizes and modern formats.</p>
+    </li>
+    <li>
+      <CldImage
+        class="rounded-lg border border-zinc-200 mb-6"
+        width="800"
+        height="600"
+        src="samples/woman-on-a-football-field"
+        crop="fill"
+        enhance
+        tint="30:253f8c"
+        replaceBackground="dark city at night with vibrant colors"
+        overlays={[
+          {
+            publicId: 'samples/woman-on-a-football-field',
+            position: {
+              gravity: 'east',
+            },
+            effects: [{
+              crop: 'crop',
+              width: '0.5',
+              height: '1.0',
+              gravity: 'east'
+            }]
+          }
+        ]}
+        sizes="50w"
+        alt=""
+      />
+      <h3 class="text-2xl font-semibold mb-4">Transformations</h3>
+      <p>
+        Transform assets using dynamic <a class="underline underline-offset-2" href="/examples#cropping--resizing--resizing">Cropping and Resizing</a>, <a class="underline underline-offset-2" href="/examples#generative-replace-background">Background Replacement</a>, other Generative AI, and more.
+      </p>
+    </li>
+    <li>
+      <CldImage
+        class="rounded-lg border border-zinc-200 mb-6"
+        width="800"
+        height="600"
+        src={`${import.meta.env.PUBLIC_ASSETS_DIRECTORY}/astro-cloudinary-upload-widget_ngil8j`}
+        sizes="50w"
+        alt=""
+      />
+      <h3 class="text-2xl font-semibold mb-4">Uploading</h3>
+      <p>Drop-in widget for easily <a class="underline underline-offset-2" href="/guides/uploading-images-and-videos">uploading assets</a> into the cloud.</p>
+    </li>
+    <li>
+      <CldImage
+        class="rounded-lg border border-zinc-200 mb-6"
+        width="800"
+        height="600"
+        src={`${import.meta.env.PUBLIC_ASSETS_DIRECTORY}/astro-cloudinary-social-cards_ntewed`}
+        sizes="50w"
+        alt=""
+      />
+      <h3 class="text-2xl font-semibold mb-4">Social Cards</h3>
+      <p>Easiest way to create beautiful social cards in Laravel.</p>
+    </li>
+  </ul>
+
+  <ul class="list-none text-center text-lg p-0 mt-20">
+    <li class="mb-3"><a class="underline underline-offset-2" href="/examples#filters--effects">Effects</a></li>
+    <li class="mb-3"><a class="underline underline-offset-2" href="/guides/uploading-images-and-videos">Uploading</a></li>
+    <li class="mb-3"><a class="underline underline-offset-2" href="/examples#generative-fill">Generative AI</a></li>
+    <li class="mb-3"><a class="underline underline-offset-2" href="/examples#text-overlays">Text</a> &amp; <a class="underline underline-offset-2" href="/examples#image-overlays">Image</a> Overlays</li>
+    <li>And a lot more...</li>
+  </ul>
+
+  <p class="text-3xl mt-16">All at <strong>scale</strong> with Cloudinary</p>
+</div>
+
+<div class="not-content text-center max-w-2xl mx-auto my-20 md:my-44">
+  <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold md:leading-[4rem]">Transform &amp; Deliver at Scale with Laravel Cloudinary</h2>
+  <p class="mt-10"><Button href="/installation">Get Started</Button></p>
+</div>
