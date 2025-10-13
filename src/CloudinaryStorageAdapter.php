@@ -14,11 +14,13 @@ use League\MimeTypeDetection\MimeTypeDetector;
 
 class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
 {
-    private MimeTypeDetector $mimeTypeDetector;
-
-    public function __construct(private Cloudinary $cloudinary, ?MimeTypeDetector $mimeTypeDetector = null)
+    public function __construct(
+        private Cloudinary $cloudinary,
+        private ?MimeTypeDetector $mimeTypeDetector = null,
+        private ?string $prefix = null)
     {
         $this->mimeTypeDetector = $mimeTypeDetector ?: new FinfoMimeTypeDetector;
+        $this->prefix = $prefix ? str_replace('\\', '/', trim($prefix, '/')) : '';
     }
 
     public function getUrl(string $path): string
@@ -38,7 +40,7 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
 
     public function createDirectory(string $path, Config $config): void
     {
-        $this->cloudinary->adminApi()->createFolder($path);
+        $this->cloudinary->adminApi()->createFolder($this->applyPrefixToPath($path));
     }
 
     public function delete(string $path): void
@@ -58,7 +60,7 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
 
     public function deleteDirectory(string $path): void
     {
-        $this->cloudinary->adminApi()->deleteAssetsByPrefix($path);
+        $this->cloudinary->adminApi()->deleteAssetsByPrefix($this->applyPrefixToPath($path));
     }
 
     public function directoryExists(string $path): bool
@@ -105,7 +107,7 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
         do {
             $response = $this->cloudinary->adminApi()->assets([
                 'type' => 'upload',
-                'prefix' => $path,
+                'prefix' => $this->applyPrefixToPath($path),
                 'max_results' => 500,
                 'next_cursor' => isset($response) ? $response->offsetGet('next_cursor') : null,
             ]);
@@ -194,12 +196,12 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
     public function prepareResource(string $path): array
     {
         $info = pathinfo($path);
-        
+
         // Ensure dirname uses forward slashes, regardless of OS
         $dirname = str_replace('\\', '/', $info['dirname']);
         // Always use forward slash for path construction
         $id = $dirname.'/'.$info['filename'];
-        
+
         $mimeType = $this->mimeTypeDetector->detectMimeTypeFromPath($path);
 
         if (strpos($mimeType, 'image/') === 0) {
@@ -210,6 +212,26 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
             return [$id, 'video'];
         }
 
+        // If a prefix is configured, apply it to the id. When applying a prefix
+        // strip any leading './' or '/' from the generated id so we don't end up
+        // with paths like "prefix/./file".
+        if ($this->prefix !== '') {
+            $normalizedId = ltrim($id, './\\/');
+            $id = $this->prefix.
+                ($normalizedId !== '' ? '/'.$normalizedId : '');
+        }
+
         return [$id, 'raw'];
+    }
+
+    private function applyPrefixToPath(string $path): string
+    {
+        if ($this->prefix === '') {
+            return $path;
+        }
+
+        $trimmed = ltrim(str_replace('\\', '/', $path), '\/');
+
+        return $this->prefix.($trimmed !== '' ? '/'.$trimmed : '');
     }
 }

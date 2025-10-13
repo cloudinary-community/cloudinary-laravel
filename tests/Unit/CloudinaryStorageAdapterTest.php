@@ -26,6 +26,10 @@ beforeEach(function () {
     $this->cloudinary->adminApi()->willReturn($this->adminApi->reveal());
 
     $this->adapter = new CloudinaryStorageAdapter($this->cloudinary->reveal());
+
+    // Also create an adapter instance configured with a prefix for tests
+    // that assert prefix behavior.
+    $this->prefixedAdapter = new CloudinaryStorageAdapter($this->cloudinary->reveal(), null, 'Fixtures');
 });
 
 it('can copy a file', function () {
@@ -136,6 +140,21 @@ it('can list contents', function () {
 
     $contents = $this->adapter->listContents('test-dir', false);
     expect(iterator_to_array($contents))->toHaveCount(1);
+});
+
+it('applies configured prefix when listing contents', function () {
+    $response = createApiResponse([
+        'resources' => [],
+    ]);
+
+    $this->adminApi->assets(Argument::that(function ($options) {
+        return $options['type'] === 'upload'
+            && $options['prefix'] === 'Fixtures/test-dir'
+            && $options['max_results'] === 500;
+    }))->willReturn($response)->shouldBeCalled();
+
+    $contents = $this->prefixedAdapter->listContents('test-dir', false);
+    expect(iterator_to_array($contents))->toHaveCount(0);
 });
 
 it('can read a file', function () {

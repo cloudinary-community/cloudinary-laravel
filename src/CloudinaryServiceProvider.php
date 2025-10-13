@@ -36,7 +36,7 @@ class CloudinaryServiceProvider extends ServiceProvider
                 ]);
             }
 
-            $adapter = new CloudinaryStorageAdapter($cloudinary);
+            $adapter = new CloudinaryStorageAdapter($cloudinary, null, $config['prefix'] ?? null);
 
             return new FilesystemAdapter(new Filesystem($adapter, $config), $adapter, $config);
         });
