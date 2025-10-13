@@ -15,28 +15,22 @@
   use Cloudinary\Transformation\ImproveMode;
   use Illuminate\Support\Str;
 
-  $retrieveFormattedImage = cloudinary()->imageTag($publicId ?? '');
+    $retrieveFormattedImage = cloudinary()->imageTag($publicId ?? '');
+
+    $attrs = [];
 
   /**
    * SET ALT if provided
    */
   if (isset($alt)) {
-      $retrieveFormattedImage = cloudinary()
-          ->imageTag($publicId ?? '')
-          ->setAttributes([
-              'alt' => $alt ?? $publicId,
-          ]);
+      $attrs['alt'] = $alt ?? $publicId;
   }
 
   /**
    *  SET CLASS if provided
    */
   if (isset($class)) {
-      $retrieveFormattedImage = cloudinary()
-          ->imageTag($publicId ?? '')
-          ->setAttributes([
-              'class' => $class,
-          ]);
+      $attrs['class'] = $class;
   }
 
   /**
@@ -85,13 +79,11 @@
               $cropFactor = 'minimumPad';
           }
 
-          $retrieveFormattedImage = cloudinary()
-              ->imageTag($publicId ?? '')
-              ->resize(
-                  Resize::$cropFactor()
-                      ->width($width ?? '')
-                      ->height($height ?? ''),
-              );
+          $retrieveFormattedImage = $retrieveFormattedImage->resize(
+              Resize::$cropFactor()
+                  ->width($width ?? '')
+                  ->height($height ?? ''),
+          );
 
           /**
            *  If the attribute is "gravity"
@@ -123,9 +115,7 @@
                       ->gravity(Gravity::focusOn(FocusOn::$gravity()));
               }
 
-              $retrieveFormattedImage = cloudinary()
-                  ->imageTag($publicId ?? '')
-                  ->resize($gravityImplementation);
+              $retrieveFormattedImage = $retrieveFormattedImage->resize($gravityImplementation);
           }
       }
   }
@@ -484,6 +474,11 @@
       }
   }
 
-  echo $retrieveFormattedImage->serialize();
+    // Apply collected attributes once so we don't overwrite previous attributes.
+    if (!empty($attrs)) {
+            $retrieveFormattedImage = $retrieveFormattedImage->setAttributes($attrs);
+    }
+
+    echo $retrieveFormattedImage->serialize();
 
 @endphp
