@@ -195,33 +195,38 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
 
     public function prepareResource(string $path): array
     {
-        $info = pathinfo($path);
+        // Normalize the whole path first so pathinfo treats directories correctly
+        $normalizedPath = str_replace('\\', '/', $path);
 
-        // Ensure dirname uses forward slashes, regardless of OS
-        $dirname = str_replace('\\', '/', $info['dirname']);
-        // Always use forward slash for path construction
-        $id = $dirname.'/'.$info['filename'];
+        $info = pathinfo($normalizedPath);
 
-        $mimeType = $this->mimeTypeDetector->detectMimeTypeFromPath($path);
+        // Build id using forward slashes only
+        $id = ($info['dirname'] ?? '.').'/'.($info['filename'] ?? '');
 
-        if (strpos($mimeType, 'image/') === 0) {
-            return [$id, 'image'];
-        }
-
-        if (strpos($mimeType, 'video/') === 0) {
-            return [$id, 'video'];
-        }
-
-        // If a prefix is configured, apply it to the id. When applying a prefix
-        // strip any leading './' or '/' from the generated id so we don't end up
-        // with paths like "prefix/./file".
+        // Apply optional prefix, if necessary; strip leading ./ or / from the id when prefixing
         if ($this->prefix !== '') {
             $normalizedId = ltrim($id, './\\/');
-            $id = $this->prefix.
-                ($normalizedId !== '' ? '/'.$normalizedId : '');
+
+            if (! str_starts_with($normalizedId, $this->prefix)) {
+                $id = rtrim($this->prefix.'/'.$normalizedId, '/');
+            }
+
+            // Remove the double prefix if it exists
+            if (str_contains($id, $this->prefix.'/'.$this->prefix)) {
+                $id = str_replace($this->prefix.'/'.$this->prefix, $this->prefix, $id);
+            }
         }
 
-        return [$id, 'raw'];
+        // Detect MIME type from the normalized path
+        $mimeType = $this->mimeTypeDetector->detectMimeTypeFromPath($normalizedPath) ?? '';
+
+        $type = match (true) {
+            str_starts_with($mimeType, 'image/') => 'image',
+            str_starts_with($mimeType, 'video/') => 'video',
+            default => 'raw',
+        };
+
+        return [$id, $type];
     }
 
     private function applyPrefixToPath(string $path): string
@@ -231,6 +236,10 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
         }
 
         $trimmed = ltrim(str_replace('\\', '/', $path), '\/');
+
+        if (str_starts_with($trimmed, $this->prefix)) {
+            return $path;
+        }
 
         return $this->prefix.($trimmed !== '' ? '/'.$trimmed : '');
     }

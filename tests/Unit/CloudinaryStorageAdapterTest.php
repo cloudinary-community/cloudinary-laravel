@@ -211,6 +211,176 @@ it('can move a file', function () {
     $this->adapter->move('Fixtures/source.jpg', 'Fixtures/destination.jpg', new Config);
 });
 
+it('uses image resource type for images and builds forward-slash id', function () {
+    // Given a path with backslashes and nested dirs
+    $path = 'dir\nested\picture.jpg';
+
+    // Expect Cloudinary upload called with normalized public_id and image resource type
+    $this->uploadApi->upload(
+        Argument::type('string'),
+        Argument::that(function ($options) {
+            return $options['public_id'] === 'dir/nested/picture'
+                && $options['resource_type'] === 'image';
+        })
+    )->willReturn(createApiResponse(['public_id' => 'dir/nested/picture']))->shouldBeCalled();
+
+    $this->adapter->write($path, 'contents', new Config);
+});
+
+it('uses video resource type for videos', function () {
+    $path = 'media/video.mp4';
+
+    $this->uploadApi->upload(
+        Argument::type('string'),
+        Argument::that(function ($options) {
+            return $options['public_id'] === 'media/video'
+                && $options['resource_type'] === 'video';
+        })
+    )->willReturn(createApiResponse(['public_id' => 'media/video']))->shouldBeCalled();
+
+    $this->adapter->write($path, 'contents', new Config);
+});
+
+it('defaults to raw resource type for non-image/video', function () {
+    $path = 'docs/file.pdf';
+
+    $this->uploadApi->upload(
+        Argument::type('string'),
+        Argument::that(function ($options) {
+            return $options['public_id'] === 'docs/file'
+                && $options['resource_type'] === 'raw';
+        })
+    )->willReturn(createApiResponse(['public_id' => 'docs/file']))->shouldBeCalled();
+
+    $this->adapter->write($path, 'contents', new Config);
+});
+
+it('applies prefix and strips leading dot-slash', function () {
+    // Using the adapter configured with prefix `Fixtures`
+    $path = './file.jpg';
+
+    $this->uploadApi->upload(
+        Argument::type('string'),
+        Argument::that(function ($options) {
+            return $options['public_id'] === 'Fixtures/file'
+                && $options['resource_type'] === 'image';
+        })
+    )->willReturn(createApiResponse(['public_id' => 'Fixtures/file']))->shouldBeCalled();
+
+    $this->prefixedAdapter->write($path, 'contents', new Config);
+});
+
+it('applies prefix and strips leading slash', function () {
+    $path = '/file.jpg';
+
+    $this->uploadApi->upload(
+        Argument::type('string'),
+        Argument::that(function ($options) {
+            return $options['public_id'] === 'Fixtures/file'
+                && $options['resource_type'] === 'image';
+        })
+    )->willReturn(createApiResponse(['public_id' => 'Fixtures/file']))->shouldBeCalled();
+
+    $this->prefixedAdapter->write($path, 'contents', new Config);
+});
+
+it('applies prefix and normalizes backslashes in nested paths', function () {
+    $path = 'subdir\\inner\\file.jpg';
+
+    $this->uploadApi->upload(
+        Argument::type('string'),
+        Argument::that(function ($options) {
+            return $options['public_id'] === 'Fixtures/subdir/inner/file'
+                && $options['resource_type'] === 'image';
+        })
+    )->willReturn(createApiResponse(['public_id' => 'Fixtures/subdir/inner/file']))->shouldBeCalled();
+
+    $this->prefixedAdapter->write($path, 'contents', new Config);
+});
+
+it('getUrl returns secure url for image and normalizes id', function () {
+    // No prefix adapter
+    // Ensure nested path is preserved and extension is removed
+    $this->adminApi->asset(
+        Argument::exact('images/photo'),
+        Argument::that(fn ($opts) => $opts['resource_type'] === 'image')
+    )->willReturn(createApiResponse([
+        'public_id' => 'images/photo',
+        'secure_url' => 'https://cdn.example.com/images/photo.jpg',
+    ]))->shouldBeCalled();
+
+    $url = $this->adapter->getUrl('images/photo.jpg');
+    expect($url)->toBe('https://cdn.example.com/images/photo.jpg');
+});
+
+it('getUrl uses video resource type for videos', function () {
+    $this->adminApi->asset(
+        Argument::exact('media/clip'),
+        Argument::that(fn ($opts) => $opts['resource_type'] === 'video')
+    )->willReturn(createApiResponse([
+        'public_id' => 'media/clip',
+        'secure_url' => 'https://cdn.example.com/media/clip.mp4',
+    ]))->shouldBeCalled();
+
+    $url = $this->adapter->getUrl('media/clip.mp4');
+    expect($url)->toBe('https://cdn.example.com/media/clip.mp4');
+});
+
+it('getUrl applies configured prefix when needed', function () {
+    // Adapter with prefix = Fixtures
+    $this->adminApi->asset(
+        Argument::exact('Fixtures/file'),
+        Argument::that(fn ($opts) => $opts['resource_type'] === 'image')
+    )->willReturn(createApiResponse([
+        'public_id' => 'Fixtures/file',
+        'secure_url' => 'https://cdn.example.com/Fixtures/file.jpg',
+    ]))->shouldBeCalled();
+
+    $url = $this->prefixedAdapter->getUrl('file.jpg');
+    expect($url)->toBe('https://cdn.example.com/Fixtures/file.jpg');
+});
+
+it('getUrl does not double-apply prefix when path already includes prefix', function () {
+    // Simulate Laravel passing already-prefixed path to adapter
+    $this->adminApi->asset(
+        Argument::exact('Fixtures/file'),
+        Argument::that(fn ($opts) => $opts['resource_type'] === 'image')
+    )->willReturn(createApiResponse([
+        'public_id' => 'Fixtures/file',
+        'secure_url' => 'https://cdn.example.com/Fixtures/file.jpg',
+    ]))->shouldBeCalled();
+
+    $url = $this->prefixedAdapter->getUrl('Fixtures/file.jpg');
+    expect($url)->toBe('https://cdn.example.com/Fixtures/file.jpg');
+});
+
+it('getUrl does not double-apply prefix when path starts with a leading slash', function () {
+    // Regression: ensure no `Fixtures/Fixtures` and no leading slash in id
+    $this->adminApi->asset(
+        Argument::exact('/Fixtures/file'),
+        Argument::that(fn ($opts) => $opts['resource_type'] === 'image')
+    )->willReturn(createApiResponse([
+        'public_id' => 'Fixtures/file',
+        'secure_url' => 'https://cdn.example.com/Fixtures/file.jpg',
+    ]))->shouldBeCalled();
+
+    $url = $this->prefixedAdapter->getUrl('/Fixtures/file.jpg');
+    expect($url)->toBe('https://cdn.example.com/Fixtures/file.jpg');
+});
+
+it('getUrl normalizes backslashes in incoming path', function () {
+    $this->adminApi->asset(
+        Argument::exact('Fixtures/sub/dir/file'),
+        Argument::that(fn ($opts) => $opts['resource_type'] === 'image')
+    )->willReturn(createApiResponse([
+        'public_id' => 'Fixtures/sub/dir/file',
+        'secure_url' => 'https://cdn.example.com/Fixtures/sub/dir/file.jpg',
+    ]))->shouldBeCalled();
+
+    $url = $this->prefixedAdapter->getUrl('sub\\dir\\file.jpg');
+    expect($url)->toBe('https://cdn.example.com/Fixtures/sub/dir/file.jpg');
+});
+
 it('can calculate checksum', function () {
     //
 })->todo();
