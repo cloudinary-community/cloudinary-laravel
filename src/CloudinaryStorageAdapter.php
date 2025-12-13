@@ -12,7 +12,6 @@ use League\Flysystem\UnableToSetVisibility;
 use League\MimeTypeDetection\FinfoMimeTypeDetector;
 use League\MimeTypeDetection\MimeTypeDetector;
 
-
 class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
 {
     public function __construct(
@@ -210,6 +209,11 @@ class CloudinaryStorageAdapter implements ChecksumProvider, FilesystemAdapter
 
             if (! str_starts_with($normalizedId, $this->prefix)) {
                 $id = rtrim($this->prefix.'/'.$normalizedId, '/');
+            }
+
+            // Remove the double prefix if it exists
+            if (str_contains($id, $this->prefix.'/'.$this->prefix)) {
+                $id = str_replace($this->prefix.'/'.$this->prefix, $this->prefix, $id);
             }
         }
 
