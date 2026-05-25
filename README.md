@@ -30,7 +30,7 @@
 
 ## Installation
 
-Requires PHP 8.2+ and Laravel 11+.
+Requires PHP 8.3+ and Laravel 11+.
 
 ```bash
 composer require cloudinary-labs/cloudinary-laravel
